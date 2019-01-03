@@ -3,6 +3,11 @@
 #include "Superposition.h"
 #include "Functions.h"
 
+Sequence::Sequence(const std::string& s) {
+    Superposition tmp(s);
+    seq.push_back(tmp);
+}
+
 Sequence::Sequence(Ket& k) {
     Superposition tmp;
     tmp.add(k);

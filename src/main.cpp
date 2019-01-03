@@ -5,6 +5,7 @@
 #include "Superposition.h"
 #include "Functions.h"
 #include "Sequence.h"
+#include "NewContext.h"
 
 // for now, use main to test our components:
 // later we will write test cases using googleTest
@@ -148,5 +149,21 @@ int main() {
     std::cout << "k5: " << k5.to_string() << " " << k5.size() << std::endl;
     std::cout << "sp4: " << sp4.to_string() << " " << sp4.size() << std::endl;
     std::cout << "seq5: " << seq5.to_string() << " " << seq5.size() << std::endl;
+
+    NewContext context("some testing context");
+    context.learn("age", "Fred", "37");
+    context.learn("father", "Fred", "Tom");
+
+    auto rule = context.recall("supported-ops", "Fred");
+    std::cout << "supported-ops: " << rule.to_string() << std::endl;
+
+    rule = context.recall("age", "Fred");
+    std::cout << "rule: " << rule.to_string() << std::endl;
+
+    rule = context.recall("father", "Fred");
+    std::cout << "rule: " << rule.to_string() << std::endl;
+
+    context.print_universe();
+
     return 0;
 }

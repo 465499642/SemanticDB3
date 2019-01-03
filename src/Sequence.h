@@ -2,6 +2,7 @@
 #define SEQUENCE_H
 
 #include <vector>
+#include <string>
 
 #include "Ket.h"
 
@@ -14,6 +15,7 @@ class Sequence {
     public:
         Sequence() {};
         ~Sequence() {};
+        Sequence(const std::string& s);
         Sequence(Ket& k);
         Sequence(Superposition& sp);
         Sequence operator+(Sequence& b);
