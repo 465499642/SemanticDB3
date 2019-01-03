@@ -17,10 +17,12 @@ OBJS = $(addprefix ${BUILDDIR}/, \
 all: directories $(OUTDIR)/main
 
 $(OUTDIR)/main: $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(INCS)
+	@echo "LD $@"
+	@$(CXX) $(CXXFLAGS) -o $@ $^ $(INCS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@ $(INCS)
+	@echo "CXX $<"
+	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(INCS)
 
 
 .PHONY: directories clean
@@ -28,8 +30,10 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 directories: $(OUTDIR)/ $(BUILDDIR)/
 
 %/:
-	mkdir -p $@
+	@echo "MKDIR $<"
+	@mkdir -p $@
 
 clean:
-	rm $(BUILDDIR)/* $(OUTDIR)/*
+	@echo "RMDIR ${BUILDDIR} ${OUTDIR}"
+	@rm -rf $(BUILDDIR)/* $(OUTDIR)/* 2> /dev/null
 
