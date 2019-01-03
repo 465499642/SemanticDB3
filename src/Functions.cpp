@@ -3,7 +3,7 @@
 #include <vector>
 #include "Functions.h"
 
-double EPSILON = 0.0001;
+const double EPSILON = 0.0001;
 
 // from here:
 // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c

@@ -1,7 +1,7 @@
 #ifndef SUPERPOSITION_H
 #define SUPERPOSITION_H
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "KetMap.h"
@@ -9,7 +9,7 @@
 
 class Superposition {
     private:
-        std::map<ulong, double> sp;
+        std::unordered_map<ulong, double> sp;
         std::vector<ulong> sort_order;
 
     public:

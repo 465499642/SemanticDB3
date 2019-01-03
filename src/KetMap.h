@@ -2,16 +2,16 @@
 #define KETMAP_H
 
 typedef unsigned long ulong;
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
 class KetMap {
     private:
         ulong map_count;
-        std::map<std::string, ulong> our_map;
+        std::unordered_map<std::string, ulong> our_map;
         std::vector<std::string> our_inverse_map;
-        std::map<std::string, std::vector<ulong> > our_split_map;
+        std::unordered_map<std::string, std::vector<ulong> > our_split_map;
 
     public:
         KetMap() {
