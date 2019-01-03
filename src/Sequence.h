@@ -17,6 +17,7 @@ class Sequence {
         Sequence(Ket& k);
         Sequence(Superposition& sp);
         Sequence operator+(Sequence& b);
+        ulong size();
         void add(Ket& k);
         void add(Superposition& sp);
         void add(Sequence& seq);

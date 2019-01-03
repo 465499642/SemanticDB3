@@ -24,6 +24,7 @@ class Ket {
             ket_value = v;
         }
         Superposition operator+(Ket& a);
+        ulong size();
         ulong label_idx();
         std::string label();
         double value();

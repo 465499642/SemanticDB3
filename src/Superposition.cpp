@@ -41,6 +41,11 @@ Superposition Superposition::operator+(Ket& b) {
     return tmp;
 }
 
+ulong Superposition::size() {
+    ulong result;
+    result = sp.size();
+    return result;
+}
 
 // const bugs out for now:
 // void Superposition::add(const Ket& a) {

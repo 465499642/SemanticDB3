@@ -7,6 +7,7 @@
 #include "Sequence.h"
 
 // for now, use main to test our components:
+// later we will write test cases using googleTest
 int main() {
     ulong i,j,k,l;
 
@@ -136,6 +137,16 @@ int main() {
     Superposition sp5;
     std::cout << "sp5: " << sp5.to_string() << std::endl;
 
+    auto random = ket_map.get_split_idx("random");
+    for (auto idx: random) {
+        std::cout << idx << " ";
+    }
+    std::cout << std::endl;
+
     ket_map.print();
+
+    std::cout << "k5: " << k5.to_string() << " " << k5.size() << std::endl;
+    std::cout << "sp4: " << sp4.to_string() << " " << sp4.size() << std::endl;
+    std::cout << "seq5: " << seq5.to_string() << " " << seq5.size() << std::endl;
     return 0;
 }

@@ -22,6 +22,12 @@ Sequence Sequence::operator+(Sequence& b) {
     return tmp;
 }
 
+ulong Sequence::size() {
+    ulong result;
+    result = seq.size();
+    return result;
+}
+
 void Sequence::add(Ket& k) {
     Superposition tmp;
     tmp.add(k);

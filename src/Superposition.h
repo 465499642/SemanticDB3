@@ -20,6 +20,7 @@ class Superposition {
         Superposition(const std::string&s, const double v);
         Superposition(const ulong idx, const double v);
         Superposition operator+(Ket& b);
+        ulong size();
         // void add(const Ket& a); // bugs out for now
         void add(Ket& a);
         void add(Superposition& a);

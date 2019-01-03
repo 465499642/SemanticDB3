@@ -24,6 +24,17 @@ double Ket::value() {
     return ket_value;
 }
 
+ulong Ket::size() {
+    ulong result;
+    if (ket_map.get_idx("") == ket_label_idx) {
+        result = 0;
+    }
+    else {
+        result = 1;
+    }
+    return result;
+}
+
 std::string Ket::to_string() {
     std::string s;
     if ( double_eq(ket_value, 1.0) ) {
