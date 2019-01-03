@@ -35,5 +35,5 @@ directories: $(OUTDIR)/ $(BUILDDIR)/
 
 clean:
 	@echo "RMDIR ${BUILDDIR} ${OUTDIR}"
-	@rm -rf $(BUILDDIR)/* $(OUTDIR)/* 2> /dev/null
+	@rm $(BUILDDIR)/* $(OUTDIR)/* 2> /dev/null
 
