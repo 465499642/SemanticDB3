@@ -1,25 +1,35 @@
+#include <math.h>
 #include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
+#include "Functions.h"
 
 Superposition::Superposition(const ulong idx) {
+    if (ket_map.get_idx("") == idx) {return; }
+
     sp[idx] = 1.0;
     sort_order.push_back(idx);
 }
 
 Superposition::Superposition(const std::string& s) {
+    if (s == "") {return; }
+
     ulong idx = ket_map.get_idx(s);
     sp[idx] = 1.0;
     sort_order.push_back(idx);
 }
 
 Superposition::Superposition(const std::string& s, const double v) {
+    if (s == "") {return; }
+
     ulong idx = ket_map.get_idx(s);
     sp[idx] = v;
     sort_order.push_back(idx);
 }
 
 Superposition::Superposition(const ulong idx, const double v) {
+    if (ket_map.get_idx("") == idx) {return; }
+
     sp[idx] = v;
     sort_order.push_back(idx);
 }
@@ -31,38 +41,30 @@ Superposition Superposition::operator+(Ket& b) {
     return tmp;
 }
 
-/*
-Superposition Superposition::operator+(Ket& a, Ket& b) {
-    Superposition tmp;
-    tmp.add(a);
-    tmp.add(b);
-    return tmp;
-}
-*/
 
-//Superposition::operator+(const Superposition& b) {
-//    Superposition result;
-//    return result;
-//}
-
-// bugs out for now:
+// const bugs out for now:
 // void Superposition::add(const Ket& a) {
 void Superposition::add(Ket& a) {
     ulong idx = a.label_idx();
     double v = a.value();
 
-    if (this->sp.find(idx) != this->sp.end()) {
-        this->sp[idx] += v;
+    if (ket_map.get_idx("") == idx) {return; }  // |> is the identity element for superpositions. sp + |> == |> + sp == sp
+
+    if (sp.find(idx) != sp.end()) {
+        sp[idx] += v;
     }
     else {
-        this->sp[idx] = v;
-        this->sort_order.push_back(idx);
+        sp[idx] = v;
+        sort_order.push_back(idx);
     }
     return;
 }
 
 void Superposition::add(Superposition& a) {
+    ulong identity_idx = ket_map.get_idx("");
+
     for (ulong idx: a.sort_order) {
+        if (identity_idx == idx) {continue;}
         if (sp.find(idx) != sp.end()) {
             sp[idx] += a.sp[idx];
         }
@@ -77,16 +79,34 @@ void Superposition::add(Superposition& a) {
 
 std::string Superposition::to_string() {
     std::string s;
+    if (sort_order.size() == 0) {return "|>"; }
+
     std::string label;
+    std::string value_string;
+    std::string sign;
+    bool first_pass = true;
     for (auto idx: sort_order) {
         auto label = ket_map.get_str(idx);
         auto value = sp[idx];
-
-        if (idx == sort_order[0]) {
-            s += std::to_string(value) + "|" + label + ">";
+        sign = " + ";
+        if (double_eq(value, 1.0)) {
+            value_string = "";
         }
         else {
-            s += " + " + std::to_string(value) + "|" + label + ">";
+            value_string = std::to_string(fabs(value));
+            if (value < 0) { sign = " - "; }
+        }
+
+        if (first_pass && value >= 0) {
+            s += value_string + "|" + label + ">";
+            first_pass = false;
+        }
+        else if (first_pass && value < 0) {
+            s += "- " + value_string + "|" + label + ">";
+            first_pass = false;
+        }
+        else {
+            s += sign + value_string + "|" + label + ">";
         }
     }
     return s;

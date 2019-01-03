@@ -19,10 +19,7 @@ class Superposition {
         Superposition(const std::string& s);
         Superposition(const std::string&s, const double v);
         Superposition(const ulong idx, const double v);
-        // Superposition Superposition::operator+(const Ket& a, const Ket& b);
-        //Superposition::operator+(const Superposition& b);
         Superposition operator+(Ket& b);
-        // Superposition operator+(Ket& a, Ket& b);
         // void add(const Ket& a); // bugs out for now
         void add(Ket& a);
         void add(Superposition& a);

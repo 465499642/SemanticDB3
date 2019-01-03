@@ -1,6 +1,9 @@
+#include <math.h>
 #include <string>
 #include <vector>
 #include "Functions.h"
+
+double EPSILON = 0.0001;
 
 // from here:
 // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
@@ -31,4 +34,11 @@ std::string join(const std::vector<std::string>& v, const std::string& delimiter
         }
     }
     return s;
+}
+
+bool double_eq(const double v1, const double v2) {
+    if (fabs(v1 - v2) < EPSILON ) {
+        return true;
+    }
+    return false;
 }

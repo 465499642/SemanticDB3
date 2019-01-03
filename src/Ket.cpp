@@ -1,8 +1,6 @@
-#include <math.h>
 #include "Ket.h"
 #include "Superposition.h"
-
-double EPSILON = 0.0001;
+#include "Functions.h"
 
 
 Superposition Ket::operator+(Ket& a) {
@@ -28,7 +26,7 @@ double Ket::value() {
 
 std::string Ket::to_string() {
     std::string s;
-    if ( fabs(ket_value - 1.0) < EPSILON ) {
+    if ( double_eq(ket_value, 1.0) ) {
         s = "|" + ket_map.get_str(ket_label_idx) + ">";
     }
     else {

@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Ket.h"
-//#include "Superposition.h"
 
 class Superposition;
 
@@ -17,8 +16,10 @@ class Sequence {
         ~Sequence() {};
         Sequence(Ket& k);
         Sequence(Superposition& sp);
-        Sequence add(Ket& k);
-        Sequence add(Superposition& sp);
+        Sequence operator+(Sequence& b);
+        void add(Ket& k);
+        void add(Superposition& sp);
+        void add(Sequence& seq);
         std::string to_string();
 };
 

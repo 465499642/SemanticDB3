@@ -4,31 +4,40 @@
 #include "Functions.h"
 
 Sequence::Sequence(Ket& k) {
-    Superposition sp;
-    sp.add(k);
-    seq.push_back(sp);
+    Superposition tmp;
+    tmp.add(k);
+    seq.push_back(tmp);
 }
 
 Sequence::Sequence(Superposition& sp) {
-    Superposition sp2;
-    sp2.add(sp);
-    seq.push_back(sp2);
-}
-
-Sequence Sequence::add(Ket& k) {
-    Superposition sp;
-    sp.add(k);
-    std::cout << "new sp: " << sp.to_string() << std::endl;
-    this->seq.push_back(sp);
-    std::cout << "made it here!" << std::endl;
-}
-
-Sequence Sequence::add(Superposition& sp) {
     Superposition tmp;
     tmp.add(sp);
     seq.push_back(tmp);
-    std::cout << this->to_string() << std::endl;
-    std::cout << "made it here too!" << std::endl;
+}
+
+Sequence Sequence::operator+(Sequence& b) {
+    Sequence tmp;
+    tmp.add(*this);
+    tmp.add(b);
+    return tmp;
+}
+
+void Sequence::add(Ket& k) {
+    Superposition tmp;
+    tmp.add(k);
+    seq.push_back(tmp);
+}
+
+void Sequence::add(Superposition& sp) {
+    Superposition tmp;
+    tmp.add(sp);
+    seq.push_back(tmp);
+}
+
+void Sequence::add(Sequence& seq2) {
+    for (auto sp: seq2.seq) {
+        seq.push_back(sp);
+    }
 }
 
 std::string Sequence::to_string() {

@@ -34,7 +34,7 @@ ulong KetMap::get_idx(const std::string& s) {
     return result;
 }
 
-std::string KetMap::get_str(const ulong idx) {
+std::string KetMap::get_str(const ulong idx) {  // what should we return if idx is not in our_inverse_map?
     std::string result;
     if (idx < our_inverse_map.size()) {
         result = our_inverse_map[idx];

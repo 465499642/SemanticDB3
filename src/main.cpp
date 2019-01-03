@@ -6,6 +6,7 @@
 #include "Functions.h"
 #include "Sequence.h"
 
+// for now, use main to test our components:
 int main() {
     ulong i,j,k,l;
 
@@ -106,19 +107,35 @@ int main() {
     std::cout << "str: " << str << std::endl;
 
     Sequence seq;
-    // Ket k1("fish soup", 37.2);
-    // seq.add(k1);
-    seq.add(sp);
-    seq.add(sp2);
+    seq.add(r1);
+    seq.add(r2);
+    seq.add(r3);
 
-//    seq.add(r2);
-//    seq.add(r3);
-/*
     seq.add(sp);
     seq.add(sp2);
     seq.add(sp3);
-*/
-//    std::cout << "seq: " << seq.to_string() << std::endl;
 
+    std::cout << "seq: " << seq.to_string() << std::endl;
+
+    Ket k1("f"), k2("r"), k3("o",2.2), k4("g", -2);
+    Sequence seq2, seq3(k1), seq4(k2);
+    seq2.add(seq3);
+    seq2.add(seq4);
+    seq2.add(k3);
+    seq2.add(k4);
+    std::cout << "seq2: " << seq2.to_string() << std::endl;
+
+    Sequence seq5;
+    seq5 = seq3 + seq4 + seq2;
+    std::cout << "seq5: " << seq5.to_string() << std::endl;
+
+    Ket k5("");
+    Superposition sp4 = k4 + k3 + k2 + k1 + k4 + k3 + k2 + k1 + k5;
+    std::cout << "sp4: " << sp4.to_string() << std::endl;
+
+    Superposition sp5;
+    std::cout << "sp5: " << sp5.to_string() << std::endl;
+
+    ket_map.print();
     return 0;
 }
