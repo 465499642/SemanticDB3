@@ -8,7 +8,8 @@
 class NewContext {
     private:
         std::string name;
-        std::map<std::pair<ulong, ulong>, Superposition> ket_rules_dict;
+        std::map<std::pair<ulong, ulong>, Superposition> rules_dict;
+        std::vector<std::pair<ulong, ulong> > sort_order;
 
     public:
         NewContext(const std::string& s);

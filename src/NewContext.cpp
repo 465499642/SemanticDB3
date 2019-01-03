@@ -25,14 +25,18 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
 //    Sequence seq_rule(srule);
     Superposition rule(srule);
 
+    // learn supported-ops superposition:
     op_label_idx = std::make_pair(supported_ops_idx, label_idx);
-    if (ket_rules_dict.find(op_label_idx) == ket_rules_dict.end()) {
-        ket_rules_dict[op_label_idx] = empty;
+    if (rules_dict.find(op_label_idx) == rules_dict.end()) {
+        rules_dict[op_label_idx] = empty;
+        sort_order.push_back(op_label_idx);
     }
-    ket_rules_dict[op_label_idx].add("op: " + op);
+    rules_dict[op_label_idx].add("op: " + op);
 
+    // learn the rule:
     op_label_idx = std::make_pair(op_idx, label_idx);
-    ket_rules_dict[op_label_idx] = rule;
+    rules_dict[op_label_idx] = rule;
+    sort_order.push_back(op_label_idx);
 }
 
 Superposition NewContext::recall(const std::string& op, const std::string& label) {
@@ -44,20 +48,33 @@ Superposition NewContext::recall(const std::string& op, const std::string& label
     std::pair<ulong, ulong> op_label_idx;
     op_label_idx = std::make_pair(op_idx, label_idx);
 
-    result = ket_rules_dict[op_label_idx];
+    result = rules_dict[op_label_idx];
     return result;
 }
 
 void NewContext::print_universe() {
     std::string s, op, label;
     std::pair<ulong, ulong> op_label_idx;
-    ulong op_idx, label_idx;
+    ulong op_idx, label_idx, supported_ops_idx;
     Superposition rule;
 
-    s += "------------------------------------------\n";
-    s += "|context> => |context: " + name + ">\n\n";
+    supported_ops_idx = ket_map.get_idx("supported-ops");
 
-    for (auto rule_pair: ket_rules_dict) {
+    s += "------------------------------------------\n";
+    s += "|context> => |context: " + name + ">\n";
+
+    for (auto pair: sort_order) {
+        op_idx = pair.first;
+        label_idx = pair.second;
+        rule = rules_dict[pair];
+        op = ket_map.get_str(op_idx);
+        label = ket_map.get_str(label_idx);
+        if (op_idx == supported_ops_idx) { s += "\n"; }
+        s += op + " |" + label + "> => " + rule.to_string() + "\n";
+    }
+
+/*
+    for (auto rule_pair: rules_dict) {
         op_label_idx = rule_pair.first;
         op_idx = op_label_idx.first;
         label_idx = op_label_idx.second;
@@ -66,6 +83,7 @@ void NewContext::print_universe() {
         label = ket_map.get_str(label_idx);
         s += op + " |" + label + "> => " + rule.to_string() + "\n";
     }
+*/
     s += "\n------------------------------------------\n";
 
     std::cout << s;

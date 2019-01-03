@@ -163,6 +163,11 @@ int main() {
     rule = context.recall("father", "Fred");
     std::cout << "rule: " << rule.to_string() << std::endl;
 
+    context.learn("father", "Tom", "Robert");
+    context.learn("age", "Tom", "62");
+    context.learn("wife", "Tom", "Mary");
+    context.learn("wife", "Fred", "Liz");
+
     context.print_universe();
 
     return 0;
