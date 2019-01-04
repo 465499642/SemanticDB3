@@ -47,6 +47,20 @@ ulong Superposition::size() {
     return result;
 }
 
+void Superposition::add(const ulong idx) {
+    if (ket_map.get_idx("") == idx) {return; }
+
+    if (sp.find(idx) != sp.end()) {
+        sp[idx] += 1.0;
+    }
+    else {
+        sp[idx] = 1.0;
+        sort_order.push_back(idx);
+    }
+    return;
+}
+
+
 void Superposition::add(const std::string& s) {
     ulong idx = ket_map.get_idx(s);
     if (ket_map.get_idx("") == idx) {return; }

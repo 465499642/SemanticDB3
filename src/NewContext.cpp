@@ -5,6 +5,7 @@
 #include "NewContext.h"
 #include "Superposition.h"
 #include "Sequence.h"
+#include "Frame.h"
 
 
 NewContext::NewContext(const std::string& s) {
@@ -14,77 +15,57 @@ NewContext::NewContext(const std::string& s) {
 void NewContext::learn(const std::string& op, const std::string& label, const std::string& srule){
     if (op == "supported-ops") { return;}
     if (srule == "") {return; }
-    ulong op_idx, label_idx, supported_ops_idx;
-    op_idx = ket_map.get_idx(op);
+    ulong op_idx, label_idx;
+    op_idx = ket_map.get_idx("op: " + op);
     label_idx = ket_map.get_idx(label);
-    std::pair<ulong, ulong> op_label_idx;
-
-    supported_ops_idx = ket_map.get_idx("supported-ops");
-    Superposition empty;
+    Frame frame;
 
 //    Sequence seq_rule(srule);
     Superposition rule(srule);
 
-    // learn supported-ops superposition:
-    op_label_idx = std::make_pair(supported_ops_idx, label_idx);
-    if (rules_dict.find(op_label_idx) == rules_dict.end()) {
-        rules_dict[op_label_idx] = empty;
-        sort_order.push_back(op_label_idx);
+    if (rules_dict.find(label_idx) == rules_dict.end()) {
+        sort_order.push_back(label_idx);
+        rules_dict[label_idx] = frame;
     }
-    rules_dict[op_label_idx].add("op: " + op);
-
-    // learn the rule:
-    op_label_idx = std::make_pair(op_idx, label_idx);
-    rules_dict[op_label_idx] = rule;
-    sort_order.push_back(op_label_idx);
+    rules_dict[label_idx].learn(op_idx, rule);
 }
 
 Superposition NewContext::recall(const std::string& op, const std::string& label) {
     Superposition result;
     ulong op_idx, label_idx;
-    op_idx = ket_map.get_idx(op);
+    op_idx = ket_map.get_idx("op: " + op);
     label_idx = ket_map.get_idx(label);
+    Frame frame;
 
-    std::pair<ulong, ulong> op_label_idx;
-    op_label_idx = std::make_pair(op_idx, label_idx);
-
-    result = rules_dict[op_label_idx];
+    if (rules_dict.find(label_idx) == rules_dict.end()) {
+        return result;
+    }
+    result = rules_dict[label_idx].recall(op_idx);
     return result;
 }
 
 void NewContext::print_universe() {
     std::string s, op, label;
-    std::pair<ulong, ulong> op_label_idx;
-    ulong op_idx, label_idx, supported_ops_idx;
+    ulong op_idx, supported_ops_idx;
+    Frame frame;
     Superposition rule;
 
-    supported_ops_idx = ket_map.get_idx("supported-ops");
+    s += "------------------------------------------\n";
+    s += "|context> => |context: " + name + ">\n\n";
+
+    for (const ulong label_idx: sort_order) {
+        label = ket_map.get_str(label_idx);
+        frame = rules_dict[label_idx];
+        for (ulong op_idx: frame.supported_ops()) {
+            ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
+            op = ket_map.get_str(op_split_idx);
+            rule = frame.recall(op_idx);
+            s += op + " |" + label + "> => " + rule.to_string() + "\n";
+        }
+        s += "\n";
+    }
 
     s += "------------------------------------------\n";
-    s += "|context> => |context: " + name + ">\n";
-
-    for (auto pair: sort_order) {
-        op_idx = pair.first;
-        label_idx = pair.second;
-        rule = rules_dict[pair];
-        op = ket_map.get_str(op_idx);
-        label = ket_map.get_str(label_idx);
-        if (op_idx == supported_ops_idx) { s += "\n"; }
-        s += op + " |" + label + "> => " + rule.to_string() + "\n";
-    }
-
-/*
-    for (auto rule_pair: rules_dict) {
-        op_label_idx = rule_pair.first;
-        op_idx = op_label_idx.first;
-        label_idx = op_label_idx.second;
-        rule = rule_pair.second;
-        op = ket_map.get_str(op_idx);
-        label = ket_map.get_str(label_idx);
-        s += op + " |" + label + "> => " + rule.to_string() + "\n";
-    }
-*/
-    s += "\n------------------------------------------\n";
 
     std::cout << s;
 }

@@ -6,6 +6,8 @@
 #include "Functions.h"
 #include "Sequence.h"
 #include "NewContext.h"
+#include "Frame.h"
+
 
 // for now, use main to test our components:
 // later we will write test cases using googleTest
@@ -169,6 +171,30 @@ int main() {
     context.learn("wife", "Fred", "Liz");
 
     context.print_universe();
+
+    Frame frame;
+    ulong op_idx1, op_idx2, op_idx3;
+    Superposition tmp1("37");
+    op_idx1 = ket_map.get_idx("op: age");
+    frame.learn(op_idx1, tmp1);
+
+    Superposition tmp2("Emma");
+    op_idx2 = ket_map.get_idx("op: wife");
+    frame.learn(op_idx2, tmp2);
+
+    Superposition tmp3("Eric");
+    op_idx3 = ket_map.get_idx("op: father");
+    frame.learn(op_idx3, tmp3);
+
+    auto op_idx = ket_map.get_idx("op: supported-ops");
+    auto sup_ops = frame.recall(op_idx);
+    std::cout << "frame supported-ops: " << sup_ops.to_string() << std::endl;
+    std::cout << "age: " << frame.recall(op_idx1).to_string() << std::endl;
+    std::cout << "wife: " << frame.recall(op_idx2).to_string() << std::endl;
+    std::cout << "father: " << frame.recall(op_idx3).to_string() << std::endl;
+    frame.print();
+
+//    ket_map.print();
 
     return 0;
 }

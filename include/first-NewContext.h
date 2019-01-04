@@ -2,15 +2,14 @@
 #define NEWCONTEXT_H
 
 #include <string>
-#include <unordered_map>
+#include <map>
 #include "Superposition.h"
-#include "Frame.h"
 
 class NewContext {
     private:
         std::string name;
-        std::unordered_map<ulong, Frame> rules_dict;
-        std::vector<ulong> sort_order;
+        std::map<std::pair<ulong, ulong>, Superposition> rules_dict;
+        std::vector<std::pair<ulong, ulong> > sort_order;
 
     public:
         NewContext(const std::string& s);

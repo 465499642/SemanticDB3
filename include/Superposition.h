@@ -22,6 +22,7 @@ class Superposition {
         Superposition operator+(Ket& b);
         ulong size();
         // void add(const Ket& a); // bugs out for now
+        void add(const ulong idx);
         void add(const std::string& s);
         void add(Ket& a);
         void add(Superposition& a);
