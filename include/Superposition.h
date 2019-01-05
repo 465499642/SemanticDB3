@@ -1,6 +1,8 @@
 #ifndef SUPERPOSITION_H
 #define SUPERPOSITION_H
 
+#define SUPERPOSITION 1
+
 #include <unordered_map>
 #include <string>
 
@@ -20,6 +22,7 @@ class Superposition {
         Superposition(const std::string&s, const double v);
         Superposition(const ulong idx, const double v);
         Superposition operator+(Ket& b);
+        int type() { return SUPERPOSITION; };
         ulong size();
         // void add(const Ket& a); // bugs out for now
         void add(const ulong idx);

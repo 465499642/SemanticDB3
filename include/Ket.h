@@ -1,6 +1,9 @@
 #ifndef KET_H
 #define KET_H
 
+#define KET 0
+
+#include <string>
 #include "KetMap.h"
 
 class Superposition;
@@ -23,6 +26,7 @@ class Ket {
             ket_label_idx = ket_map.get_idx(s);
             ket_value = v;
         }
+        int type() { return KET; };
         Superposition operator+(Ket& a);
         ulong size();
         ulong label_idx();

@@ -35,7 +35,6 @@ Superposition NewContext::recall(const std::string& op, const std::string& label
     ulong op_idx, label_idx;
     op_idx = ket_map.get_idx("op: " + op);
     label_idx = ket_map.get_idx(label);
-    Frame frame;
 
     if (rules_dict.find(label_idx) == rules_dict.end()) {
         return result;
@@ -46,9 +45,11 @@ Superposition NewContext::recall(const std::string& op, const std::string& label
 
 void NewContext::print_universe() {
     std::string s, op, label;
-    ulong op_idx, supported_ops_idx;
+    ulong supported_ops_idx;
     Frame frame;
     Superposition rule;
+
+    supported_ops_idx = ket_map.get_idx("op: supported-ops");
 
     s += "------------------------------------------\n";
     s += "|context> => |context: " + name + ">\n\n";
@@ -56,7 +57,9 @@ void NewContext::print_universe() {
     for (const ulong label_idx: sort_order) {
         label = ket_map.get_str(label_idx);
         frame = rules_dict[label_idx];
-        for (ulong op_idx: frame.supported_ops()) {
+        rule = frame.recall(supported_ops_idx);
+        s += "supported-ops |" + label + "> => " + rule.to_string() + "\n";
+        for (const ulong op_idx: frame.supported_ops()) {
             ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
             op = ket_map.get_str(op_split_idx);
             rule = frame.recall(op_idx);

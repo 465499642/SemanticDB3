@@ -196,5 +196,9 @@ int main() {
 
 //    ket_map.print();
 
+    std::cout << "ket type: " << k1.type() << std::endl;
+//    std::cout << "sp type: " << sp2.type() << std::endl;
+//    std::cout << "seq type: " << seq2.type() << std::endl;
+
     return 0;
 }

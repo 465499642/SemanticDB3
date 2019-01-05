@@ -6,6 +6,8 @@
 
 #include "Ket.h"
 
+#define SEQUENCE 2
+
 class Superposition;
 
 class Sequence {
@@ -19,6 +21,7 @@ class Sequence {
         Sequence(Ket& k);
         Sequence(Superposition& sp);
         Sequence operator+(Sequence& b);
+        int type() { return SEQUENCE; };
         ulong size();
         void add(Ket& k);
         void add(Superposition& sp);
