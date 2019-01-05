@@ -112,7 +112,7 @@ void Superposition::add(Superposition& a) {
 
 std::string Superposition::to_string() {
     std::string s;
-    if (sort_order.size() == 0) {return "|>"; }
+    if (sp.size() == 0) {s = "|>"; return s; }
 
     std::string label;
     std::string value_string;

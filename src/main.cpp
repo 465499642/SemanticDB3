@@ -7,6 +7,7 @@
 #include "Sequence.h"
 #include "NewContext.h"
 #include "Frame.h"
+#include "BaseRule.h"
 
 
 // for now, use main to test our components:
@@ -152,18 +153,22 @@ int main() {
     std::cout << "sp4: " << sp4.to_string() << " " << sp4.size() << std::endl;
     std::cout << "seq5: " << seq5.to_string() << " " << seq5.size() << std::endl;
 
+
     NewContext context("some testing context");
     context.learn("age", "Fred", "37");
     context.learn("father", "Fred", "Tom");
+    context.print_universe();
 
-    auto rule = context.recall("supported-ops", "Fred");
-    std::cout << "supported-ops: " << rule.to_string() << std::endl;
+
+    BaseRule * rule;
+    rule = context.recall("supported-ops", "Fred");
+    std::cout << "supported-ops: " << rule->to_string() << std::endl;
 
     rule = context.recall("age", "Fred");
-    std::cout << "rule: " << rule.to_string() << std::endl;
+    std::cout << "rule: " << rule->to_string() << std::endl;
 
     rule = context.recall("father", "Fred");
-    std::cout << "rule: " << rule.to_string() << std::endl;
+    std::cout << "rule: " << rule->to_string() << std::endl;
 
     context.learn("father", "Tom", "Robert");
     context.learn("age", "Tom", "62");
@@ -172,33 +177,64 @@ int main() {
 
     context.print_universe();
 
+
     Frame frame;
+    BaseRule* brule;
     ulong op_idx1, op_idx2, op_idx3;
     Superposition tmp1("37");
+    tmp1.add("39");
+    brule = &tmp1;
     op_idx1 = ket_map.get_idx("op: age");
-    frame.learn(op_idx1, tmp1);
+    frame.learn(op_idx1, brule);
 
     Superposition tmp2("Emma");
     op_idx2 = ket_map.get_idx("op: wife");
-    frame.learn(op_idx2, tmp2);
+    brule = &tmp2;
+    frame.learn(op_idx2, brule);
 
     Superposition tmp3("Eric");
     op_idx3 = ket_map.get_idx("op: father");
-    frame.learn(op_idx3, tmp3);
+    brule = &tmp3;
+    frame.learn(op_idx3, brule);
+
+    // return 0;
 
     auto op_idx = ket_map.get_idx("op: supported-ops");
-    auto sup_ops = frame.recall(op_idx);
-    std::cout << "frame supported-ops: " << sup_ops.to_string() << std::endl;
-    std::cout << "age: " << frame.recall(op_idx1).to_string() << std::endl;
-    std::cout << "wife: " << frame.recall(op_idx2).to_string() << std::endl;
-    std::cout << "father: " << frame.recall(op_idx3).to_string() << std::endl;
+
+    BaseRule* sup_ops;
+    sup_ops = frame.recall(op_idx);
+//    return 0;
+
+    std::cout << "frame supported-ops: " << sup_ops->to_string() << std::endl;
+    std::cout << "frame supported-ops: " << frame.recall(op_idx)->to_string() << std::endl;
+    std::cout << "frame supported-ops: " << frame.recall(op_idx)->size() << std::endl;
+
+    BaseRule* brule0;
+    brule0 = frame.recall(op_idx1);
+    std::cout << "age: " << brule0->to_string() << " " << brule0->size() << std::endl;
+    std::cout << "wife: " << frame.recall(op_idx2)->to_string() << frame.recall(op_idx2)->size() << std::endl;
+    std::cout << "father: " << frame.recall(op_idx3)->to_string() << frame.recall(op_idx2)->size() << std::endl;
     frame.print();
+
+//    return 0;
+
 
 //    ket_map.print();
 
     std::cout << "ket type: " << k1.type() << std::endl;
-//    std::cout << "sp type: " << sp2.type() << std::endl;
-//    std::cout << "seq type: " << seq2.type() << std::endl;
+    std::cout << "sp type: " << sp2.type() << std::endl;
+    std::cout << "seq type: " << seq2.type() << std::endl;
+
+    BaseRule * base_rule;
+    base_rule = &k1;
+    std::cout << "base_rule->to_string " << base_rule->to_string() << std::endl;
+
+    base_rule = &sp2;
+    std::cout << "base_rule->to_string " << base_rule->to_string() << std::endl;
+
+    base_rule = &seq2;
+    std::cout << "base_rule->to_string " << base_rule->to_string() << std::endl;
+
 
     return 0;
 }

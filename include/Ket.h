@@ -5,10 +5,11 @@
 
 #include <string>
 #include "KetMap.h"
+#include "BaseRule.h"
 
 class Superposition;
 
-class Ket {
+class Ket : public BaseRule {
     private:
         ulong ket_label_idx;
         double ket_value;

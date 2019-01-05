@@ -7,9 +7,11 @@
 #include <string>
 
 #include "KetMap.h"
+#include "BaseRule.h"
 #include "Ket.h"
 
-class Superposition {
+
+class Superposition : public BaseRule {
     private:
         std::unordered_map<ulong, double> sp;
         std::vector<ulong> sort_order;

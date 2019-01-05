@@ -15,7 +15,7 @@ class NewContext {
     public:
         NewContext(const std::string& s);
         void learn(const std::string& op, const std::string& label, const std::string& rule);
-        Superposition recall(const std::string& op, const std::string& label);
+        BaseRule* recall(const std::string& op, const std::string& label);
         void print_universe();
 };
 

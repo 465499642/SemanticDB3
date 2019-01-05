@@ -2,6 +2,7 @@
 #include <string>
 #include <utility>
 #include "KetMap.h"
+#include "BaseRule.h"
 #include "NewContext.h"
 #include "Superposition.h"
 #include "Sequence.h"
@@ -21,22 +22,26 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
     Frame frame;
 
 //    Sequence seq_rule(srule);
-    Superposition rule(srule);
+    Superposition *rule = new Superposition(srule);
+    BaseRule* brule;
+    brule = rule;
 
     if (rules_dict.find(label_idx) == rules_dict.end()) {
         sort_order.push_back(label_idx);
         rules_dict[label_idx] = frame;
     }
-    rules_dict[label_idx].learn(op_idx, rule);
+    rules_dict[label_idx].learn(op_idx, brule);
 }
 
-Superposition NewContext::recall(const std::string& op, const std::string& label) {
-    Superposition result;
+BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
+    BaseRule* result;
     ulong op_idx, label_idx;
     op_idx = ket_map.get_idx("op: " + op);
     label_idx = ket_map.get_idx(label);
 
     if (rules_dict.find(label_idx) == rules_dict.end()) {
+        Superposition *sp = new Superposition();
+        result = sp;
         return result;
     }
     result = rules_dict[label_idx].recall(op_idx);
@@ -47,7 +52,7 @@ void NewContext::print_universe() {
     std::string s, op, label;
     ulong supported_ops_idx;
     Frame frame;
-    Superposition rule;
+    BaseRule* rule;
 
     supported_ops_idx = ket_map.get_idx("op: supported-ops");
 
@@ -58,12 +63,12 @@ void NewContext::print_universe() {
         label = ket_map.get_str(label_idx);
         frame = rules_dict[label_idx];
         rule = frame.recall(supported_ops_idx);
-        s += "supported-ops |" + label + "> => " + rule.to_string() + "\n";
+        s += "supported-ops |" + label + "> => " + rule->to_string() + "\n";
         for (const ulong op_idx: frame.supported_ops()) {
             ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
             op = ket_map.get_str(op_split_idx);
             rule = frame.recall(op_idx);
-            s += op + " |" + label + "> => " + rule.to_string() + "\n";
+            s += op + " |" + label + "> => " + rule->to_string() + "\n";
         }
         s += "\n";
     }

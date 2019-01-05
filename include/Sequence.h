@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 
+#include "BaseRule.h"
 #include "Ket.h"
 
 #define SEQUENCE 2
 
 class Superposition;
 
-class Sequence {
+class Sequence : public BaseRule {
     private:
         std::vector<Superposition> seq;
 
