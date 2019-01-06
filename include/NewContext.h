@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "Superposition.h"
 #include "Frame.h"
+#include "BaseRule.h"
 
 class NewContext {
     private:
@@ -14,6 +15,7 @@ class NewContext {
 
     public:
         NewContext(const std::string& s);
+        void learn(const std::string& op, const std::string& label, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, const std::string& rule);
         BaseRule* recall(const std::string& op, const std::string& label);
         void print_universe();

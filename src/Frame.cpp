@@ -14,6 +14,9 @@ void Frame::learn(const ulong op_idx, BaseRule* brule) {
     if (rules.find(op_idx) == rules.end()) {
         supported_operators.push_back(op_idx);
     }
+    else {
+        delete rules[op_idx];
+    }
     rules[op_idx] = brule;
     return;
 }
@@ -33,6 +36,7 @@ BaseRule* Frame::recall(const ulong op_idx) {
         result = sp;
         return result;
     }
+    delete sp;  // this branch doesn't need to keep sp
     result = rules[op_idx];
     return result;
 }

@@ -7,11 +7,29 @@
 #include "Superposition.h"
 #include "Sequence.h"
 #include "Frame.h"
+#include "StoredRule.h"
+#include "MemoizingRule.h"
 
 
 NewContext::NewContext(const std::string& s) {
     name = s;
 }
+
+void NewContext::learn(const std::string& op, const std::string& label, BaseRule* brule){
+    if (op == "supported-ops") { return;}
+    if (brule->size() == 0) {return; }
+    ulong op_idx, label_idx;
+    op_idx = ket_map.get_idx("op: " + op);
+    label_idx = ket_map.get_idx(label);
+    Frame frame;
+
+    if (rules_dict.find(label_idx) == rules_dict.end()) {
+        sort_order.push_back(label_idx);
+        rules_dict[label_idx] = frame;
+    }
+    rules_dict[label_idx].learn(op_idx, brule);
+}
+
 
 void NewContext::learn(const std::string& op, const std::string& label, const std::string& srule){
     if (op == "supported-ops") { return;}
@@ -68,7 +86,14 @@ void NewContext::print_universe() {
             ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
             op = ket_map.get_str(op_split_idx);
             rule = frame.recall(op_idx);
-            s += op + " |" + label + "> => " + rule->to_string() + "\n";
+            std::string rule_type;
+            if (rule->type() == STOREDRULE) {
+                rule_type = "#";
+            }
+            else if (rule->type() == MEMOIZINGRULE) {
+                rule_type = "!";
+            }
+            s += op + " |" + label + "> " + rule_type + "=> " + rule->to_string() + "\n";
         }
         s += "\n";
     }

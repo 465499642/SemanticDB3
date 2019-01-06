@@ -8,7 +8,8 @@
 #include "NewContext.h"
 #include "Frame.h"
 #include "BaseRule.h"
-
+#include "StoredRule.h"
+#include "MemoizingRule.h"
 
 // for now, use main to test our components:
 // later we will write test cases using googleTest
@@ -235,6 +236,15 @@ int main() {
     base_rule = &seq2;
     std::cout << "base_rule->to_string " << base_rule->to_string() << std::endl;
 
+    StoredRule stored_rule("|_self>");
+    std::cout << "stored_rule: " << stored_rule.type() << " " << stored_rule.size() << " " << stored_rule.to_string() << std::endl;
+
+    context.learn("foo", "*", &stored_rule);
+
+    MemoizingRule mem_rule("3 |_self>");
+    context.learn("bah", "*", &mem_rule);
+
+    context.print_universe();
 
     return 0;
 }
