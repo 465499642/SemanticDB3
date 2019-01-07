@@ -246,5 +246,17 @@ int main() {
 
     context.print_universe();
 
+
+    Ket k6("a: b: c: d: e");
+    ulong k6_idx = k6.label_idx();
+    ulong k6_head_idx = ket_map.get_head_idx(k6_idx);
+    ulong k6_value_idx = ket_map.get_value_idx(k6_idx);
+    Ket k7(k6_head_idx), k8(k6_value_idx);
+    std::cout << "k7: " << k7.to_string() << std::endl;
+    std::cout << "k8: " << k8.to_string() << std::endl;
+
+    Ket k9("animal: dog: Charlie", 7.72);
+    std::cout << "k9: " << k9.to_string() << " " << extract_head(k9).to_string() << " " << extract_value(k9).to_string() << std::endl;
+
     return 0;
 }

@@ -19,6 +19,14 @@ class Ket : public BaseRule {
             ket_label_idx = ket_map.get_idx("");
             ket_value = 1;
         }
+        Ket(const ulong idx) {
+            ket_label_idx = idx;
+            ket_value = 1;
+        }
+        Ket(const ulong idx, const double v) {
+            ket_label_idx = idx;
+            ket_value = v;
+        }
         Ket(const std::string& s) {
             ket_label_idx = ket_map.get_idx(s);
             ket_value = 1;

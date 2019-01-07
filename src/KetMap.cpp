@@ -2,6 +2,13 @@
 #include "KetMap.h"
 #include "Functions.h"
 
+KetMap::KetMap() {
+    std::string s = "";
+    our_map[s] = 0;
+    our_inverse_map.push_back(s);
+    map_count = 1;
+}
+
 ulong KetMap::get_idx(const std::string& s) {
     ulong result;
     std::vector<ulong> split_result;
@@ -65,6 +72,25 @@ std::vector<ulong> KetMap::get_split_idx(const std::string& s) {
 std::vector<ulong> KetMap::get_split_idx(const ulong idx) {
     auto s = get_str(idx);
     auto result = get_split_idx(s);
+    return result;
+}
+
+ulong KetMap::get_head_idx(const ulong idx) {
+    ulong result = 0;
+    std::vector<ulong> uvect = get_split_idx(idx);
+    if (uvect.size() == 0) { return result; };
+    result = uvect[0];
+    return result;
+}
+
+//        ulong get_tail_idx(const ulong idx);
+//        ulong get_category_idx(const ulong idx);
+
+ulong KetMap::get_value_idx(const ulong idx) {
+    ulong result = 0;
+    std::vector<ulong> uvect = get_split_idx(idx);
+    if (uvect.size() == 0) { return result; };
+    result = uvect.back();
     return result;
 }
 

@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include "Functions.h"
+#include "KetMap.h"
+#include "Ket.h"
 
 const double EPSILON = 0.0001;
 
@@ -42,3 +44,21 @@ bool double_eq(const double v1, const double v2) {
     }
     return false;
 }
+
+
+
+Ket extract_head(Ket k) {
+    ulong head_idx = ket_map.get_head_idx(k.label_idx());
+    Ket result(head_idx, k.value());
+    return result;
+}
+
+// Ket extract_tail(Ket k);
+// Ket extract_category(Ket k);
+
+Ket extract_value(Ket k) {
+    ulong value_idx = ket_map.get_value_idx(k.label_idx());
+    Ket result(value_idx, k.value());
+    return result;
+}
+
