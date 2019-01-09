@@ -53,8 +53,17 @@ Ket extract_head(Ket k) {
     return result;
 }
 
-// Ket extract_tail(Ket k);
-// Ket extract_category(Ket k);
+Ket extract_tail(Ket k) {
+    ulong tail_idx = ket_map.get_tail_idx(k.label_idx());
+    Ket result(tail_idx, k.value());
+    return result;
+}
+
+Ket extract_category(Ket k) {
+    ulong category_idx = ket_map.get_category_idx(k.label_idx());
+    Ket result(category_idx, k.value());
+    return result;
+}
 
 Ket extract_value(Ket k) {
     ulong value_idx = ket_map.get_value_idx(k.label_idx());

@@ -256,7 +256,11 @@ int main() {
     std::cout << "k8: " << k8.to_string() << std::endl;
 
     Ket k9("animal: dog: Charlie", 7.72);
-    std::cout << "k9: " << k9.to_string() << " " << extract_head(k9).to_string() << " " << extract_value(k9).to_string() << std::endl;
+    std::cout << "k9: " << k9.to_string() << std::endl;
+    std::cout << "k9: extract_head: " << extract_head(k9).to_string() << std::endl;
+    std::cout << "k9: extract_tail: " << extract_tail(k9).to_string() << std::endl;
+    std::cout << "k9: extract_category: " << extract_category(k9).to_string() << std::endl;
+    std::cout << "k9: extract_value: " << extract_value(k9).to_string() << std::endl;
 
     return 0;
 }

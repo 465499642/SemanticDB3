@@ -35,34 +35,8 @@ ulong KetMap::get_idx(const std::string& s) {
             }
         }
         if (split_result.size() > 1) {
-            uvec_map[split_result] = result;
-            inverse_uvec_map[result] = split_result;
+            our_split_map[s] = split_result;
         }
-    }
-    return result;
-}
-
-ulong KetMap::get_idx(const std::vector<ulong>& uvec) {
-    ulong result;
-    if (uvec.size() == 0) { return 0; }
-    if (uvec.size() == 1) { return uvec[0]; }
-
-    if (uvec_map.find(uvec) != uvec_map.end()) {
-        result = uvec_map[uvec];
-    }
-    else {
-        std::string s;
-        bool first_pass = true;
-        for (const ulong idx: uvec) {
-            if (first_pass) {
-                s += get_str(idx);
-                first_pass = false;
-            }
-            else {
-                s += ": " + get_str(idx);
-            }
-        }
-        return get_idx(s);  // later, swap in code so we aren't merging and then splitting our string.
     }
     return result;
 }
@@ -75,34 +49,31 @@ std::string KetMap::get_str(const ulong idx) {  // what should we return if idx 
     return result;
 }
 
-std::string KetMap::get_str(const std::vector<ulong>& uvec) {
-    std::string result;
-    ulong idx = get_idx(uvec);
-    result = get_str(idx);
+std::vector<ulong> KetMap::get_split_idx(const std::string& s) {
+    std::vector<ulong> result;
+    ulong r;
+    if (our_split_map.find(s) != our_split_map.end()) {
+        result = our_split_map[s];
+    }
+    else {
+        if (our_map.find(s) == our_map.end()) {
+            r = KetMap::get_idx(s);
+        }
+        if (our_split_map.find(s) != our_split_map.end()) {
+            result = our_split_map[s];
+        }
+        else {
+            result.push_back(our_map[s]);
+        }
+    }
     return result;
 }
 
 std::vector<ulong> KetMap::get_split_idx(const ulong idx) {
-    std::vector<ulong> result;
-
-    if (inverse_uvec_map.find(idx) != inverse_uvec_map.end()) {
-        result = inverse_uvec_map[idx];
-    }
-    else {
-        result.push_back(idx);  // fix later!
-    }
+    auto s = get_str(idx);
+    auto result = get_split_idx(s);
     return result;
 }
-
-
-std::vector<ulong> KetMap::get_split_idx(const std::string& s) {
-    std::vector<ulong> result;
-    ulong idx = get_idx(s);
-    result = get_split_idx(idx);
-    return result;
-}
-
-
 
 ulong KetMap::get_head_idx(const ulong idx) {
     ulong result = 0;
@@ -112,24 +83,8 @@ ulong KetMap::get_head_idx(const ulong idx) {
     return result;
 }
 
-ulong KetMap::get_tail_idx(const ulong idx) {
-    ulong result = 0;
-    std::vector<ulong> uvec = get_split_idx(idx);
-    if (uvec.size() == 0) { return result; };
-    uvec.erase(uvec.begin());
-    result = get_idx(uvec);
-    return result;
-}
-
-ulong KetMap::get_category_idx(const ulong idx) {
-    ulong result = 0;
-    std::vector<ulong> uvec = get_split_idx(idx);
-    if (uvec.size() == 0) { return result; };
-    // uvec.erase(uvec.end());
-    uvec.pop_back();
-    result = get_idx(uvec);
-    return result;
-}
+//        ulong get_tail_idx(const ulong idx);
+//        ulong get_category_idx(const ulong idx);
 
 ulong KetMap::get_value_idx(const ulong idx) {
     ulong result = 0;
@@ -138,7 +93,6 @@ ulong KetMap::get_value_idx(const ulong idx) {
     result = uvect.back();
     return result;
 }
-
 
 void KetMap::print() {
     std::cout << "map_count: " << map_count << std::endl;
@@ -150,17 +104,9 @@ void KetMap::print() {
     for (auto x: our_inverse_map) {
         std::cout << "    " << x << std::endl;
     }
-    std::cout << "uvec_map:" << std::endl;
-    for (auto x: uvec_map) {
-        std::cout << "    ";
-        for (auto y: x.first) {
-            std::cout << y << " ";
-        }
-        std::cout << ": " << x.second << std::endl;
-    }
-    std::cout << "inverse_uvec_map:" << std::endl;
-    for (auto x: inverse_uvec_map) {
-        std::cout << "    " << x.first << ": ";
+    std::cout << "our_split_map:" << std::endl;
+    for (auto x: our_split_map) {
+        std::cout << "    " << x.first << "    ";
         for (auto y: x.second) {
             std::cout << y << " ";
         }

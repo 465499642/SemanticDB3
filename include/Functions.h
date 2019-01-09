@@ -9,8 +9,8 @@ std::string join(const std::vector<std::string>& v, const std::string& delimiter
 bool double_eq(const double v1, const double v2);
 
 Ket extract_head(Ket k);
-// Ket extract_tail(Ket k);
-// Ket extract_category(Ket k);
+Ket extract_tail(Ket k);
+Ket extract_category(Ket k);
 Ket extract_value(Ket k);
 
 
