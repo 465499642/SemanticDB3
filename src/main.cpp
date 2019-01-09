@@ -280,5 +280,6 @@ int main() {
     std::cout << "op0: " << context.recall("op0", "animal: mammal: cat: Trudy")->to_string() << std::endl;
     std::cout << "op: " << context.recall("op", "animal: mammal: cat: Trudy")->to_string() << std::endl;
 
+    ket_map.print();
     return 0;
 }

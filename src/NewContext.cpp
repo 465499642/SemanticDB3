@@ -19,7 +19,8 @@ void NewContext::learn(const std::string& op, const std::string& label, BaseRule
     if (op == "supported-ops") { return;}
     if (brule->size() == 0) {return; }
     ulong op_idx, label_idx;
-    op_idx = ket_map.get_idx("op: " + op);
+    // op_idx = ket_map.get_idx("op: " + op);
+    op_idx = ket_map.get_idx(op);
     label_idx = ket_map.get_idx(label);
     Frame frame;
 
@@ -35,7 +36,8 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
     if (op == "supported-ops") { return;}
     if (srule == "") {return; }
     ulong op_idx, label_idx;
-    op_idx = ket_map.get_idx("op: " + op);
+    // op_idx = ket_map.get_idx("op: " + op);
+    op_idx = ket_map.get_idx(op);
     label_idx = ket_map.get_idx(label);
     Frame frame;
 
@@ -71,7 +73,8 @@ BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
 BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
     BaseRule* result;
     ulong op_idx, star_idx, trial_label_idx;
-    op_idx = ket_map.get_idx("op: " + op);
+    // op_idx = ket_map.get_idx("op: " + op);
+    op_idx = ket_map.get_idx(op);
     trial_label_idx = ket_map.get_idx(label);
 
     if (rules_dict.find(trial_label_idx) != rules_dict.end()) {
@@ -106,7 +109,8 @@ void NewContext::print_universe() {
     Frame frame;
     BaseRule* rule;
 
-    supported_ops_idx = ket_map.get_idx("op: supported-ops");
+    // supported_ops_idx = ket_map.get_idx("op: supported-ops");
+    supported_ops_idx = ket_map.get_idx("supported-ops");
 
     s += "------------------------------------------\n";
     s += "|context> => |context: " + name + ">\n\n";
@@ -117,8 +121,9 @@ void NewContext::print_universe() {
         rule = frame.recall(supported_ops_idx);
         s += "supported-ops |" + label + "> => " + rule->to_string() + "\n";
         for (const ulong op_idx: frame.supported_ops()) {
-            ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
-            op = ket_map.get_str(op_split_idx);
+            // ulong op_split_idx = ket_map.get_split_idx(op_idx).back();
+            // op = ket_map.get_str(op_split_idx);
+            op = ket_map.get_str(op_idx);
             rule = frame.recall(op_idx);
             std::string rule_type;
             if (rule->type() == STOREDRULE) {

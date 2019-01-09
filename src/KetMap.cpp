@@ -149,6 +149,7 @@ void KetMap::print() {
     for (auto x: our_inverse_map) {
         std::cout << "    " << x << std::endl;
     }
+    std::cout << "uvec_map size: " << uvec_map.size() << std::endl;
     std::cout << "uvec_map:" << std::endl;
     for (auto x: uvec_map) {
         std::cout << "    ";
@@ -157,6 +158,7 @@ void KetMap::print() {
         }
         std::cout << ": " << x.second << std::endl;
     }
+    std::cout << "inverse_uvec_map size: " << inverse_uvec_map.size() << std::endl;
     std::cout << "inverse_uvec_map:" << std::endl;
     for (auto x: inverse_uvec_map) {
         std::cout << "    " << x.first << ": ";

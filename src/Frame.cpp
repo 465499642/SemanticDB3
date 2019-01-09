@@ -24,10 +24,12 @@ void Frame::learn(const ulong op_idx, BaseRule* brule) {
 BaseRule* Frame::recall(const ulong op_idx) {
     BaseRule* result;
     Superposition *sp = new Superposition();
-    ulong supported_ops_idx = ket_map.get_idx("op: supported-ops");
+    // ulong supported_ops_idx = ket_map.get_idx("op: supported-ops");
+    ulong supported_ops_idx = ket_map.get_idx("supported-ops");
     if (op_idx == supported_ops_idx) {
         for (const ulong op_idx2: supported_operators) {
-            sp->add(op_idx2);
+            std::string s = "op: " + ket_map.get_str(op_idx2);
+            sp->add(s);
         }
         result = sp;
         return result;
