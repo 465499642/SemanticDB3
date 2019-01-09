@@ -94,7 +94,6 @@ std::vector<ulong> KetMap::get_split_idx(const ulong idx) {
     return result;
 }
 
-
 std::vector<ulong> KetMap::get_split_idx(const std::string& s) {
     std::vector<ulong> result;
     ulong idx = get_idx(s);

@@ -255,12 +255,30 @@ int main() {
     std::cout << "k7: " << k7.to_string() << std::endl;
     std::cout << "k8: " << k8.to_string() << std::endl;
 
+
+    // test extract_* operators:
     Ket k9("animal: dog: Charlie", 7.72);
     std::cout << "k9: " << k9.to_string() << std::endl;
     std::cout << "k9: extract_head: " << extract_head(k9).to_string() << std::endl;
     std::cout << "k9: extract_tail: " << extract_tail(k9).to_string() << std::endl;
     std::cout << "k9: extract_category: " << extract_category(k9).to_string() << std::endl;
     std::cout << "k9: extract_value: " << extract_value(k9).to_string() << std::endl;
+
+
+    // test label descent:
+    context.learn("op0", "*", "op0 applied to *");
+    context.learn("op1", "animal: *", "op1 applied to animal");
+    context.learn("op2", "animal: mammal: *", "op2 applied to animal: mammal");
+    context.learn("op3", "animal: mammal: cat: *", "op3 applied to animal: mammal: cat");
+    context.learn("op4", "animal: mammal: cat: Trudy", "op4 applied to animal: mammal: cat: Trudy");
+    context.print_universe();
+
+    std::cout << "op4: " << context.recall("op4", "animal: mammal: cat: Trudy")->to_string() << std::endl;
+    std::cout << "op3: " << context.recall("op3", "animal: mammal: cat: Trudy")->to_string() << std::endl;
+    std::cout << "op2: " << context.recall("op2", "animal: mammal: cat: Trudy")->to_string() << std::endl;
+    std::cout << "op1: " << context.recall("op1", "animal: mammal: cat: Trudy")->to_string() << std::endl;
+    std::cout << "op0: " << context.recall("op0", "animal: mammal: cat: Trudy")->to_string() << std::endl;
+    std::cout << "op: " << context.recall("op", "animal: mammal: cat: Trudy")->to_string() << std::endl;
 
     return 0;
 }

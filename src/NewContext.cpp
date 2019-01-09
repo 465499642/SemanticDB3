@@ -51,6 +51,7 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
     rules_dict[label_idx].learn(op_idx, brule);
 }
 
+/*
 BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
     BaseRule* result;
     ulong op_idx, label_idx;
@@ -63,6 +64,39 @@ BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
         return result;
     }
     result = rules_dict[label_idx].recall(op_idx);
+    return result;
+}
+*/
+
+BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
+    BaseRule* result;
+    ulong op_idx, star_idx, trial_label_idx;
+    op_idx = ket_map.get_idx("op: " + op);
+    trial_label_idx = ket_map.get_idx(label);
+
+    if (rules_dict.find(trial_label_idx) != rules_dict.end()) {
+        result = rules_dict[trial_label_idx].recall(op_idx);
+        if (result->size() != 0) { return result; };
+    }
+
+    star_idx = ket_map.get_idx("*");  // implement label descent, not sure cost of this vs just splitting strings approach
+    auto label_split_idx = ket_map.get_split_idx(trial_label_idx);
+    while (!label_split_idx.empty()) {
+        label_split_idx.pop_back();
+        label_split_idx.push_back(star_idx);
+        trial_label_idx = ket_map.get_idx(label_split_idx);
+        // std::cout << "trial_label: " << ket_map.get_str(trial_label_idx) << std::endl;
+
+        if (rules_dict.find(trial_label_idx) != rules_dict.end()) {
+            result = rules_dict[trial_label_idx].recall(op_idx);
+            if (result->size() != 0) { return result; };
+        }
+        label_split_idx.pop_back();
+    }
+
+    Superposition *sp = new Superposition();
+    result = sp;
+
     return result;
 }
 
