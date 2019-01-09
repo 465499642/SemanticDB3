@@ -12,10 +12,7 @@ class KetMap {
         ulong map_count;
         std::unordered_map<std::string, ulong> our_map;
         std::vector<std::string> our_inverse_map;
-//        std::unordered_map<std::string, std::vector<ulong> > our_split_map;
-        // std::unordered_map<std::vector<ulong>, ulong > uvec_map;
         std::map<std::vector<ulong>, ulong > uvec_map;
-//        std::vector<std::vector<ulong> > inverse_uvec_map;
         std::map<ulong, std::vector<ulong> > inverse_uvec_map;
 
     public:

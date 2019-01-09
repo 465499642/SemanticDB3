@@ -11,7 +11,6 @@ KetMap::KetMap() {
 
 ulong KetMap::get_idx(const std::string& s) {
     ulong result;
-    std::vector<ulong> split_result;
 
     if (our_map.find(s) != our_map.end()) {
         result = our_map[s];
@@ -22,6 +21,7 @@ ulong KetMap::get_idx(const std::string& s) {
         map_count++;
         our_inverse_map.push_back(s);
 
+        std::vector<ulong> split_result;
         auto svec = split(s, ": ");
         for (const auto token: svec) {
             if (our_map.find(token) != our_map.end()) {
@@ -55,7 +55,7 @@ ulong KetMap::get_idx(const std::vector<ulong>& uvec) {
         bool first_pass = true;
         for (const ulong idx: uvec) {
             if (first_pass) {
-                s += get_str(idx);
+                s = get_str(idx);
                 first_pass = false;
             }
             else {

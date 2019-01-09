@@ -53,7 +53,7 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
     rules_dict[label_idx].learn(op_idx, brule);
 }
 
-/*
+/*  // non label descent version:
 BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
     BaseRule* result;
     ulong op_idx, label_idx;
