@@ -88,8 +88,11 @@ std::vector<ulong> KetMap::get_split_idx(const ulong idx) {
     if (inverse_uvec_map.find(idx) != inverse_uvec_map.end()) {
         result = inverse_uvec_map[idx];
     }
+    else if (idx < map_count) {
+        result.push_back(idx);
+    }
     else {
-        result.push_back(idx);  // fix later!
+        result.push_back(0);
     }
     return result;
 }
