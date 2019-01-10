@@ -7,11 +7,12 @@
     #define TOKEN(t) (yylval.token = t)
 %}
 %option noyywrap
+
 %%
 [ \t]                                 ;
 "\n"                                  return TOKEN(TENDL);
-"-- ".*                               return TOKEN(TCOMMENT);
-[ ]*"|context> => |context: ".*">"    SAVE_TOKEN; return TCONTEXT_RULE;
+"--".*                                return TOKEN(TCOMMENT);
+[ ]*"|context> => |context: "         return TOKEN(TCONTEXT_PREFIX);
 [ ]*"supported-ops |".*               return TOKEN(TSUPPORTED_OPS);
 [0-9]+\.[0-9]+                        SAVE_TOKEN; return TDOUBLE;
 [0-9]+                                SAVE_TOKEN; return TINTEGER;
