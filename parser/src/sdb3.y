@@ -13,28 +13,26 @@
     int token;
 }
 
-%token <string> TINTEGER TDOUBLE TKET_LABEL
+%token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
-%token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE
-%token <token> TPIPE TGT TLT TLPAREN TRPAREN TENDL
+%token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE
+%token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
 %token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_PREFIX
 
-%type <string> rule ket int double context_line
+%type <string> rule ket int double op
 
 %start rule
 
 %%
 
 rule: 
-    double endl
+    | double endl
     | int endl
-    | context_line endl
     | ket endl
+    | op endl
     ;
 
-int:    TINTEGER { 
-        std::cout << "bison found an int: " << $1 << std::endl; 
-        }
+int:  TINTEGER { std::cout << "bison found an int: " << $1 << std::endl; }
     ;
 
 double: TDOUBLE { 
@@ -42,14 +40,12 @@ double: TDOUBLE {
         }
     ;
 
-ket:    TPIPE TKET_LABEL TGT {
-        std::cout << "bison found a ket label: " << $2 << std::endl;
+ket:    TKET {
+        std::cout << "bison found a ket: " << $1 << std::endl;
         }
     ;
 
-context_line: TCONTEXT_PREFIX TKET_LABEL TGT {
-        std::cout << "bison found a context label: " << $2 << std::endl;
-        }
+op:     TOP_LABEL { std::cout << "bison found an op-label: " << $1 << std::endl; }
     ;
 
 endl:    TENDL

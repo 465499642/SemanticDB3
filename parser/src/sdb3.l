@@ -9,12 +9,12 @@
 %option noyywrap
 
 %%
-[ \t]                                 ;
+[ \t]+                                return TOKEN(TSPACE);
 "\n"                                  return TOKEN(TENDL);
 "--".*                                return TOKEN(TCOMMENT);
 [ ]*"|context> => |context: "         return TOKEN(TCONTEXT_PREFIX);
-[ ]*"supported-ops |".*               return TOKEN(TSUPPORTED_OPS);
-[0-9]+\.[0-9]+                        SAVE_TOKEN; return TDOUBLE;
+[ ]*"supported-ops".*                 return TOKEN(TSUPPORTED_OPS);
+[0-9]+\.[0-9]*                        SAVE_TOKEN; return TDOUBLE;
 [0-9]+                                SAVE_TOKEN; return TINTEGER;
 "|"                                   return TOKEN(TPIPE);
 "+=>"                                 return TOKEN(TADD_LEARN_SYM);
@@ -31,7 +31,12 @@
 "<"                                   return TOKEN(TLT);
 "("                                   return TOKEN(TLPAREN);
 ")"                                   return TOKEN(TRPAREN);
-[^<|>]+                               SAVE_TOKEN; return TKET_LABEL;
+"["                                   return TOKEN(TLSQUARE);
+"]"                                   return TOKEN(TRSQUARE);
+"/"                                   return TOKEN(TDIVIDE);
+"|"[^<|>]+">"                         SAVE_TOKEN; return TKET;
+[a-zA-Z!][a-zA-Z0-9\-\+!?\.:]+        SAVE_TOKEN; return TOP_LABEL;
+"["[^\[\]<|>]*"]"                     SAVE_TOKEN; return TPARAMETER;
 .                                     ;
 %%
 
