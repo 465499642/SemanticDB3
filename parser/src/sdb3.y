@@ -15,12 +15,13 @@
 
 %token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
-%token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW
+%token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW TQUOTE TSTAR
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
 %token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET
 
 %type <string> swfile rule numeric ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
-%type <string> sp_parameters literal_sequence powered_op op op_sequence
+%type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
+%type <string> fraction
 
 %start swfile
 
@@ -48,6 +49,10 @@ numeric : TINTEGER { $$ = $1; std::cout << "int: " << *$1 << std::endl; }
         | TDOUBLE { $$ = $1; std::cout << "double: " << *$1 << std::endl; }
         ;
 
+fraction : numeric { $$ = $1; }
+         | numeric TDIVIDE numeric { $$ = $1; std::cout << "fraction: " << *$1 << "/" << *$3 << std::endl; }
+         ;
+
 ket : TKET { $$ = $1; std::cout << "ket: " << *$1 << std::endl; }
     ;
 
@@ -56,6 +61,7 @@ coeff_ket : ket { $$ = $1; }
           ;
 
 literal_sequence : coeff_ket { $$ = $1; }
+              | TMINUS space coeff_ket { $$ = $3; }
               | literal_sequence space op_symbol space coeff_ket { $$ = $5; std::cout << "seq: " << *$1 << *$5 << std::endl; }
               ;
 
@@ -72,9 +78,10 @@ simple_op : TOP_LABEL { $$ = $1; std::cout << "simple op: " << *$1 << std::endl;
 parameter_string : TPARAMETER_STR { $$ = $1; std::cout << "parameter string: " << *$1 << std::endl; }
                  ;
 
-parameter : numeric { $$ = $1; }
+parameter : fraction { $$ = $1; }
           | simple_op { $$ = $1; }
           | parameter_string { $$ = $1; }
+          | TSTAR { $$ = new std::string("*"); }
           ;
 
 parameters : parameter { $$ = $1; }
@@ -91,9 +98,20 @@ sp_parameters : space literal_sequence space { $$ = $2; }
 function_op : simple_op TLPAREN sp_parameters TRPAREN { $$ = $1; std::cout << "function_op: " << *$1 << "( " << *$3 << " )" << std::endl; }
             ;
 
+bracket_ops : TLPAREN symbol_op_sequence TRPAREN { $$ = $2; std::cout << "bracket_ops" << std::endl; }
+            ;
+
+symbol_op_sequence : space op_sequence space { $$ = $2; }
+                   | space op_symbol space op_sequence space { $$ = $4; }
+                   | symbol_op_sequence op_symbol space op_sequence space { $$ = $1; }
+                   ;
+
 general_op : simple_op { $$ = $1; }
            | compound_op { $$ = $1; }
            | function_op { $$ = $1; }
+           | fraction { $$ = $1; }
+           | bracket_ops { $$ = $1; }
+           | TQUOTE TQUOTE { $$ = new std::string(); } // doesn't work for now.
            ;
 
 powered_op : general_op TPOW TINTEGER { $$ = $1; std::cout << "powered_op: " << *$1 << "^" << *$3 << std::endl; }

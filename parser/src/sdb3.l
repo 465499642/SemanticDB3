@@ -44,6 +44,8 @@ digit					[0-9]
 ","					return TOKEN(TCOMMA);
 ":"                                     return TOKEN(TCOLON);
 "^"                                     return TOKEN(TPOW);
+"\""                                    return TOKEN(TQUOTE);
+"\*"                                    return TOKEN(TSTAR);
 .					;
 
 %%
