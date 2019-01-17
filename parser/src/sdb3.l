@@ -1,6 +1,9 @@
 %{
 #include <iostream>
 #include <string>
+#include "Ket.h"
+#include "Superposition.h"
+#include "Sequence.h"
 #include "sdb3.tab.h"
 
 extern int yylex();

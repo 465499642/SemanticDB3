@@ -2,15 +2,23 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <iostream>
+    #include "Ket.h"
+    #include "Superposition.h"
+    #include "Sequence.h"
     extern int yylex();
     extern int yyparse();
     extern FILE* yyin;
     void yyerror(const char *s) { std::cout << "ERROR: " << s << std::endl; }
+    std::string tidy_ket(const std::string &s) { std::string result = s.substr(1, s.size() - 2); return result; } // improve later!
 %}
 
 %union {
     std::string *string;
+    Ket *k;
+    Superposition *sp;
+    Sequence *seq;
     int token;
+    double d;
 }
 
 %token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
@@ -19,9 +27,11 @@
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
 %token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET
 
-%type <string> swfile rule numeric ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
+%type <string> swfile rule ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
-%type <string> fraction
+%type <k> real_ket
+%type <d> numeric fraction
+%type <seq> real_seq
 
 %start swfile
 
@@ -35,7 +45,8 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
      | space TCONTEXT_KET space TLEARN_SYM space ket { std::cout << "context learn rule" << std::endl; }
      | space TSUPPORTED_OPS { std::cout << "supported-ops learn rule" << std::endl; }
      | space simple_op space coeff_ket space learn_sym space literal_sequence { std::cout << "learn rule" << std::endl; }
-     | numeric { $$ = $1; std::cout << "numeric: " << *$1 << std::endl; }
+     | numeric { std::cout << "numeric: " << $1 << std::endl; }
+     | real_seq { std::cout << "real seq: " << $1->to_string() << std::endl; }
      | literal_sequence { }
      | coeff_ket { $$ = $1; std::cout << "ket" << std::endl; }
      | space { std::cout << "space" << std::endl; }
@@ -45,19 +56,30 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
      ;
 
 
-numeric : TINTEGER { $$ = $1; std::cout << "int: " << *$1 << std::endl; }
-        | TDOUBLE { $$ = $1; std::cout << "double: " << *$1 << std::endl; }
+numeric : TINTEGER { $$ = std::stod(*$1); std::cout << "int: " << *$1 << std::endl; }
+        | TDOUBLE { $$ = std::stod(*$1); std::cout << "double: " << *$1 << std::endl; }
         ;
 
 fraction : numeric { $$ = $1; }
-         | numeric TDIVIDE numeric { $$ = $1; std::cout << "fraction: " << *$1 << "/" << *$3 << std::endl; }
+         | numeric TDIVIDE numeric { $$ = $1 / $3; std::cout << "fraction: " << $1 << "/" << $3 << std::endl; }
          ;
 
-ket : TKET { $$ = $1; std::cout << "ket: " << *$1 << std::endl; }
+real_ket : ket { $$ = new Ket(*$1); }
+         | TMINUS space numeric space ket { $$ = new Ket(*$5, - $3); }
+         | numeric space ket { $$ = new Ket(*$3, $1); }
+         ;
+
+real_seq : real_ket { $$ = new Sequence(*$1); }
+        | real_seq space TPLUS space real_ket { $1->add(*$5); } 
+        | real_seq space TMINUS space real_ket { $1->add(*$5); } // fix later, when we implement sp.multiply(-1)
+        | real_seq space TSEQ space real_ket { $1->add(*$5); }
+        ;
+
+ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
     ;
 
 coeff_ket : ket { $$ = $1; }
-          | numeric space ket { $$ = $3; std::cout << "coeff_ket: " << *$1 << *$3 << std::endl; }
+          | numeric space ket { $$ = $3; std::cout << "coeff_ket: " << $1 << *$3 << std::endl; }
           ;
 
 literal_sequence : coeff_ket { $$ = $1; }
@@ -78,7 +100,7 @@ simple_op : TOP_LABEL { $$ = $1; std::cout << "simple op: " << *$1 << std::endl;
 parameter_string : TPARAMETER_STR { $$ = $1; std::cout << "parameter string: " << *$1 << std::endl; }
                  ;
 
-parameter : fraction { $$ = $1; }
+parameter : fraction { $$ = new std::string(std::to_string($1)); }
           | simple_op { $$ = $1; }
           | parameter_string { $$ = $1; }
           | TSTAR { $$ = new std::string("*"); }
@@ -109,7 +131,7 @@ symbol_op_sequence : space op_sequence space { $$ = $2; }
 general_op : simple_op { $$ = $1; }
            | compound_op { $$ = $1; }
            | function_op { $$ = $1; }
-           | fraction { $$ = $1; }
+           | fraction { $$ = new std::string(std::to_string($1)); }
            | bracket_ops { $$ = $1; }
            | TQUOTE TQUOTE { $$ = new std::string(); } // doesn't work for now.
            ;
