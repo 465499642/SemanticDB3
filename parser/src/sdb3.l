@@ -4,6 +4,7 @@
 #include "Ket.h"
 #include "Superposition.h"
 #include "Sequence.h"
+#include "NewContext.h"
 #include "sdb3.tab.h"
 
 extern int yylex();

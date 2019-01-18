@@ -50,3 +50,10 @@ std::vector<ulong> Ket::label_split_idx() {
     std::vector<ulong> result = ket_map.get_split_idx(ket_label_idx);
     return result;
 }
+
+Ket Ket::multiply(const double d) {
+    Ket tmp(*this);
+    tmp.ket_value *= d;
+    return tmp;
+}
+

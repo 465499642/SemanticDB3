@@ -5,6 +5,7 @@
     #include "Ket.h"
     #include "Superposition.h"
     #include "Sequence.h"
+    #include "NewContext.h"
     extern int yylex();
     extern int yyparse();
     extern FILE* yyin;
@@ -14,6 +15,7 @@
 
 %union {
     std::string *string;
+    NewContext *context;
     Ket *k;
     Superposition *sp;
     Sequence *seq;
@@ -27,8 +29,9 @@
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
 %token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET
 
-%type <string> swfile rule ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
+%type <string> rule ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
+%type <context> swfile learn_rule context_learn_rule
 %type <k> real_ket
 %type <d> numeric fraction
 %type <seq> real_seq
@@ -37,14 +40,20 @@
 
 %%
 
-swfile : %empty { $$ = new std::string(); }
-       | swfile rule endl { $$ = $2; }
+swfile : %empty { $$ = new NewContext("global context"); }
+       | swfile comment { $1->print_universe(); } endl
+       | swfile context_learn_rule endl { $$ = $2; }
+       | swfile space TSUPPORTED_OPS endl { }
+       | swfile space simple_op space ket space learn_sym space real_seq endl { $1->learn(*$3, *$5, $9); }
        ;
 
+learn_rule : space comment { }
+           | context_learn_rule { $$ = $1; }
+           | space TSUPPORTED_OPS { }
+           | space simple_op space ket space learn_sym space ket { /* $$->learn(*$2, *$4, *$8); */ }
+           ;
+
 rule : space comment { $$ = new std::string(); std::cout << "comment" << std::endl; }
-     | space TCONTEXT_KET space TLEARN_SYM space ket { std::cout << "context learn rule" << std::endl; }
-     | space TSUPPORTED_OPS { std::cout << "supported-ops learn rule" << std::endl; }
-     | space simple_op space coeff_ket space learn_sym space literal_sequence { std::cout << "learn rule" << std::endl; }
      | numeric { std::cout << "numeric: " << $1 << std::endl; }
      | real_seq { std::cout << "real seq: " << $1->to_string() << std::endl; }
      | literal_sequence { }
@@ -55,6 +64,8 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
      | TCOLON op_sequence { }
      ;
 
+context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = new NewContext(*$6); }
+                   ;
 
 numeric : TINTEGER { $$ = std::stod(*$1); std::cout << "int: " << *$1 << std::endl; }
         | TDOUBLE { $$ = std::stod(*$1); std::cout << "double: " << *$1 << std::endl; }
@@ -71,8 +82,8 @@ real_ket : ket { $$ = new Ket(*$1); }
 
 real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TPLUS space real_ket { $1->add(*$5); } 
-        | real_seq space TMINUS space real_ket { $1->add(*$5); } // fix later, when we implement sp.multiply(-1)
-        | real_seq space TSEQ space real_ket { $1->add(*$5); }
+        | real_seq space TMINUS space real_ket { Ket tmp = (*$5).multiply(-1); $1->add(tmp); }
+        | real_seq space TSEQ space real_ket { $1->append(*$5); }
         ;
 
 ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
@@ -147,7 +158,7 @@ op_sequence : op { $$ = $1; }
             | op_sequence TSPACE op { $$ = $1; std::cout << "op_sequence: " << *$1 << " " << *$3 << std::endl; }
             ;
 
-comment : TCOMMENT { std::cout << "TCOMMENT" << std::endl; }
+comment : space TCOMMENT { std::cout << "TCOMMENT" << std::endl; }
         ;
 
 learn_sym : TLEARN_SYM { std::cout << "TLEARN_SYM" << std::endl; }

@@ -24,9 +24,15 @@ class Sequence : public BaseRule {
         Sequence operator+(Sequence& b);
         int type() { return SEQUENCE; };
         ulong size();
+
         void add(Ket& k);
         void add(Superposition& sp);
-        void add(Sequence& seq);
+//        void add(Sequence& seq);
+
+        void append(Ket& k);
+        void append(Superposition& sp);
+        void append(Sequence& seq);
+
         std::string to_string();
 };
 

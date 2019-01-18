@@ -43,6 +43,8 @@ class Ket : public BaseRule {
         double value();
         std::string to_string();
         std::vector<ulong> label_split_idx();
+
+        Ket multiply(const double d);
 };
 
 #endif

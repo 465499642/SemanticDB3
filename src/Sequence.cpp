@@ -22,8 +22,8 @@ Sequence::Sequence(Superposition& sp) {
 
 Sequence Sequence::operator+(Sequence& b) {
     Sequence tmp;
-    tmp.add(*this);
-    tmp.add(b);
+    tmp.append(*this);
+    tmp.append(b);
     return tmp;
 }
 
@@ -34,18 +34,40 @@ ulong Sequence::size() {
 }
 
 void Sequence::add(Ket& k) {
+    if ( seq.size() == 0 ) {
+        Superposition tmp;
+        tmp.add(k);
+        seq.push_back(tmp);
+    }
+    else {
+        seq.back().add(k);
+    }
+}
+
+void Sequence::add(Superposition& sp) {
+    if ( seq.size() == 0 ) {
+        Superposition tmp;
+        tmp.add(sp);
+        seq.push_back(tmp);
+    }
+    else {
+        seq.back().add(sp);
+    }
+}
+
+void Sequence::append(Ket& k) {
     Superposition tmp;
     tmp.add(k);
     seq.push_back(tmp);
 }
 
-void Sequence::add(Superposition& sp) {
+void Sequence::append(Superposition& sp) {
     Superposition tmp;
     tmp.add(sp);
     seq.push_back(tmp);
 }
 
-void Sequence::add(Sequence& seq2) {
+void Sequence::append(Sequence& seq2) {
     for (auto sp: seq2.seq) {
         seq.push_back(sp);
     }

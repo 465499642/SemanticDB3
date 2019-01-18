@@ -125,10 +125,10 @@ int main() {
 
     Ket k1("f"), k2("r"), k3("o",2.2), k4("g", -2);
     Sequence seq2, seq3(k1), seq4(k2);
-    seq2.add(seq3);
-    seq2.add(seq4);
-    seq2.add(k3);
-    seq2.add(k4);
+    seq2.append(seq3);
+    seq2.append(seq4);
+    seq2.append(k3);
+    seq2.append(k4);
     std::cout << "seq2: " << seq2.to_string() << std::endl;
 
     Sequence seq5;
