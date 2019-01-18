@@ -5,6 +5,7 @@
 #include "Superposition.h"
 #include "Sequence.h"
 #include "NewContext.h"
+#include "ContextList.h"
 #include "sdb3.tab.h"
 
 extern int yylex();

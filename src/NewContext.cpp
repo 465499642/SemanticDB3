@@ -15,6 +15,10 @@ NewContext::NewContext(const std::string& s) {
     name = s;
 }
 
+std::string NewContext::get_name() {
+    return name;
+}
+
 void NewContext::learn(const std::string& op, const std::string& label, BaseRule* brule){
     if (op == "supported-ops") { return;}
     if (brule->size() == 0) {return; }

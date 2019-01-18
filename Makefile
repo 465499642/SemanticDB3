@@ -11,6 +11,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     Functions.o \
     Sequence.o \
     NewContext.o \
+    ContextList.o \
     Frame.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS

@@ -1,25 +1,27 @@
-#ifndef NEWCONTEXT_H
-#define NEWCONTEXT_H
+#ifndef CONTEXTLIST_H
+#define CONTEXTLIST_H
 
 #include <string>
-#include <unordered_map>
-#include "Superposition.h"
-#include "Frame.h"
+#include <vector>
+
+#include "NewContext.h"
 #include "BaseRule.h"
 
-class NewContext {
+
+class ContextList {
     private:
         std::string name;
-        std::unordered_map<ulong, Frame> rules_dict;
-        std::vector<ulong> sort_order;
+        ulong index;
+        ulong max_index;
+        std::vector<NewContext> data;
 
     public:
-        NewContext(const std::string& s);
-        std::string get_name();
+        ContextList(const std::string& s);
+        void set(const std::string& s);
         void learn(const std::string& op, const std::string& label, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, const std::string& rule);
         BaseRule* recall(const std::string& op, const std::string& label);
-        void print_universe();
+        void print_multiverse();
 };
 
 #endif

@@ -6,6 +6,7 @@
     #include "Superposition.h"
     #include "Sequence.h"
     #include "NewContext.h"
+    #include "ContextList.h"
     extern int yylex();
     extern int yyparse();
     extern FILE* yyin;
@@ -15,7 +16,7 @@
 
 %union {
     std::string *string;
-    NewContext *context;
+    ContextList *context;
     Ket *k;
     Superposition *sp;
     Sequence *seq;
@@ -31,7 +32,8 @@
 
 %type <string> rule ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
-%type <context> swfile learn_rule context_learn_rule
+%type <string> context_learn_rule
+%type <context> swfile learn_rule
 %type <k> real_ket
 %type <d> numeric fraction
 %type <seq> real_seq
@@ -40,9 +42,9 @@
 
 %%
 
-swfile : %empty { $$ = new NewContext("global context"); }
-       | swfile comment { $1->print_universe(); } endl
-       | swfile context_learn_rule endl { $$ = $2; }
+swfile : %empty { $$ = new ContextList("global context"); }
+       | swfile comment { $1->print_multiverse(); } endl
+       | swfile context_learn_rule endl { $1->set(*$2); }
        | swfile space TSUPPORTED_OPS endl { }
        | swfile space simple_op space ket space learn_sym space real_seq endl { $1->learn(*$3, *$5, $9); }
        ;
@@ -64,7 +66,7 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
      | TCOLON op_sequence { }
      ;
 
-context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = new NewContext(*$6); }
+context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = $6; }
                    ;
 
 numeric : TINTEGER { $$ = std::stod(*$1); std::cout << "int: " << *$1 << std::endl; }
