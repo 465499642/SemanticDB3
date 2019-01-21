@@ -13,6 +13,7 @@
 #include "ContextList.h"
 #include "NumericOp.h"
 #include "SimpleOp.h"
+#include "OpSeq.h"
 
 
 // for now, use main to test our components:
@@ -292,8 +293,12 @@ int main() {
     context_list.learn("foo", "r", "foo: r");
     context_list.learn("foo", "o", "foo: o");
     context_list.learn("foo", "g", "foo: g");
+    context_list.learn("bah", "foo: f", "bah: foo: f");
+    context_list.learn("bah", "foo: r", "bah: foo: r");
+    context_list.learn("bah", "foo: o", "bah: foo: o");
+    context_list.learn("bah", "foo: g", "bah: foo: g");
     NumericOp n_op(3.1);
-    SimpleOp s_op("foo");
+    SimpleOp s_op("foo"), s_op2("bah");
     std::cout << "simple op: " << s_op.Compile(context_list, seq5).to_string() << std::endl;
     std::cout << "numeric op: " << n_op.Compile(context_list, seq5).to_string() << std::endl;
 
@@ -309,6 +314,14 @@ int main() {
     std::cout << "test_seq: " << test_seq.to_string() << std::endl;
     std::cout << "test_seq.to_ket(): " << test_seq.to_ket().to_string() << std::endl;
     std::cout << "test_seq.to_sp(): " << test_seq.to_sp().to_string() << std::endl;
+
+    // test OpSeq;
+    OpSeq op_seq;
+    op_seq.append(&s_op2);
+    op_seq.append(&n_op);
+    op_seq.append(&s_op);
+    std::cout << "op_seq: " << op_seq.to_string() << std::endl;
+    std::cout << "compiled op_seq: " << op_seq.Compile(context_list, seq5).to_string() << std::endl;
 
     return 0;
 }
