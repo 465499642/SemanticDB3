@@ -12,10 +12,9 @@
 Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) {
     Sequence result;
     for (auto sp: seq) {
-        std::cout << sp.to_string() << std::endl;
+        // std::cout << sp.to_string() << std::endl;
         Ket k = sp.to_ket();  // for now, as we don't have an iterator for Superposition class.
-        auto rule = context.recall(op_idx, k.label_idx());
-        Superposition sp2 = rule->to_sp();
+        Superposition sp2 = context.recall(op_idx, k.label_idx())->to_sp();
         sp2.multiply(k.value());
         result.append(sp2);
     }
