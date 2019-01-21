@@ -30,8 +30,21 @@ Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
 
 std::string OpSeq::to_string() {
     std::string s = "";
+    switch(op_type) {
+        case SPLUS: s = " + "; break;
+        case SMINUS: s = " - "; break;
+        case SSEQ: s = " . "; break;
+        case SMERGE: s = " _ "; break;
+        case SMERGE2: s = " __ "; break;
+    }
+    bool first_pass = true;
     for (auto op: op_seq ) {
-       s += " " + op->to_string();
+        if (first_pass) {
+            s += op->to_string();
+            first_pass = false;
+        } else {
+            s += " " + op->to_string();
+        }
     }
     return s;
 }
