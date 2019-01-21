@@ -144,3 +144,23 @@ std::string Superposition::to_string() {
     }
     return s;
 }
+
+void Superposition::multiply(const double d) {
+    for (ulong idx: sort_order) {
+        sp[idx] *= d;
+    }
+}
+
+Ket Superposition::to_ket() {
+    if (sp.size() == 0) { Ket tmp; return tmp; }
+    ulong op_idx = sort_order[0];
+    double value = sp[op_idx];
+    Ket tmp(op_idx, value);
+    return tmp;
+}
+
+Superposition Superposition::to_sp() {
+    Superposition tmp(*this);
+    return tmp;
+}
+

@@ -84,7 +84,7 @@ real_ket : ket { $$ = new Ket(*$1); }
 
 real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TPLUS space real_ket { $1->add(*$5); } 
-        | real_seq space TMINUS space real_ket { Ket tmp = (*$5).multiply(-1); $1->add(tmp); }
+        | real_seq space TMINUS space real_ket { Ket tmp = *$5; tmp.multiply(-1); $1->add(tmp); }
         | real_seq space TSEQ space real_ket { $1->append(*$5); }
         ;
 

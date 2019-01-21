@@ -20,6 +20,12 @@ Sequence::Sequence(Superposition& sp) {
     seq.push_back(tmp);
 }
 
+Sequence::Sequence(const Sequence& seq2) {
+    for (auto sp: seq2.seq) {
+        seq.push_back(sp);
+    }
+}
+
 Sequence Sequence::operator+(Sequence& b) {
     Sequence tmp;
     tmp.append(*this);
@@ -52,6 +58,12 @@ void Sequence::add(Superposition& sp) {
     }
     else {
         seq.back().add(sp);
+    }
+}
+
+void Sequence::multiply(const double d) {
+    for (ulong idx = 0; idx < seq.size(); idx++) {
+        seq[idx].multiply(d);
     }
 }
 
@@ -88,3 +100,16 @@ std::string Sequence::to_string() {
     }
     return s;
 }
+
+Ket Sequence::to_ket() {
+    if (seq.size() == 0) { Ket tmp; return tmp; }
+    Ket tmp = seq[0].to_ket();
+    return tmp;
+}
+
+Superposition Sequence::to_sp() {
+    if (seq.size() == 0 ) { Superposition tmp; return tmp; }
+    Superposition tmp = seq[0];
+    return tmp;
+}
+

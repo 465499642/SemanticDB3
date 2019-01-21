@@ -19,6 +19,7 @@ void ContextList::set(const std::string& s) {
         if (data[k].get_name() == s) {
             index = k;
             match = true;
+            break;
         }
     }
     if (!match) {
@@ -40,6 +41,11 @@ void ContextList::learn(const std::string& op, const std::string& label, const s
 BaseRule* ContextList::recall(const std::string& op, const std::string& label) {
     return data[index].recall(op, label);
 }
+
+BaseRule* ContextList::recall(const ulong op_idx, const ulong label_idx) {
+    return data[index].recall(op_idx, label_idx);
+}
+
 
 void ContextList::print_multiverse() {
     for (auto context: data) {

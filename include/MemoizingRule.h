@@ -16,6 +16,8 @@ class MemoizingRule : public BaseRule {
         ulong size() { return mrule.length(); };
         std::string to_string() { return mrule; };
 
+        Ket to_ket() { Ket tmp; return tmp; };
+        Superposition to_sp() { Superposition tmp; return tmp; };
 };
 
 #endif

@@ -10,6 +10,10 @@
 #include "BaseRule.h"
 #include "StoredRule.h"
 #include "MemoizingRule.h"
+#include "ContextList.h"
+#include "NumericOp.h"
+#include "SimpleOp.h"
+
 
 // for now, use main to test our components:
 // later we will write test cases using googleTest
@@ -281,5 +285,30 @@ int main() {
     std::cout << "op: " << context.recall("op", "animal: mammal: cat: Trudy")->to_string() << std::endl;
 
     ket_map.print();
+
+    // test Compile:
+    ContextList context_list("testing compile");
+    context_list.learn("foo", "f", "foo: f");
+    context_list.learn("foo", "r", "foo: r");
+    context_list.learn("foo", "o", "foo: o");
+    context_list.learn("foo", "g", "foo: g");
+    NumericOp n_op(3.1);
+    SimpleOp s_op("foo");
+    std::cout << "simple op: " << s_op.Compile(context_list, seq5).to_string() << std::endl;
+    std::cout << "numeric op: " << n_op.Compile(context_list, seq5).to_string() << std::endl;
+
+    // test seq.to_ket() and seq.to_sp():
+    Ket kx("x",7), ky("y", 3.2), kz("z",-3.14);
+    Sequence test_seq;
+    test_seq.add(kx);
+    test_seq.add(ky);
+    test_seq.add(kz);
+    test_seq.append(ky);
+    test_seq.add(kz);
+    test_seq.append(kx);
+    std::cout << "test_seq: " << test_seq.to_string() << std::endl;
+    std::cout << "test_seq.to_ket(): " << test_seq.to_ket().to_string() << std::endl;
+    std::cout << "test_seq.to_sp(): " << test_seq.to_sp().to_string() << std::endl;
+
     return 0;
 }

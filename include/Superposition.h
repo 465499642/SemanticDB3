@@ -31,8 +31,11 @@ class Superposition : public BaseRule {
         void add(const std::string& s);
         void add(Ket& a);
         void add(Superposition& a);
+        void multiply(const double d);
         std::string to_string();
 
+        Ket to_ket();
+        Superposition to_sp();
 };
 
 #endif

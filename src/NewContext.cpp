@@ -75,18 +75,22 @@ BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
 */
 
 BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
+    // ulong op_idx = ket_map.get_idx("op: " + op);
+    ulong op_idx = ket_map.get_idx(op);
+    ulong label_idx = ket_map.get_idx(label);
+    return this->recall(op_idx, label_idx);
+}
+
+BaseRule* NewContext::recall(const ulong op_idx, const ulong label_idx) {
     BaseRule* result;
-    ulong op_idx, star_idx, trial_label_idx;
-    // op_idx = ket_map.get_idx("op: " + op);
-    op_idx = ket_map.get_idx(op);
-    trial_label_idx = ket_map.get_idx(label);
+    ulong trial_label_idx = label_idx;
 
     if (rules_dict.find(trial_label_idx) != rules_dict.end()) {
         result = rules_dict[trial_label_idx].recall(op_idx);
         if (result->size() != 0) { return result; };
     }
 
-    star_idx = ket_map.get_idx("*");  // implement label descent, not sure cost of this vs just splitting strings approach
+    ulong star_idx = ket_map.get_idx("*");  // implement label descent, not sure cost of this vs just splitting strings approach
     auto label_split_idx = ket_map.get_split_idx(trial_label_idx);
     while (!label_split_idx.empty()) {
         label_split_idx.pop_back();

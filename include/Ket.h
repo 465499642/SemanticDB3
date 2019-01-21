@@ -44,7 +44,10 @@ class Ket : public BaseRule {
         std::string to_string();
         std::vector<ulong> label_split_idx();
 
-        Ket multiply(const double d);
+        void multiply(const double d);
+
+        Ket to_ket();
+        Superposition to_sp();
 };
 
 #endif

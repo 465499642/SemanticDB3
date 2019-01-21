@@ -51,9 +51,17 @@ std::vector<ulong> Ket::label_split_idx() {
     return result;
 }
 
-Ket Ket::multiply(const double d) {
+void Ket::multiply(const double d) {
+    ket_value *= d;
+}
+
+Ket Ket::to_ket() {
     Ket tmp(*this);
-    tmp.ket_value *= d;
+    return tmp;
+}
+
+Superposition Ket::to_sp() {
+    Superposition tmp(this->label_idx(), this->value());
     return tmp;
 }
 
