@@ -1,6 +1,7 @@
 #include "Ket.h"
 #include "Superposition.h"
 #include "Functions.h"
+#include "Sequence.h"
 
 
 Superposition Ket::operator+(Ket& a) {
@@ -65,3 +66,7 @@ Superposition Ket::to_sp() {
     return tmp;
 }
 
+Sequence Ket::to_seq() {
+    Sequence tmp(*this);
+    return tmp;
+}

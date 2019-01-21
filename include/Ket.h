@@ -8,6 +8,7 @@
 #include "BaseRule.h"
 
 class Superposition;
+class Sequence;
 
 class Ket : public BaseRule {
     private:
@@ -48,6 +49,7 @@ class Ket : public BaseRule {
 
         Ket to_ket();
         Superposition to_sp();
+        Sequence to_seq();
 };
 
 #endif

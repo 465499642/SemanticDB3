@@ -113,3 +113,9 @@ Superposition Sequence::to_sp() {
     return tmp;
 }
 
+Sequence Sequence::to_seq() {
+    Sequence tmp(*this);
+    return tmp;
+}
+
+

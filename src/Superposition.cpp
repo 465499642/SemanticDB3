@@ -3,6 +3,7 @@
 #include "Ket.h"
 #include "Superposition.h"
 #include "Functions.h"
+#include "Sequence.h"
 
 Superposition::Superposition(const ulong idx) {
     if (ket_map.get_idx("") == idx) {return; }
@@ -161,6 +162,11 @@ Ket Superposition::to_ket() {
 
 Superposition Superposition::to_sp() {
     Superposition tmp(*this);
+    return tmp;
+}
+
+Sequence Superposition::to_seq() {
+    Sequence tmp(*this);
     return tmp;
 }
 

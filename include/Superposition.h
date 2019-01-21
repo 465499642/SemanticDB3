@@ -36,6 +36,7 @@ class Superposition : public BaseRule {
 
         Ket to_ket();
         Superposition to_sp();
+        Sequence to_seq();
 };
 
 #endif
