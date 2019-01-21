@@ -14,6 +14,7 @@
 #include "NumericOp.h"
 #include "SimpleOp.h"
 #include "OpSeq.h"
+#include "PoweredOp.h"
 
 
 // for now, use main to test our components:
@@ -322,6 +323,11 @@ int main() {
     op_seq.append(&s_op);
     std::cout << "op_seq: " << op_seq.to_string() << std::endl;
     std::cout << "compiled op_seq: " << op_seq.Compile(context_list, seq5).to_string() << std::endl;
+
+    // test PoweredOp;
+    PoweredOp p_op(&n_op, 2);
+    std::cout << "p_op: " << p_op.to_string() << std::endl;
+    std::cout << "compiled p_op: " << p_op.Compile(context_list, seq5).to_string() << std::endl;
 
     return 0;
 }

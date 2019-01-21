@@ -16,6 +16,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     NumericOp.o \
     SimpleOp.o \
     OpSeq.o \
+    PoweredOp.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 
