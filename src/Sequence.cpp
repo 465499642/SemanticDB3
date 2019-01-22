@@ -61,6 +61,19 @@ void Sequence::add(Superposition& sp) {
     }
 }
 
+void Sequence::add(Sequence& seq2) {
+    if (seq2.size() == 0 ) { return; }
+    if (seq.size() == 0 ) {
+        seq = seq2.seq;
+    } else {
+        Sequence tail(seq2);
+        Superposition head = tail.seq.front();
+        tail.seq.erase(tail.seq.begin());
+        seq.back().add(head);
+        this->append(tail);
+    }
+}
+
 void Sequence::multiply(const double d) {
     for (ulong idx = 0; idx < seq.size(); idx++) {
         seq[idx].multiply(d);

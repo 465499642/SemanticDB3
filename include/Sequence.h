@@ -28,7 +28,7 @@ class Sequence : public BaseRule {
 
         void add(Ket& k);
         void add(Superposition& sp);
-//        void add(Sequence& seq);
+        void add(Sequence& seq);
 
         void multiply(const double d);
 

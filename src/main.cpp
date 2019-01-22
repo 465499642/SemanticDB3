@@ -338,7 +338,8 @@ int main() {
         std::cout << k.to_string() << std::endl;
     }
 
-    Ket ka("a"), kb("b",2.2);
+    // test SimpleOp Compile:
+    Ket ka("a"), kb("b",2.2), kc("c");
     SimpleOp s_op3("foo");
     context_list.learn("foo", "a", "foo: a");
     context_list.learn("foo", "b", "foo: b");
@@ -350,6 +351,30 @@ int main() {
     std::cout << "seq_abx: " << seq_abx.to_string() << std::endl;
     std::cout << "s_op3: " << s_op3.to_string() << std::endl;
     std::cout << "compiled seq_abx: " << s_op3.Compile(context_list, seq_abx).to_string() << std::endl;
+
+    // test Sequence add(seq):
+    Sequence seq_abc, seq_xyz, seq_abcxyz;
+    seq_abc.add(ka);
+    seq_abc.append(kb);
+    seq_abc.add(kc);
+    seq_xyz.add(kx);
+    seq_xyz.add(ky);
+    seq_xyz.append(kz);
+    seq_abcxyz.add(seq_abc);
+    seq_abcxyz.add(seq_xyz);
+    std::cout << "seq_abc: " << seq_abc.to_string() << std::endl;
+    std::cout << "seq_xyz: " << seq_xyz.to_string() << std::endl;
+    std::cout << "seq_abcxyz: " << seq_abcxyz.to_string() << std::endl;
+
+    // test Sequence add(kempty):
+    Ket kempty;
+    Sequence seq_empty;
+    seq_empty.append(kempty);
+    seq_empty.append(kempty);
+    seq_empty.append(kempty);
+    seq_empty.append(ka);
+    seq_empty.append(kb);
+    std::cout << "seq_empty: " << seq_empty.to_string() << std::endl;
 
     return 0;
 }
