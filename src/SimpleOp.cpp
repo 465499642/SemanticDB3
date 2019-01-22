@@ -9,13 +9,15 @@
 #include "Ket.h"
 
 
-Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) {
+Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) { // make more elaborate later.
     Sequence result;
     for (auto sp: seq) {
-        // std::cout << sp.to_string() << std::endl;
-        Ket k = sp.to_ket();  // for now, as we don't have an iterator for Superposition class.
-        Superposition sp2 = context.recall(op_idx, k.label_idx())->to_sp();
-        sp2.multiply(k.value());
+        Superposition sp2;
+        for (auto k: sp) {
+            Superposition sp3 = context.recall(op_idx, k.label_idx())->to_sp();
+            sp3.multiply(k.value());
+            sp2.add(sp3);
+        }
         result.append(sp2);
     }
     return result;

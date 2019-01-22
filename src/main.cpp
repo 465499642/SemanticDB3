@@ -338,5 +338,18 @@ int main() {
         std::cout << k.to_string() << std::endl;
     }
 
+    Ket ka("a"), kb("b",2.2);
+    SimpleOp s_op3("foo");
+    context_list.learn("foo", "a", "foo: a");
+    context_list.learn("foo", "b", "foo: b");
+    context_list.learn("foo", "x", "foo: x");
+    Sequence seq_abx;
+    seq_abx.add(ka);
+    seq_abx.add(kb);
+    seq_abx.append(kx);
+    std::cout << "seq_abx: " << seq_abx.to_string() << std::endl;
+    std::cout << "s_op3: " << s_op3.to_string() << std::endl;
+    std::cout << "compiled seq_abx: " << s_op3.Compile(context_list, seq_abx).to_string() << std::endl;
+
     return 0;
 }
