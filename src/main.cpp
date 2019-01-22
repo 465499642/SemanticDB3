@@ -376,5 +376,34 @@ int main() {
     seq_empty.append(kb);
     std::cout << "seq_empty: " << seq_empty.to_string() << std::endl;
 
+    // test merge:
+    Ket kmerge1 = kc.merge(kx);
+    Ket kmerge2 = kc.merge(kx, " ");
+    std::cout << "kmerge1: " << kmerge1.to_string() << std::endl;
+    std::cout << "kmerge2: " << kmerge2.to_string() << std::endl;
+
+    Superposition spm1, spm2, spmerge1, spmerge2;
+    spm1.add(ka);
+    spm1.add(kb);
+    spm2.add(kx);
+    spm2.add(ky);
+    spmerge1 = spm1.merge(spm2);
+    spmerge2 = spm1.merge(spm2, " ");
+    std::cout << "spm1: " << spm1.to_string() << std::endl;
+    std::cout << "spm2: " << spm2.to_string() << std::endl;
+    std::cout << "spmerge1: " << spmerge1.to_string() << std::endl;
+    std::cout << "spmerge2: " << spmerge2.to_string() << std::endl;
+
+    Sequence seqm1, seqm2, seqmerge1, seqmerge2;
+    seqm1.add(ka);
+    seqm1.add(kb);
+    seqm1.append(kx);
+    seqm1.add(ky);
+    seqmerge1 = seqm1.merge(seqm1);
+    seqmerge2 = seqm1.merge(seqm1, " ");
+    std::cout << "seqm1: " << seqm1.to_string() << std::endl;
+    std::cout << "seqmerge1: " << seqmerge1.to_string() << std::endl;
+    std::cout << "seqmerge2: " << seqmerge2.to_string() << std::endl;
+
     return 0;
 }

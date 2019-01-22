@@ -132,3 +132,28 @@ Sequence Sequence::to_seq() {
 }
 
 
+Sequence Sequence::merge(const Sequence& seq2, const std::string& s) {
+    if (seq2.seq.size() == 0 ) { return *this; }
+    if (seq.size() == 0 ) { return seq2; }
+    Sequence tmp;
+    for (ulong i = 0; i < seq.size() - 1; i++ ) {
+        Superposition sp;
+        sp = seq[i];
+        tmp.seq.push_back(sp);
+    }
+    Superposition head, tail, merge;
+    head = seq.back();
+    tail = seq2.seq.front();
+    merge = head.merge(tail, s);
+    tmp.seq.push_back(merge);
+    for (ulong i = 1; i < seq2.seq.size(); i++ ) {
+        Superposition sp;
+        sp = seq2.seq[i];
+        tmp.seq.push_back(sp);
+    }
+    return tmp;
+}
+
+Sequence Sequence::merge(const Sequence& seq2) {
+    return this->merge(seq2, "");
+}

@@ -50,6 +50,9 @@ class Ket : public BaseRule {
         Ket to_ket();
         Superposition to_sp();
         Sequence to_seq();
+
+        Ket merge(Ket k);
+        Ket merge(Ket k, const std::string& s);
 };
 
 #endif

@@ -52,6 +52,9 @@ class Sequence : public BaseRule {
         Ket to_ket();
         Superposition to_sp();
         Sequence to_seq();
+
+        Sequence merge(const Sequence& seq2);
+        Sequence merge(const Sequence& seq2, const std::string& s);
 };
 
 #endif

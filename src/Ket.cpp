@@ -70,3 +70,18 @@ Sequence Ket::to_seq() {
     Sequence tmp(*this);
     return tmp;
 }
+
+
+Ket Ket::merge(Ket k) {
+    double value = ket_value * k.ket_value;
+    std::string s = this->label() + k.label();
+    Ket tmp(s, value);
+    return tmp;
+}
+
+Ket Ket::merge(Ket k, const std::string& s) {
+    double value = ket_value * k.ket_value;
+    std::string s2 = this->label() + s + k.label();
+    Ket tmp(s2, value);
+    return tmp;
+}

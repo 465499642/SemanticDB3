@@ -44,6 +44,8 @@ class Superposition : public BaseRule {
         SuperpositionIter begin () const;
         SuperpositionIter end () const;
 
+        Superposition merge(const Superposition& sp2);
+        Superposition merge(const Superposition& sp2, const std::string& s);
 };
 
 #endif

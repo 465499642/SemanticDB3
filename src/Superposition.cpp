@@ -44,7 +44,7 @@ Superposition Superposition::operator+(Ket& b) {
 
 ulong Superposition::size() {
     ulong result;
-    result = sp.size();
+    result = sort_order.size();
     return result;
 }
 
@@ -186,5 +186,37 @@ SuperpositionIter Superposition::begin () const {
 
 SuperpositionIter Superposition::end () const {
     return SuperpositionIter(this, this->sort_order.size());
+}
+
+
+Superposition Superposition::merge(const Superposition& sp2, const std::string& s) {
+    if (sp2.sort_order.size() == 0 ) { return *this; }
+    if (sort_order.size() == 0 ) { return sp2; }
+    Superposition tmp;
+    for (ulong i = 0; i < sort_order.size() - 1; i++) {
+        ulong idx = sort_order[i];
+        double value = sp.at(idx);
+        tmp.sp[idx] = value;
+        tmp.sort_order.push_back(idx);
+    }
+    ulong head_idx = sort_order.back();
+    ulong tail_idx = sp2.sort_order.front();
+    std::string s2 = ket_map.get_str(head_idx) + s + ket_map.get_str(tail_idx);
+    ulong new_idx = ket_map.get_idx(s2);
+    double head_value = sp.at(head_idx);
+    double tail_value = sp2.sp.at(tail_idx);
+    tmp.sp[new_idx] = head_value * tail_value;
+    tmp.sort_order.push_back(new_idx);
+    for (ulong i = 1; i < sp2.sort_order.size(); i++) {
+        ulong idx = sp2.sort_order[i];
+        double value = sp2.sp.at(idx);
+        tmp.sp[idx] = value;
+        tmp.sort_order.push_back(idx);
+    }
+    return tmp;
+}
+
+Superposition Superposition::merge(const Superposition& sp2) {
+    return this->merge(sp2, "");
 }
 
