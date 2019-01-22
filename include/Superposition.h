@@ -9,6 +9,7 @@
 #include "KetMap.h"
 #include "BaseRule.h"
 #include "Ket.h"
+#include "SuperpositionIter.h"
 
 
 class Superposition : public BaseRule {
@@ -37,6 +38,12 @@ class Superposition : public BaseRule {
         Ket to_ket();
         Superposition to_sp();
         Sequence to_seq();
+
+        // SuperpositionIter:
+        Ket get(ulong idx) const;
+        SuperpositionIter begin () const;
+        SuperpositionIter end () const;
+
 };
 
 #endif

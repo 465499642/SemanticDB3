@@ -329,5 +329,14 @@ int main() {
     std::cout << "p_op: " << p_op.to_string() << std::endl;
     std::cout << "compiled p_op: " << p_op.Compile(context_list, seq5).to_string() << std::endl;
 
+    // test sp for-each:
+    Superposition sp20;
+    sp20.add(kx);
+    sp20.add(ky);
+    sp20.add(kz);
+    for (auto k: sp20) {
+        std::cout << k.to_string() << std::endl;
+    }
+
     return 0;
 }

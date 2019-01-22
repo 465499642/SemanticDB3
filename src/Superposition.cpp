@@ -170,3 +170,21 @@ Sequence Superposition::to_seq() {
     return tmp;
 }
 
+
+// SuperpositionIter:
+Ket Superposition::get(ulong idx) const {
+    if (idx >= sort_order.size() ) { Ket tmp; return tmp; }
+    ulong sp_idx = sort_order[idx];
+    double value = sp.at(sp_idx);
+    Ket tmp(sp_idx, value);
+    return tmp;
+}
+
+SuperpositionIter Superposition::begin () const {
+    return SuperpositionIter(this, 0);
+}
+
+SuperpositionIter Superposition::end () const {
+    return SuperpositionIter(this, this->sort_order.size());
+}
+

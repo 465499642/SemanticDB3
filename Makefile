@@ -17,6 +17,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     SimpleOp.o \
     OpSeq.o \
     PoweredOp.o \
+    SuperpositionIter.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 
