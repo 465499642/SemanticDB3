@@ -53,3 +53,7 @@ void ContextList::print_multiverse() {
         std::cout << std::endl;
     }
 }
+
+void ContextList::print_universe() {
+    data[index].print_universe();
+}
