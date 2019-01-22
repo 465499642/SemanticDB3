@@ -24,11 +24,11 @@ class Sequence : public BaseRule {
         Sequence(const Sequence& seq);
         Sequence operator+(Sequence& b);
         int type() { return SEQUENCE; };
-        ulong size();
+        const ulong size();
 
         void add(Ket& k);
         void add(Superposition& sp);
-        void add(Sequence& seq);
+        void add(const Sequence& seq);
 
         void multiply(const double d);
 
@@ -53,8 +53,8 @@ class Sequence : public BaseRule {
         Superposition to_sp();
         Sequence to_seq();
 
-        Sequence merge(const Sequence& seq2);
-        Sequence merge(const Sequence& seq2, const std::string& s);
+        void merge(const Sequence& seq2);
+        void merge(const Sequence& seq2, const std::string& s);
 };
 
 #endif

@@ -38,7 +38,7 @@ class Ket : public BaseRule {
         }
         int type() { return KET; };
         Superposition operator+(Ket& a);
-        ulong size();
+        const ulong size();
         ulong label_idx();
         std::string label();
         double value();
@@ -51,8 +51,8 @@ class Ket : public BaseRule {
         Superposition to_sp();
         Sequence to_seq();
 
-        Ket merge(Ket k);
-        Ket merge(Ket k, const std::string& s);
+        void merge(Ket k);
+        void merge(Ket k, const std::string& s);
 };
 
 #endif

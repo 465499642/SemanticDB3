@@ -42,7 +42,7 @@ Superposition Superposition::operator+(Ket& b) {
     return tmp;
 }
 
-ulong Superposition::size() {
+const ulong Superposition::size() {
     ulong result;
     result = sort_order.size();
     return result;
@@ -56,6 +56,19 @@ void Superposition::add(const ulong idx) {
     }
     else {
         sp[idx] = 1.0;
+        sort_order.push_back(idx);
+    }
+    return;
+}
+
+void Superposition::add(const ulong idx, const double v) {
+    if (ket_map.get_idx("") == idx) {return; }
+
+    if (sp.find(idx) != sp.end()) {
+        sp[idx] += v;
+    }
+    else {
+        sp[idx] = v;
         sort_order.push_back(idx);
     }
     return;
@@ -94,16 +107,16 @@ void Superposition::add(Ket& a) {
     return;
 }
 
-void Superposition::add(Superposition& a) {
+void Superposition::add(const Superposition& a) {
     ulong identity_idx = ket_map.get_idx("");
 
     for (ulong idx: a.sort_order) {
         if (identity_idx == idx) {continue;}
         if (sp.find(idx) != sp.end()) {
-            sp[idx] += a.sp[idx];
+            sp[idx] += a.sp.at(idx);
         }
         else {
-            sp[idx] = a.sp[idx];
+            sp[idx] = a.sp.at(idx);
             sort_order.push_back(idx);
         }
     }
@@ -189,34 +202,27 @@ SuperpositionIter Superposition::end () const {
 }
 
 
-Superposition Superposition::merge(const Superposition& sp2, const std::string& s) {
-    if (sp2.sort_order.size() == 0 ) { return *this; }
-    if (sort_order.size() == 0 ) { return sp2; }
-    Superposition tmp;
-    for (ulong i = 0; i < sort_order.size() - 1; i++) {
-        ulong idx = sort_order[i];
-        double value = sp.at(idx);
-        tmp.sp[idx] = value;
-        tmp.sort_order.push_back(idx);
-    }
+void Superposition::merge(const Superposition& sp2, const std::string& s) {
+    if (sp2.sort_order.size() == 0 ) { return; }
+    if (sort_order.size() == 0 ) { this->add(sp2); return; }
     ulong head_idx = sort_order.back();
+    double head_value = sp[head_idx];
+    sp.erase(head_idx);
+    sort_order.pop_back();
     ulong tail_idx = sp2.sort_order.front();
+    double tail_value = sp2.sp.at(tail_idx); // does this work: sp2.sp[tail_idx] ?
     std::string s2 = ket_map.get_str(head_idx) + s + ket_map.get_str(tail_idx);
     ulong new_idx = ket_map.get_idx(s2);
-    double head_value = sp.at(head_idx);
-    double tail_value = sp2.sp.at(tail_idx);
-    tmp.sp[new_idx] = head_value * tail_value;
-    tmp.sort_order.push_back(new_idx);
+    double new_value = head_value * tail_value;
+    this->add(new_idx, new_value);
     for (ulong i = 1; i < sp2.sort_order.size(); i++) {
         ulong idx = sp2.sort_order[i];
         double value = sp2.sp.at(idx);
-        tmp.sp[idx] = value;
-        tmp.sort_order.push_back(idx);
+        this->add(idx, value);
     }
-    return tmp;
 }
 
-Superposition Superposition::merge(const Superposition& sp2) {
-    return this->merge(sp2, "");
+void Superposition::merge(const Superposition& sp2) {
+    this->merge(sp2, "");
 }
 

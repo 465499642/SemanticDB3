@@ -14,7 +14,7 @@ class BaseRule {
     public:
         virtual int type() = 0;
         virtual std::string to_string() = 0;
-        virtual ulong size() = 0;
+        virtual const ulong size() = 0;
         virtual Ket to_ket() = 0;
         virtual Superposition to_sp() = 0;
         virtual Sequence to_seq() = 0;

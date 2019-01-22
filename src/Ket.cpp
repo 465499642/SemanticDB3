@@ -25,7 +25,7 @@ double Ket::value() {
     return ket_value;
 }
 
-ulong Ket::size() {
+const ulong Ket::size() {
     ulong result;
     if (ket_map.get_idx("") == ket_label_idx) {
         result = 0;
@@ -72,16 +72,14 @@ Sequence Ket::to_seq() {
 }
 
 
-Ket Ket::merge(Ket k) {
-    double value = ket_value * k.ket_value;
+void Ket::merge(Ket k) {
+    ket_value *= k.ket_value;
     std::string s = this->label() + k.label();
-    Ket tmp(s, value);
-    return tmp;
+    ket_label_idx = ket_map.get_idx(s);
 }
 
-Ket Ket::merge(Ket k, const std::string& s) {
-    double value = ket_value * k.ket_value;
+void Ket::merge(Ket k, const std::string& s) {
+    ket_value *= k.ket_value;
     std::string s2 = this->label() + s + k.label();
-    Ket tmp(s2, value);
-    return tmp;
+    ket_label_idx = ket_map.get_idx(s2);
 }

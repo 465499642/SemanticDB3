@@ -13,7 +13,7 @@ class StoredRule : public BaseRule {
     public:
         StoredRule(const std::string& s) {srule = s; };
         int type() { return STOREDRULE; };
-        ulong size() { return srule.length(); };
+        const ulong size() { return srule.length(); };
         std::string to_string() { return srule; };
 
         Ket to_ket() { Ket tmp; return tmp; };

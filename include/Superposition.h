@@ -26,12 +26,13 @@ class Superposition : public BaseRule {
         Superposition(const ulong idx, const double v);
         Superposition operator+(Ket& b);
         int type() { return SUPERPOSITION; };
-        ulong size();
+        const ulong size();
         // void add(const Ket& a); // bugs out for now
         void add(const ulong idx);
+        void add(const ulong idx, const double v);
         void add(const std::string& s);
         void add(Ket& a);
-        void add(Superposition& a);
+        void add(const Superposition& a);
         void multiply(const double d);
         std::string to_string();
 
@@ -44,8 +45,8 @@ class Superposition : public BaseRule {
         SuperpositionIter begin () const;
         SuperpositionIter end () const;
 
-        Superposition merge(const Superposition& sp2);
-        Superposition merge(const Superposition& sp2, const std::string& s);
+        void merge(const Superposition& sp2);
+        void merge(const Superposition& sp2, const std::string& s);
 };
 
 #endif

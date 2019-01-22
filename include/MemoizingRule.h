@@ -13,7 +13,7 @@ class MemoizingRule : public BaseRule {
     public:
         MemoizingRule(const std::string& s) {mrule = s; };
         int type() { return MEMOIZINGRULE; };
-        ulong size() { return mrule.length(); };
+        const ulong size() { return mrule.length(); };
         std::string to_string() { return mrule; };
 
         Ket to_ket() { Ket tmp; return tmp; };

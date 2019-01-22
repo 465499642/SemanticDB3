@@ -33,7 +33,7 @@ Sequence Sequence::operator+(Sequence& b) {
     return tmp;
 }
 
-ulong Sequence::size() {
+const ulong Sequence::size() {
     ulong result;
     result = seq.size();
     return result;
@@ -61,8 +61,8 @@ void Sequence::add(Superposition& sp) {
     }
 }
 
-void Sequence::add(Sequence& seq2) {
-    if (seq2.size() == 0 ) { return; }
+void Sequence::add(const Sequence& seq2) {
+    if (seq2.seq.size() == 0 ) { return; }
     if (seq.size() == 0 ) {
         seq = seq2.seq;
     } else {
@@ -132,28 +132,22 @@ Sequence Sequence::to_seq() {
 }
 
 
-Sequence Sequence::merge(const Sequence& seq2, const std::string& s) {
-    if (seq2.seq.size() == 0 ) { return *this; }
-    if (seq.size() == 0 ) { return seq2; }
-    Sequence tmp;
-    for (ulong i = 0; i < seq.size() - 1; i++ ) {
-        Superposition sp;
-        sp = seq[i];
-        tmp.seq.push_back(sp);
-    }
-    Superposition head, tail, merge;
+void Sequence::merge(const Sequence& seq2, const std::string& s) {
+    if (seq2.seq.size() == 0 ) { return; }
+    if (seq.size() == 0 ) { this->add(seq2); return; }
+    Superposition head, tail;
     head = seq.back();
     tail = seq2.seq.front();
-    merge = head.merge(tail, s);
-    tmp.seq.push_back(merge);
+    head.merge(tail, s);
+    seq.pop_back();
+    seq.push_back(head);
     for (ulong i = 1; i < seq2.seq.size(); i++ ) {
         Superposition sp;
         sp = seq2.seq[i];
-        tmp.seq.push_back(sp);
+        seq.push_back(sp);
     }
-    return tmp;
 }
 
-Sequence Sequence::merge(const Sequence& seq2) {
-    return this->merge(seq2, "");
+void Sequence::merge(const Sequence& seq2) {
+    this->merge(seq2, "");
 }
