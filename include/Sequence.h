@@ -39,6 +39,7 @@ class Sequence : public BaseRule {
         std::string to_string();
 
         // define an iterator for our sequence class:
+        Superposition get(ulong idx) const;
         typedef typename std::vector<Superposition>::iterator iterator;
         typedef typename std::vector<Superposition>::const_iterator const_iterator;
 

@@ -114,6 +114,11 @@ std::string Sequence::to_string() {
     return s;
 }
 
+Superposition Sequence::get(ulong idx) const {
+    if (idx >= seq.size() ) { Superposition tmp; return tmp; }
+    return seq[idx];
+}
+
 Ket Sequence::to_ket() {
     if (seq.size() == 0) { Ket tmp; return tmp; }
     Ket tmp = seq[0].to_ket();
