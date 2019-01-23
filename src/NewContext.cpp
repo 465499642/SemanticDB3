@@ -121,7 +121,8 @@ void NewContext::print_universe() {
     supported_ops_idx = ket_map.get_idx("supported-ops");
 
     s += "------------------------------------------\n";
-    s += "|context> => |context: " + name + ">\n\n";
+    // s += "|context> => |context: " + name + ">\n\n";
+    s += "|context> => |" + name + ">\n\n";
 
     for (const ulong label_idx: sort_order) {
         label = ket_map.get_str(label_idx);

@@ -38,9 +38,12 @@
 %type <d> numeric fraction
 %type <seq> real_seq
 
-%start swfile
+%start start
 
 %%
+
+start : swfile { $1->print_multiverse(); }
+      ;
 
 swfile : %empty { $$ = new ContextList("global context"); }
        | swfile comment { $1->print_multiverse(); } endl
@@ -183,6 +186,20 @@ endl:    TENDL { std::cout << "TENDL" << std::endl; }
 %%
 
 int main(int argc, char** argv) {
-    yyparse();
+    // Open a file handle to a particular file:
+    FILE *src = fopen(argv[1], "r");
+    // Make sure it is valid:
+    if (!src) {
+        printf("Can't open file\n");
+        return -1;
+    }
+    // Set Flex to read from it instead of defaulting to STDIN:
+    yyin = src;
+  
+    // Parse through the input until eof:
+    do {
+        yyparse();
+    } while (!feof(yyin));
+
     return 0;
 }
