@@ -69,6 +69,24 @@ void NewContext::learn(const std::string& op, const std::string& label, const st
     rules_dict[label_idx].learn(op_idx, brule);
 }
 
+void NewContext::add_learn(const ulong op_idx, const ulong label_idx, BaseRule* brule) {
+    if (op_idx == ket_map.get_idx("supported-ops")) { return; }  // maybe hard wire in "supported-ops" as ket_map idx = 1?
+    if (brule->size() == 0) { return; }
+
+    Frame frame;
+    if (rules_dict.find(label_idx) == rules_dict.end()) {
+        sort_order.push_back(label_idx);
+        rules_dict[label_idx] = frame;
+    }
+    rules_dict[label_idx].add_learn(op_idx, brule);
+}
+
+void NewContext::add_learn(const std::string& op, const std::string& label, BaseRule* brule){
+    ulong op_idx = ket_map.get_idx(op);
+    ulong label_idx = ket_map.get_idx(label);
+    this->add_learn(op_idx, label_idx, brule);
+}
+
 /*  // non label descent version:
 BaseRule* NewContext::recall(const std::string& op, const std::string& label) {
     BaseRule* result;

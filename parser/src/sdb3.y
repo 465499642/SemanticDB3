@@ -49,7 +49,8 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile comment { $1->print_multiverse(); } endl
        | swfile context_learn_rule endl { $1->set(*$2); }
        | swfile space TSUPPORTED_OPS endl { }
-       | swfile space simple_op space ket space learn_sym space real_seq endl { $1->learn(*$3, *$5, $9); }
+       | swfile space simple_op space ket space TLEARN_SYM space real_seq endl { $1->learn(*$3, *$5, $9); }
+       | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn(*$3, *$5, $9); }
        ;
 
 learn_rule : space comment { }
