@@ -27,16 +27,17 @@ class Sequence : public BaseRule {
         const ulong size();
 
         BaseRule* b_add(BaseRule* brule);
+        BaseRule* b_append(BaseRule* brule);
 
         void add(Ket& k);
-        void add(Superposition& sp);
+        void add(const Superposition& sp);
         void add(const Sequence& seq);
 
         void multiply(const double d);
 
         void append(Ket& k);
-        void append(Superposition& sp);
-        void append(Sequence& seq);
+        void append(const Superposition& sp);
+        void append(const Sequence& seq);
 
         std::string to_string();
 

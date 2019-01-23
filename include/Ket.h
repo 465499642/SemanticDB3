@@ -52,6 +52,7 @@ class Ket : public BaseRule {
         Sequence to_seq();
 
         BaseRule* b_add(BaseRule* brule);
+        BaseRule* b_append(BaseRule* brule);
 
         void merge(Ket k);
         void merge(Ket k, const std::string& s);

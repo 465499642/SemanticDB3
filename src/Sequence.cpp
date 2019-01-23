@@ -53,7 +53,7 @@ void Sequence::add(Ket& k) {
     }
 }
 
-void Sequence::add(Superposition& sp) {
+void Sequence::add(const Superposition& sp) {
     if ( seq.size() == 0 ) {
         Superposition tmp;
         tmp.add(sp);
@@ -89,13 +89,13 @@ void Sequence::append(Ket& k) {
     seq.push_back(tmp);
 }
 
-void Sequence::append(Superposition& sp) {
+void Sequence::append(const Superposition& sp) {
     Superposition tmp;
     tmp.add(sp);
     seq.push_back(tmp);
 }
 
-void Sequence::append(Sequence& seq2) {
+void Sequence::append(const Sequence& seq2) {
     for (auto sp: seq2.seq) {
         seq.push_back(sp);
     }
@@ -164,8 +164,17 @@ void Sequence::merge(const Sequence& seq2) {
 BaseRule* Sequence::b_add(BaseRule* brule) {
     switch(brule->type()) {
         case KET:
-        case SUPERPOSITION:
+        case SUPERPOSITION: { Sequence *seq = new Sequence(*this); seq->add(brule->to_sp()); return seq; }
         case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->add(brule->to_seq()); return seq; }
+        default: return this;
+    }
+}
+
+BaseRule* Sequence::b_append(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION: { Sequence *seq = new Sequence(*this); seq->append(brule->to_sp()); return seq; }
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->append(brule->to_seq()); return seq; }
         default: return this;
     }
 }

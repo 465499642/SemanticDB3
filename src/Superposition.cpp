@@ -245,3 +245,12 @@ BaseRule* Superposition::b_add(BaseRule* brule) {
     }
 }
 
+BaseRule* Superposition::b_append(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION: { Sequence *seq = new Sequence(*this); seq->append(brule->to_sp()); return seq; }
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->append(brule->to_seq()); return seq; }
+        default: return this;
+    }
+}
+

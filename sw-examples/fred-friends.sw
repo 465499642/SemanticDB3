@@ -7,3 +7,9 @@ friends |Sam> +=> |Robert>
 friends |Sam> +=> |Jane>
 friends |Sam> +=> |Mark>
 friends |Sam> +=> |Tom>
+
+spell |Fred> .=> |F>
+spell |Fred> .=> |r>
+spell |Fred> .=> |e>
+spell |Fred> .=> |d>
+

@@ -81,6 +81,16 @@ BaseRule* Ket::b_add(BaseRule* brule) {
     }
 }
 
+BaseRule* Ket::b_append(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION: { Sequence *seq = new Sequence(*this); seq->append(brule->to_sp()); return seq; }
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->append(brule->to_seq()); return seq; }
+        default: return this;
+    }
+}
+
+
 void Ket::merge(Ket k) {
     ket_value *= k.ket_value;
     std::string s = this->label() + k.label();

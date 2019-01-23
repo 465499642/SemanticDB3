@@ -30,7 +30,9 @@ class Superposition : public BaseRule {
         int type() { return SUPERPOSITION; };
         const ulong size();
         // void add(const Ket& a); // bugs out for now
+
         BaseRule* b_add(BaseRule* brule);
+        BaseRule* b_append(BaseRule* brule);
 
         void add(const ulong idx);
         void add(const ulong idx, const double v);
