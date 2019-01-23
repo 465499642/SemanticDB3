@@ -35,6 +35,21 @@ void Frame::add_learn(const ulong op_idx, BaseRule* brule) {
     return;
 }
 
+void Frame::seq_learn(const ulong op_idx, BaseRule* brule) {
+    BaseRule* rule;
+    if (rules.find(op_idx) == rules.end()) {
+        supported_operators.push_back(op_idx);
+        rules[op_idx] = brule;
+    }
+    else {
+        rule = rules[op_idx]->b_append(brule);
+        delete rules[op_idx];
+        rules[op_idx] = rule;
+    }
+    return;
+}
+
+
 BaseRule* Frame::recall(const ulong op_idx) {
     BaseRule* result;
     Superposition *sp = new Superposition();

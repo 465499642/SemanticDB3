@@ -21,6 +21,9 @@ class NewContext {
         void learn(const std::string& op, const std::string& label, const std::string& rule);
         void add_learn(const ulong op_idx, const ulong label_idx, BaseRule* brule);
         void add_learn(const std::string& op, const std::string& label, BaseRule* brule);
+        void seq_learn(const ulong op_idx, const ulong label_idx, BaseRule* brule);
+        void seq_learn(const std::string& op, const std::string& label, BaseRule* brule);
+
         BaseRule* recall(const std::string& op, const std::string& label);
         BaseRule* recall(const ulong op_idx, const ulong label_idx);
         void print_universe();

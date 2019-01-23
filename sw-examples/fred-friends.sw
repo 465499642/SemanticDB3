@@ -13,3 +13,13 @@ spell |Fred> .=> |r>
 spell |Fred> .=> |e>
 spell |Fred> .=> |d>
 
+test |seq> .=> |>
+test |seq> .=> |>
+test |seq> .=> |>
+test |seq> .=> |>
+test |seq> .=> |a>
+test |seq> .=> |b>
+test |seq> .=> |c>
+test |seq> .=> |>
+test |seq> .=> |>
+test |seq> .=> |>

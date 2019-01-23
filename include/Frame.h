@@ -19,6 +19,7 @@ class Frame {
         std::vector<ulong> supported_ops();
         void learn(const ulong op_idx, BaseRule* brule);
         void add_learn(const ulong op_idx, BaseRule* brule);
+        void seq_learn(const ulong op_idx, BaseRule* brule);
         BaseRule* recall(const ulong op_idx);
         void print();
 };

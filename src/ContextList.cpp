@@ -46,6 +46,14 @@ void ContextList::add_learn(const std::string& op, const std::string& label, Bas
     data[index].add_learn(op, label, brule);
 }
 
+void ContextList::seq_learn(const ulong op_idx, const ulong label_idx, BaseRule* brule) {
+    data[index].seq_learn(op_idx, label_idx, brule);
+}
+
+void ContextList::seq_learn(const std::string& op, const std::string& label, BaseRule* brule) {
+    data[index].seq_learn(op, label, brule);
+}
+
 
 BaseRule* ContextList::recall(const std::string& op, const std::string& label) {
     return data[index].recall(op, label);
