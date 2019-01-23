@@ -16,6 +16,7 @@ class NewContext {
     public:
         NewContext(const std::string& s);
         std::string get_name();
+        void learn(const ulong op_idx, const ulong label_idx, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, const std::string& rule);
         BaseRule* recall(const std::string& op, const std::string& label);

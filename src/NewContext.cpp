@@ -19,6 +19,18 @@ std::string NewContext::get_name() {
     return name;
 }
 
+void NewContext::learn(const ulong op_idx, const ulong label_idx, BaseRule* brule) {
+    if (op_idx == ket_map.get_idx("supported-ops")) { return; }  // maybe hard wire in "supported-ops" as ket_map idx = 1?
+    if (brule->size() == 0) { return; }
+
+    Frame frame;
+    if (rules_dict.find(label_idx) == rules_dict.end()) {
+        sort_order.push_back(label_idx);
+        rules_dict[label_idx] = frame;
+    }
+    rules_dict[label_idx].learn(op_idx, brule);
+}
+
 void NewContext::learn(const std::string& op, const std::string& label, BaseRule* brule){
     if (op == "supported-ops") { return;}
     if (brule->size() == 0) {return; }

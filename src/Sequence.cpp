@@ -1,7 +1,10 @@
 #include <iostream>
+#include "Ket.h"
 #include "Sequence.h"
 #include "Superposition.h"
 #include "Functions.h"
+#include "BaseRule.h"
+
 
 Sequence::Sequence(const std::string& s) {
     Superposition tmp(s);
@@ -156,3 +159,14 @@ void Sequence::merge(const Sequence& seq2, const std::string& s) {
 void Sequence::merge(const Sequence& seq2) {
     this->merge(seq2, "");
 }
+
+
+BaseRule* Sequence::b_add(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION:
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->add(brule->to_seq()); return seq; }
+        default: return this;
+    }
+}
+

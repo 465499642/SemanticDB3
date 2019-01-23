@@ -2,6 +2,7 @@
 #include "Superposition.h"
 #include "Functions.h"
 #include "Sequence.h"
+#include "BaseRule.h"
 
 
 Superposition Ket::operator+(Ket& a) {
@@ -12,7 +13,7 @@ Superposition Ket::operator+(Ket& a) {
 }
 
 
-ulong Ket::label_idx() {
+const ulong Ket::label_idx() {
     return ket_label_idx;
 }
 
@@ -21,7 +22,7 @@ std::string Ket::label() {
     return result;
 }
 
-double Ket::value() {
+const double Ket::value() {
     return ket_value;
 }
 
@@ -71,6 +72,14 @@ Sequence Ket::to_seq() {
     return tmp;
 }
 
+BaseRule* Ket::b_add(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION: { Superposition *sp = new Superposition(*this); sp->add(brule->to_sp()); return sp; }
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->add(brule->to_seq()); return seq; }
+        default: return this;
+    }
+}
 
 void Ket::merge(Ket k) {
     ket_value *= k.ket_value;

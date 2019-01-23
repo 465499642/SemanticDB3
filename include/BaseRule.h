@@ -18,6 +18,7 @@ class BaseRule {
         virtual Ket to_ket() = 0;
         virtual Superposition to_sp() = 0;
         virtual Sequence to_seq() = 0;
+        virtual BaseRule* b_add(BaseRule* brule) = 0;
 };
 
 #endif

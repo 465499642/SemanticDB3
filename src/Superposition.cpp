@@ -35,6 +35,15 @@ Superposition::Superposition(const ulong idx, const double v) {
     sort_order.push_back(idx);
 }
 
+Superposition::Superposition(Ket k) {
+    ulong idx = k.label_idx();
+    if (ket_map.get_idx("") == idx) {return; }
+
+    sp[idx] = k.value();
+    sort_order.push_back(idx);
+}
+
+
 Superposition Superposition::operator+(Ket& b) {
     Superposition tmp;
     tmp.add(*this);
@@ -224,5 +233,15 @@ void Superposition::merge(const Superposition& sp2, const std::string& s) {
 
 void Superposition::merge(const Superposition& sp2) {
     this->merge(sp2, "");
+}
+
+
+BaseRule* Superposition::b_add(BaseRule* brule) {
+    switch(brule->type()) {
+        case KET:
+        case SUPERPOSITION: { Superposition *sp = new Superposition(*this); sp->add(brule->to_sp()); return sp; }
+        case SEQUENCE: { Sequence *seq = new Sequence(*this); seq->add(brule->to_seq()); return seq; }
+        default: return this;
+    }
 }
 

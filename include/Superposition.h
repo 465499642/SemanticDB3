@@ -24,10 +24,14 @@ class Superposition : public BaseRule {
         Superposition(const std::string& s);
         Superposition(const std::string&s, const double v);
         Superposition(const ulong idx, const double v);
+        Superposition(Ket k);
+
         Superposition operator+(Ket& b);
         int type() { return SUPERPOSITION; };
         const ulong size();
         // void add(const Ket& a); // bugs out for now
+        BaseRule* b_add(BaseRule* brule);
+
         void add(const ulong idx);
         void add(const ulong idx, const double v);
         void add(const std::string& s);

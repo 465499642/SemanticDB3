@@ -26,6 +26,8 @@ class Sequence : public BaseRule {
         int type() { return SEQUENCE; };
         const ulong size();
 
+        BaseRule* b_add(BaseRule* brule);
+
         void add(Ket& k);
         void add(Superposition& sp);
         void add(const Sequence& seq);
