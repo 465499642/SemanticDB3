@@ -6,6 +6,8 @@
 #include "Sequence.h"
 #include "NewContext.h"
 #include "ContextList.h"
+#include "BaseOp.h"
+#include "OpSeq.h"
 #include "sdb3.tab.h"
 
 extern int yylex();

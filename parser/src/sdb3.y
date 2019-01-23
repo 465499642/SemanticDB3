@@ -7,6 +7,12 @@
     #include "Sequence.h"
     #include "NewContext.h"
     #include "ContextList.h"
+    #include "BaseOp.h"
+    #include "SimpleOp.h"
+    #include "NumericOp.h"
+    #include "PoweredOp.h"
+    #include "OpSeq.h"
+
     extern int yylex();
     extern int yyparse();
     extern FILE* yyin;
@@ -22,6 +28,8 @@
     Sequence *seq;
     int token;
     double d;
+    BaseOp *base_op;
+    OpSeq *op_seq;
 }
 
 %token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
@@ -37,6 +45,8 @@
 %type <k> real_ket
 %type <d> numeric fraction
 %type <seq> real_seq
+%type <base_op> real_general_op real_powered_op real_op
+%type <op_seq> real_op_sequence
 
 %start start
 
@@ -52,6 +62,11 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile space simple_op space ket space TLEARN_SYM space real_seq endl { $1->learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn(*$3, *$5, $9); }
+       | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_sequence space real_ket endl { 
+           Sequence *k_seq = new Sequence(*$11);
+           Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
+           $1->learn(*$3, *$5, seq); 
+       }
        ;
 
 learn_rule : space comment { }
@@ -94,6 +109,23 @@ real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TMERGE space real_ket { Sequence tmp(*$5); $1->merge(tmp); }
         | real_seq space TMERGE2 space real_ket { Sequence tmp(*$5); $1->merge(tmp, " "); }
         ;
+
+real_general_op : simple_op { $$ = new SimpleOp(*$1); }
+                | fraction { $$ = new NumericOp($1); }
+                ;
+
+real_powered_op : real_general_op TPOW TINTEGER { ulong pow = std::stoul(*$3); $$ = new PoweredOp($1, pow); }
+                ;
+
+real_op : real_powered_op { $$ = $1; }
+        | real_general_op { $$ = $1; }
+        ;
+
+real_op_sequence : real_op { $$ = new OpSeq($1); }
+                 | real_op_sequence TSPACE real_op { $1->append($3); }
+                 ;
+
+
 
 ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
     ;
