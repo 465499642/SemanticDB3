@@ -24,6 +24,7 @@ Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
     for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
         result = (*it)->Compile(context, result);
     }
+    if (op_type == SMINUS) { result.multiply(-1); } // not 100% sure this should be here.
     return result;
 }
 
