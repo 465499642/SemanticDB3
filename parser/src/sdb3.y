@@ -12,6 +12,8 @@
     #include "NumericOp.h"
     #include "PoweredOp.h"
     #include "OpSeq.h"
+    #include "BaseCompoundSeq.h"
+    #include "SingleCompoundSeq.h"
 
     extern int yylex();
     extern int yyparse();
@@ -30,6 +32,7 @@
     double d;
     BaseOp *base_op;
     OpSeq *op_seq;
+    BaseCompoundSeq *base_compound_seq;
 }
 
 %token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
@@ -47,6 +50,7 @@
 %type <seq> real_seq
 %type <base_op> real_general_op real_powered_op real_op
 %type <op_seq> real_op_sequence
+%type <base_compound_seq> real_single_compound_seq
 
 %start start
 
@@ -66,6 +70,10 @@ swfile : %empty { $$ = new ContextList("global context"); }
            Sequence *k_seq = new Sequence(*$11);
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
            $1->learn(*$3, *$5, seq); 
+       }
+       | swfile space simple_op space ket space TMEM_LEARN_SYM space real_single_compound_seq endl {
+           Sequence *seq = new Sequence($9->Compile(*$1));
+           $1->learn(*$3, *$5, seq);
        }
        ;
 
@@ -125,7 +133,9 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 
-
+real_single_compound_seq : real_op_sequence space real_ket { $$ = new SingleCompoundSeq($1, $3); }
+                         | real_op_sequence space TLPAREN space real_seq space TRPAREN { $$ = new SingleCompoundSeq($1, $5); }
+                         ;
 
 ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
     ;
