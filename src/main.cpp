@@ -15,6 +15,7 @@
 #include "SimpleOp.h"
 #include "OpSeq.h"
 #include "PoweredOp.h"
+#include "SingleCompoundSeq.h"
 
 
 // for now, use main to test our components:
@@ -410,6 +411,21 @@ int main() {
     std::cout << "seqm1: " << seqm1.to_string() << std::endl;
     std::cout << "seqmerge1: " << seqmerge1.to_string() << std::endl;
     std::cout << "seqmerge2: " << seqmerge2.to_string() << std::endl;
+
+    // test SingleCompoundSeq:
+    SimpleOp s_op_1("op1"), s_op_2("op2");
+    NumericOp n_3(3);
+    PoweredOp p_op_1(&n_3, 4);
+    OpSeq op_seq_1;
+    op_seq_1.append(&s_op_2);
+    op_seq_1.append(&p_op_1);
+    op_seq_1.append(&s_op_1);
+    SingleCompoundSeq compound_seq(&op_seq_1, &kx);
+    context_list.learn("op1", "x", "op1: x");
+    context_list.learn("op2", "op1: x", "op2: op1: x");
+    std::cout << "op_seq_1: " << op_seq_1.to_string() << std::endl;
+    std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
+    std::cout << "compiled compound_seq: " << compound_seq.Compile(context_list).to_string() << std::endl;
 
     return 0;
 }
