@@ -16,6 +16,7 @@
 #include "OpSeq.h"
 #include "PoweredOp.h"
 #include "SingleCompoundSeq.h"
+#include "CompoundSeq.h"
 
 
 // for now, use main to test our components:
@@ -426,6 +427,19 @@ int main() {
     std::cout << "op_seq_1: " << op_seq_1.to_string() << std::endl;
     std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
     std::cout << "compiled compound_seq: " << compound_seq.Compile(context_list).to_string() << std::endl;
+    std::cout << "testing existance of compound_seq: " << compound_seq.to_string() << std::endl;
+
+    // test CompoundSeq:
+    SingleCompoundSeq compound_seq2(&op_seq_1, &ky);
+    CompoundSeq full_compound_seq;
+    full_compound_seq.append(compound_seq);
+    full_compound_seq.append(compound_seq2);
+    context_list.learn("op1", "y", "op1: y");
+    context_list.learn("op2", "op1: y", "op2: op1: y");
+    std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
+    std::cout << "compound_seq2: " << compound_seq2.to_string() << std::endl;
+    std::cout << "full_compound_seq: " << full_compound_seq.to_string() << std::endl;
+    std::cout << "compiled full_compound_seq: " << full_compound_seq.Compile(context_list).to_string() << std::endl;
 
     return 0;
 }

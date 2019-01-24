@@ -25,6 +25,7 @@ class SingleCompoundSeq : public BaseCompoundSeq {
     public:
         SingleCompoundSeq(OpSeq* op_seq2, BaseRule* b_rule2);
         SingleCompoundSeq(unsigned int type, OpSeq* op_seq2, BaseRule* b_rule2);
+        unsigned int type() { return op_type; };
         Sequence Compile(ContextList& context);
         std::string to_string();
 };

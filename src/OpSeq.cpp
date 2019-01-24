@@ -21,9 +21,8 @@ void OpSeq::append(BaseOp* b_op) {
 
 Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
     Sequence result = seq;
-    while (!op_seq.empty()) {
-        result = op_seq.back()->Compile(context, result);
-        op_seq.pop_back();
+    for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
+        result = (*it)->Compile(context, result);
     }
     return result;
 }
