@@ -9,6 +9,8 @@
 #include "BaseOp.h"
 #include "OpSeq.h"
 #include "BaseCompoundSeq.h"
+#include "SingleCompoundSeq.h"
+#include "CompoundSeq.h"
 #include "sdb3.tab.h"
 
 extern int yylex();
