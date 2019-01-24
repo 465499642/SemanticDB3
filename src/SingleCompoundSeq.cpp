@@ -4,13 +4,6 @@
 
 
 SingleCompoundSeq::SingleCompoundSeq(OpSeq* op_seq2, BaseRule* b_rule2) {
-    op_type = SPLUS;
-    op_seq = op_seq2;
-    b_rule = b_rule2;
-}
-
-SingleCompoundSeq::SingleCompoundSeq(unsigned int type, OpSeq* op_seq2, BaseRule* b_rule2) {
-    op_type = type;
     op_seq = op_seq2;
     b_rule = b_rule2;
 }

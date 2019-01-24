@@ -21,6 +21,7 @@ class OpSeq : public BaseOp {
         OpSeq(BaseOp* b_op);
         OpSeq(unsigned int type, BaseOp* b_op);
 
+        unsigned int type() { return op_type; }
         void append(BaseOp* b_op);
         Sequence Compile(ContextList& context, Sequence& seq);
         std::string to_string();

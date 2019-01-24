@@ -9,23 +9,14 @@
 #include "BaseRule.h"
 
 
-#define SPLUS 0
-#define SMINUS 1
-#define SSEQ 2
-#define SMERGE 3
-#define SMERGE2 4
-
-
 class SingleCompoundSeq : public BaseCompoundSeq {
     private:
-        unsigned int op_type;
         OpSeq* op_seq;
         BaseRule* b_rule;
 
     public:
         SingleCompoundSeq(OpSeq* op_seq2, BaseRule* b_rule2);
-        SingleCompoundSeq(unsigned int type, OpSeq* op_seq2, BaseRule* b_rule2);
-        unsigned int type() { return op_type; };
+        unsigned int type() { return op_seq->type(); };
         Sequence Compile(ContextList& context);
         std::string to_string();
 };

@@ -441,5 +441,20 @@ int main() {
     std::cout << "full_compound_seq: " << full_compound_seq.to_string() << std::endl;
     std::cout << "compiled full_compound_seq: " << full_compound_seq.Compile(context_list).to_string() << std::endl;
 
+//    OpSeq op_seq_2(SMINUS);
+//    OpSeq op_seq_2(SSEQ);
+    OpSeq op_seq_2(SMERGE2);
+    op_seq_2.append(&s_op_2);
+    op_seq_2.append(&p_op_1);
+    op_seq_2.append(&s_op_1);
+    SingleCompoundSeq compound_seq3(&op_seq_2, &ky);
+    CompoundSeq full_compound_seq2;
+    full_compound_seq2.append(compound_seq);
+    full_compound_seq2.append(compound_seq3);
+    std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
+    std::cout << "compound_seq3: " << compound_seq3.to_string() << std::endl;
+    std::cout << "full_compound_seq2: " << full_compound_seq2.to_string() << std::endl;
+    std::cout << "compiled full_compound_seq2: " << full_compound_seq2.Compile(context_list).to_string() << std::endl;
+
     return 0;
 }
