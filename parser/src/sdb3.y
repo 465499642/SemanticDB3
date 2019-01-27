@@ -14,6 +14,7 @@
     #include "OpSeq.h"
     #include "SingleOpRule.h"
     #include "OpRule.h"
+    #include "StoredRule.h"
 
     extern int yylex();
     extern int yyparse();
@@ -68,15 +69,18 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile space simple_op space ket space TLEARN_SYM space real_seq endl { $1->learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn(*$3, *$5, $9); }
-       | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_sequence space real_ket endl { 
-           Sequence *k_seq = new Sequence(*$11);
+       | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
+           /*Sequence *k_seq = new Sequence(*$11);
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
            $1->learn(*$3, *$5, seq); 
+           */
+           StoredRule *s_rule = new StoredRule($9);
+           $1->learn(*$3, *$5, s_rule);
        }
        | swfile space simple_op space ket space TMEM_LEARN_SYM space real_op_rule endl {
-           std::cout << $9->to_string() << std::endl;
+           // std::cout << $9->to_string() << std::endl;
            Sequence *seq = new Sequence($9->Compile(*$1));
-           std::cout << "seq: " << seq->to_string() << std::endl;
+           // std::cout << "seq: " << seq->to_string() << std::endl;
            $1->learn(*$3, *$5, seq);
        }
        ;

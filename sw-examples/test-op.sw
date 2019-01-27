@@ -1,6 +1,6 @@
 op1 |y> => |op1: y>
 op2 |op1: y> => |op2: op1: y>
-op |foo> #=> op2 3^4 op1 |y>
+op |foo> !=> op2 3^4 op1 |y>
 
 op1 |x> => |op1: x>
 op2 |op1: x> => |op2: op1: x>
@@ -23,5 +23,5 @@ op3 |op2: op6: z> => |op3: op2: op6: z>
 
 op |foo5> !=> (  ( (2 op1 |x> + op4 op5 |y> - op6 |z>) )  )
 op |foo6> !=> op2 (2 op1 |x> + op4 op5 |y> - op6 |z>)
-op |foo7> !=> op3 7^2 op2 (2 op1 |x> + op4 op5 |y> - op6 |z>)
+op |foo7> #=> op3 7^2 op2 (2 op1 |x> + op4 op5 |y> - op6 |z>)
 
