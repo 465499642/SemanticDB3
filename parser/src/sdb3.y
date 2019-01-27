@@ -15,6 +15,7 @@
     #include "SingleOpRule.h"
     #include "OpRule.h"
     #include "StoredRule.h"
+    #include "MemoizingRule.h"
 
     extern int yylex();
     extern int yyparse();
@@ -72,16 +73,17 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
            /*Sequence *k_seq = new Sequence(*$11);
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
-           $1->learn(*$3, *$5, seq); 
-           */
+           $1->learn(*$3, *$5, seq); */
+
            StoredRule *s_rule = new StoredRule($9);
            $1->learn(*$3, *$5, s_rule);
        }
        | swfile space simple_op space ket space TMEM_LEARN_SYM space real_op_rule endl {
-           // std::cout << $9->to_string() << std::endl;
-           Sequence *seq = new Sequence($9->Compile(*$1));
-           // std::cout << "seq: " << seq->to_string() << std::endl;
-           $1->learn(*$3, *$5, seq);
+           /* Sequence *seq = new Sequence($9->Compile(*$1));
+           $1->learn(*$3, *$5, seq); */
+
+           MemoizingRule *m_rule = new MemoizingRule($9);
+           $1->learn(*$3, *$5, m_rule);
        }
        ;
 
