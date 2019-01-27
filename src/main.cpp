@@ -16,7 +16,7 @@
 #include "OpSeq.h"
 #include "PoweredOp.h"
 #include "SingleOpRule.h"
-// #include "CompoundSeq.h"
+#include "OpRule.h"
 
 
 // for now, use main to test our components:
@@ -429,33 +429,33 @@ int main() {
     std::cout << "compiled op_rule: " << op_rule.Compile(context_list).to_string() << std::endl;
     std::cout << "testing existance of op_rule: " << op_rule.to_string() << std::endl;
 
-/*
-    // test CompoundSeq:
-    SingleCompoundSeq compound_seq2(&op_seq_1, &ky);
-    CompoundSeq full_compound_seq;
-    full_compound_seq.append(compound_seq);
-    full_compound_seq.append(compound_seq2);
+
+    // test OpRule:
+    SingleOpRule op_rule2(&op_seq_1, &ky);
+    OpRule full_op_rule;
+    full_op_rule.push(op_rule);
+    full_op_rule.push(op_rule2);
     context_list.learn("op1", "y", "op1: y");
     context_list.learn("op2", "op1: y", "op2: op1: y");
-    std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
-    std::cout << "compound_seq2: " << compound_seq2.to_string() << std::endl;
-    std::cout << "full_compound_seq: " << full_compound_seq.to_string() << std::endl;
-    std::cout << "compiled full_compound_seq: " << full_compound_seq.Compile(context_list).to_string() << std::endl;
+    std::cout << "op_rule: " << op_rule.to_string() << std::endl;
+    std::cout << "op_rule2: " << op_rule2.to_string() << std::endl;
+    std::cout << "full_op_rule: " << full_op_rule.to_string() << std::endl;
+    std::cout << "compiled full_op_rule: " << full_op_rule.Compile(context_list).to_string() << std::endl;
 
 //    OpSeq op_seq_2(SMINUS);
-//    OpSeq op_seq_2(SSEQ);
-    OpSeq op_seq_2(SMERGE2);
+    OpSeq op_seq_2(SSEQ);
+//    OpSeq op_seq_2(SMERGE2);
     op_seq_2.append(&s_op_2);
     op_seq_2.append(&p_op_1);
     op_seq_2.append(&s_op_1);
-    SingleCompoundSeq compound_seq3(&op_seq_2, &ky);
-    CompoundSeq full_compound_seq2;
-    full_compound_seq2.append(compound_seq);
-    full_compound_seq2.append(compound_seq3);
-    std::cout << "compound_seq: " << compound_seq.to_string() << std::endl;
-    std::cout << "compound_seq3: " << compound_seq3.to_string() << std::endl;
-    std::cout << "full_compound_seq2: " << full_compound_seq2.to_string() << std::endl;
-    std::cout << "compiled full_compound_seq2: " << full_compound_seq2.Compile(context_list).to_string() << std::endl;
-*/
+    SingleOpRule op_rule3(&op_seq_2, &ky);
+    OpRule full_op_rule2;
+    full_op_rule2.push(op_rule);
+    full_op_rule2.push(op_rule3);
+    std::cout << "op_rule: " << op_rule.to_string() << std::endl;
+    std::cout << "op_rule3: " << op_rule3.to_string() << std::endl;
+    std::cout << "full_op_rule2: " << full_op_rule2.to_string() << std::endl;
+    std::cout << "compiled full_op_rule2: " << full_op_rule2.Compile(context_list).to_string() << std::endl;
+
     return 0;
 }

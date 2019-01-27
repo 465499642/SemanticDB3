@@ -1,21 +1,21 @@
 #include <string>
 #include <vector>
-#include "CompoundSeq.h"
-#include "SingleCompoundSeq.h"
+#include "OpRule.h"
+#include "SingleOpRule.h"
 #include "ContextList.h"
 #include "Sequence.h"
 #include "OpSeq.h"
 
 
-void CompoundSeq::append(SingleCompoundSeq &single_compound_seq) {
-    compound_seq_vec.push_back(single_compound_seq);
+void OpRule::push(SingleOpRule &single_op_rule) {
+    op_rule_vec.push_back(single_op_rule);
 }
 
-Sequence CompoundSeq::Compile(ContextList& context) {
+Sequence OpRule::Compile(ContextList& context) {
     Sequence seq2;
-    for (auto seq: compound_seq_vec) {
+    for (auto seq: op_rule_vec) {
         Sequence compiled_seq = seq.Compile(context);
-        switch (seq.type()) {  // should this be in the parser??
+        switch (seq.symbol_type()) {  // should this be in the parser??
             case SPLUS: { seq2.add(compiled_seq); break; }
             // case SMINUS: { compiled_seq.multiply(-1); seq2.add(compiled_seq); break; }
             case SMINUS: { seq2.add(compiled_seq); break; } // the SMINUS branch is now handled inside OpSeq
@@ -27,9 +27,9 @@ Sequence CompoundSeq::Compile(ContextList& context) {
     return seq2;
 }
 
-std::string CompoundSeq::to_string() {
+std::string OpRule::to_string() {
     std::string s = "";
-    for (auto seq: compound_seq_vec) {
+    for (auto seq: op_rule_vec) {
         s += seq.to_string();
     }
     return s;
