@@ -12,16 +12,16 @@
 
 class OpSeq : public BaseOp {
     private:
-        unsigned int op_type;
+        unsigned int op_symbol;
         std::vector<BaseOp*> op_seq;
 
     public:
-        OpSeq() { op_type = SPLUS; }
-        OpSeq(unsigned int type) { op_type = type; }
+        OpSeq() { op_symbol = SPLUS; }
+        OpSeq(unsigned int type) { op_symbol = type; }
         OpSeq(BaseOp* b_op);
         OpSeq(unsigned int type, BaseOp* b_op);
 
-        unsigned int type() { return op_type; }
+        unsigned int symbol_type() { return op_symbol; }
         void append(BaseOp* b_op);
         Sequence Compile(ContextList& context, Sequence& seq);
         std::string to_string();

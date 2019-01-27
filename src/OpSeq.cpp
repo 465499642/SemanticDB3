@@ -6,12 +6,12 @@
 #include "Sequence.h"
 
 OpSeq::OpSeq(BaseOp* b_op) {
-    op_type = SPLUS;
+    op_symbol = SPLUS;
     op_seq.push_back(b_op);
 }
 
 OpSeq::OpSeq(unsigned int type, BaseOp* b_op) {
-    op_type = type;
+    op_symbol = type;
     op_seq.push_back(b_op);
 }
 
@@ -24,13 +24,13 @@ Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
     for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
         result = (*it)->Compile(context, result);
     }
-    if (op_type == SMINUS) { result.multiply(-1); } // not 100% sure this should be here.
+    if (op_symbol == SMINUS) { result.multiply(-1); } // not 100% sure this should be here.
     return result;
 }
 
 std::string OpSeq::to_string() {
     std::string s = "";
-    switch(op_type) {
+    switch(op_symbol) {
         case SPLUS: s = " + "; break;
         case SMINUS: s = " - "; break;
         case SSEQ: s = " . "; break;
