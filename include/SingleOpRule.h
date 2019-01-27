@@ -18,6 +18,7 @@ class SingleOpRule : public BaseRule {
         BaseRule* b_rule;
 
     public:
+        SingleOpRule(BaseRule* b_rule2);
         SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2);
         unsigned int symbol_type() { return op_seq->symbol_type(); };
         Sequence Compile(ContextList& context);

@@ -2,6 +2,10 @@
 #include "SingleOpRule.h"
 #include "Sequence.h"
 
+SingleOpRule::SingleOpRule(BaseRule* b_rule2) {
+    op_seq = new OpSeq();
+    b_rule = b_rule2;
+}
 
 SingleOpRule::SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2) {
     op_seq = op_seq2;

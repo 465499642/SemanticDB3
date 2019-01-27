@@ -67,7 +67,12 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile comment { $1->print_multiverse(); } endl
        | swfile context_learn_rule endl { $1->set(*$2); }
        | swfile space TSUPPORTED_OPS endl { }
-       | swfile space simple_op space ket space TLEARN_SYM space real_seq endl { $1->learn(*$3, *$5, $9); }
+       | swfile space simple_op space ket space TLEARN_SYM space real_op_rule endl { 
+           // $1->learn(*$3, *$5, $9); 
+
+           Sequence *seq = new Sequence($9->Compile(*$1));
+           $1->learn(*$3, *$5, seq);
+       }
        | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn(*$3, *$5, $9); }
        | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
@@ -148,7 +153,8 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 
-real_single_op_rule : real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
+real_single_op_rule : space real_seq { $$ = new SingleOpRule($2); }
+                    | real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
                     | real_op_sequence space TLPAREN space real_op_rule space TRPAREN { $$ = new SingleOpRule($1, $5); }
                     ;
 
