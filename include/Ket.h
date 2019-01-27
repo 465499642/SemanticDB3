@@ -56,6 +56,9 @@ class Ket : public BaseRule {
 
         void merge(Ket k);
         void merge(Ket k, const std::string& s);
+
+        Sequence Compile(ContextList& context);
+
 };
 
 #endif

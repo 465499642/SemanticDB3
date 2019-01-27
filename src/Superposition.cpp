@@ -254,3 +254,7 @@ BaseRule* Superposition::b_append(BaseRule* brule) {
     }
 }
 
+
+Sequence Superposition::Compile(ContextList& context) {
+    return this->to_seq();
+}

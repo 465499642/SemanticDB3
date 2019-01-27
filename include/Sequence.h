@@ -59,6 +59,9 @@ class Sequence : public BaseRule {
 
         void merge(const Sequence& seq2);
         void merge(const Sequence& seq2, const std::string& s);
+
+        Sequence Compile(ContextList& context);
+
 };
 
 #endif

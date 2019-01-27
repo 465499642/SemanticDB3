@@ -179,3 +179,6 @@ BaseRule* Sequence::b_append(BaseRule* brule) {
     }
 }
 
+Sequence Sequence::Compile(ContextList& context) {
+    return this->to_seq();
+}

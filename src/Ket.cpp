@@ -102,3 +102,8 @@ void Ket::merge(Ket k, const std::string& s) {
     std::string s2 = this->label() + s + k.label();
     ket_label_idx = ket_map.get_idx(s2);
 }
+
+
+Sequence Ket::Compile(ContextList& context) {
+    return this->to_seq();
+}

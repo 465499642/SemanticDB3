@@ -21,7 +21,7 @@ class OpRule : public BaseRule {
         Sequence Compile(ContextList& context);
 
         int type() { return OPRULE; };
-        const ulong size() { return 1; }; // return something better later.
+        const ulong size() { return op_rule_vec.size(); };
         std::string to_string();
 
         BaseRule* b_add(BaseRule* brule) { return this; }; // do something better here later.

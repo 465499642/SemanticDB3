@@ -53,6 +53,9 @@ class Superposition : public BaseRule {
 
         void merge(const Superposition& sp2);
         void merge(const Superposition& sp2, const std::string& s);
+
+        Sequence Compile(ContextList& context);
+
 };
 
 #endif

@@ -22,6 +22,9 @@ class StoredRule : public BaseRule {
         Ket to_ket() { Ket tmp; return tmp; };
         Superposition to_sp() { Superposition tmp; return tmp; };
         Sequence to_seq() { Sequence tmp; return tmp; };
+
+        Sequence Compile(ContextList& context) { Sequence tmp; return tmp; };
+
 };
 
 #endif

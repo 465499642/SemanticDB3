@@ -7,6 +7,7 @@
 class Ket;
 class Superposition;
 class Sequence;
+class ContextList;
 
 class BaseRule {
     private:
@@ -20,6 +21,7 @@ class BaseRule {
         virtual Sequence to_seq() = 0;
         virtual BaseRule* b_add(BaseRule* brule) = 0;
         virtual BaseRule* b_append(BaseRule* brule) = 0;
+        virtual Sequence Compile(ContextList& context) = 0;
 };
 
 #endif
