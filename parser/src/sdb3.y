@@ -148,6 +148,7 @@ real_single_op_rule : real_op_sequence space real_ket { $$ = new SingleOpRule($1
 
 real_op_rule : real_single_op_rule { $$ = new OpRule(); $$->push(*$1); }
              | real_op_rule TSPACE real_single_op_rule { $1->push(*$3); }
+             | space TLPAREN space real_op_rule space TRPAREN { $$ = $4; }
              ;
 
 ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
