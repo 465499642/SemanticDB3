@@ -74,7 +74,9 @@ swfile : %empty { $$ = new ContextList("global context"); }
            $1->learn(*$3, *$5, seq); 
        }
        | swfile space simple_op space ket space TMEM_LEARN_SYM space real_op_rule endl {
+           std::cout << $9->to_string() << std::endl;
            Sequence *seq = new Sequence($9->Compile(*$1));
+           std::cout << "seq: " << seq->to_string() << std::endl;
            $1->learn(*$3, *$5, seq);
        }
        ;
@@ -141,7 +143,7 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  ;
 
 real_single_op_rule : real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
-                    | real_op_sequence space TLPAREN space real_seq space TRPAREN { $$ = new SingleOpRule($1, $5); }
+                    | real_op_sequence space TLPAREN space real_op_rule space TRPAREN { $$ = new SingleOpRule($1, $5); }
                     ;
 
 real_op_rule : real_single_op_rule { $$ = new OpRule(); $$->push(*$1); }
