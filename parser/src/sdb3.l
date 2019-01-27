@@ -8,9 +8,8 @@
 #include "ContextList.h"
 #include "BaseOp.h"
 #include "OpSeq.h"
-#include "BaseCompoundSeq.h"
-#include "SingleCompoundSeq.h"
-#include "CompoundSeq.h"
+#include "SingleOpRule.h"
+#include "OpRule.h"
 #include "sdb3.tab.h"
 
 extern int yylex();

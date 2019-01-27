@@ -12,9 +12,8 @@
     #include "NumericOp.h"
     #include "PoweredOp.h"
     #include "OpSeq.h"
-    #include "BaseCompoundSeq.h"
-    #include "SingleCompoundSeq.h"
-    #include "CompoundSeq.h"
+    #include "SingleOpRule.h"
+    #include "OpRule.h"
 
     extern int yylex();
     extern int yyparse();
@@ -33,9 +32,8 @@
     double d;
     BaseOp *base_op;
     OpSeq *op_seq;
-    BaseCompoundSeq *base_compound_seq;
-    SingleCompoundSeq *single_compound_seq;
-    CompoundSeq *compound_seq;
+    SingleOpRule *single_op_rule;
+    OpRule *op_rule;
 }
 
 %token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
@@ -53,8 +51,8 @@
 %type <seq> real_seq
 %type <base_op> real_general_op real_powered_op real_op
 %type <op_seq> real_op_sequence
-%type <single_compound_seq> real_single_compound_seq 
-%type <compound_seq> real_compound_seq
+%type <single_op_rule> real_single_op_rule 
+%type <op_rule> real_op_rule
 
 %start start
 
@@ -75,7 +73,7 @@ swfile : %empty { $$ = new ContextList("global context"); }
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
            $1->learn(*$3, *$5, seq); 
        }
-       | swfile space simple_op space ket space TMEM_LEARN_SYM space real_compound_seq endl {
+       | swfile space simple_op space ket space TMEM_LEARN_SYM space real_op_rule endl {
            Sequence *seq = new Sequence($9->Compile(*$1));
            $1->learn(*$3, *$5, seq);
        }
@@ -142,13 +140,13 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 
-real_single_compound_seq : real_op_sequence space real_ket { $$ = new SingleCompoundSeq($1, $3); }
-                         | real_op_sequence space TLPAREN space real_seq space TRPAREN { $$ = new SingleCompoundSeq($1, $5); }
-                         ;
+real_single_op_rule : real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
+                    | real_op_sequence space TLPAREN space real_seq space TRPAREN { $$ = new SingleOpRule($1, $5); }
+                    ;
 
-real_compound_seq : real_single_compound_seq { $$ = new CompoundSeq(); $$->append(*$1); }
-                  | real_compound_seq TSPACE real_single_compound_seq { $1->append(*$3); }
-                  ;
+real_op_rule : real_single_op_rule { $$ = new OpRule(); $$->push(*$1); }
+             | real_op_rule TSPACE real_single_op_rule { $1->push(*$3); }
+             ;
 
 ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
     ;
