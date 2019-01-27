@@ -1,6 +1,7 @@
 #include <string>
 #include "SingleOpRule.h"
 #include "Sequence.h"
+#include "Ket.h"
 
 SingleOpRule::SingleOpRule(BaseRule* b_rule2) {
     op_seq = new OpSeq();
@@ -22,6 +23,11 @@ Sequence SingleOpRule::Compile(ContextList& context) {
 }
 
 std::string SingleOpRule::to_string() {
-    std::string s = op_seq->to_string() + " ( " + b_rule->to_string() + " )";
+    std::string s;
+    if (b_rule->type() == KET) {
+        s = op_seq->to_string() + " " + b_rule->to_string();
+    } else {
+        s = op_seq->to_string() + " ( " + b_rule->to_string() + " )";
+    }
     return s;
 }
