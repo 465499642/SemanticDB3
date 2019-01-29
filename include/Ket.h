@@ -58,7 +58,7 @@ class Ket : public BaseRule {
         void merge(Ket k, const std::string& s);
 
         Sequence Compile(ContextList& context);
-
+        Sequence Compile(ContextList& context, const ulong label_idx);
 };
 
 #endif

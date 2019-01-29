@@ -19,6 +19,7 @@ class OpRule : public BaseRule {
         OpRule() {};
         void push(SingleOpRule &single_op_rule);
         Sequence Compile(ContextList& context);
+        Sequence Compile(ContextList& context, const ulong label_idx);
 
         int type() { return OPRULE; };
         const ulong size() { return op_rule_vec.size(); };

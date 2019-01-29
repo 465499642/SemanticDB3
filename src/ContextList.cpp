@@ -4,6 +4,9 @@
 
 #include "NewContext.h"
 #include "ContextList.h"
+#include "StoredRule.h"
+#include "MemoizingRule.h"
+
 
 ContextList::ContextList(const std::string& s) {
     name = s;
@@ -65,6 +68,20 @@ BaseRule* ContextList::recall(const std::string& op, const std::string& label) {
 
 BaseRule* ContextList::recall(const ulong op_idx, const ulong label_idx) {
     return data[index].recall(op_idx, label_idx);
+}
+
+BaseRule* ContextList::active_recall(const ulong op_idx, const ulong label_idx) {  // not sure this is best place for this code.
+    BaseRule* tmp = this->recall(op_idx, label_idx);                               // SimpleOp::Compile is an alternative
+    if (tmp->type() == STOREDRULE) {
+        Sequence *seq = new Sequence(tmp->Compile(*this, label_idx));
+        return seq;
+    } else if (tmp->type() == MEMOIZINGRULE) {
+        Sequence *seq = new Sequence(tmp->Compile(*this, label_idx));
+        this->learn(op_idx, label_idx, seq);
+        return seq;
+    } else {
+        return tmp;
+    }
 }
 
 

@@ -61,7 +61,7 @@ class Sequence : public BaseRule {
         void merge(const Sequence& seq2, const std::string& s);
 
         Sequence Compile(ContextList& context);
-
+        Sequence Compile(ContextList& context, const ulong label_idx);
 };
 
 #endif

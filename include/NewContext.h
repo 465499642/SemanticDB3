@@ -26,6 +26,7 @@ class NewContext {
 
         BaseRule* recall(const std::string& op, const std::string& label);
         BaseRule* recall(const ulong op_idx, const ulong label_idx);
+//        BaseRule* active_recall(const ulong op_idx, const ulong label_idx);
         void print_universe();
 };
 

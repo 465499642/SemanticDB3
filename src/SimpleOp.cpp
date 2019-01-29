@@ -14,7 +14,11 @@ Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) { // make more e
     for (auto sp: seq) {
         Superposition sp2;
         for (auto k: sp) {
-            Superposition sp3 = context.recall(op_idx, k.label_idx())->to_sp();
+            // Superposition sp3 = context.recall(op_idx, k.label_idx())->to_sp();
+            BaseRule *b_rule = context.active_recall(op_idx, k.label_idx());
+            // std::cout << "b_rule: " << b_rule->to_string() << std::endl;
+            // std::cout << "b_rule type: " << b_rule->type() << std::endl;
+            Superposition sp3 = b_rule->to_sp();
             sp3.multiply(k.value());
             sp2.add(sp3);
         }

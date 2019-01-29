@@ -22,6 +22,7 @@ class SingleOpRule : public BaseRule {
         SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2);
         unsigned int symbol_type() { return op_seq->symbol_type(); };
         Sequence Compile(ContextList& context);
+        Sequence Compile(ContextList& context, const ulong label_idx);
 
         int type() { return SINGLEOPRULE; };
         const ulong size() { return 1; };

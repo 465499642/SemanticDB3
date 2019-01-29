@@ -22,6 +22,7 @@ class BaseRule {
         virtual BaseRule* b_add(BaseRule* brule) = 0;
         virtual BaseRule* b_append(BaseRule* brule) = 0;
         virtual Sequence Compile(ContextList& context) = 0;
+        virtual Sequence Compile(ContextList& context, const ulong label_idx) = 0;
 };
 
 #endif

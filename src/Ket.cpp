@@ -107,3 +107,8 @@ void Ket::merge(Ket k, const std::string& s) {
 Sequence Ket::Compile(ContextList& context) {
     return this->to_seq();
 }
+
+Sequence Ket::Compile(ContextList& context, const ulong label_idx) {
+    return this->to_seq();
+}
+

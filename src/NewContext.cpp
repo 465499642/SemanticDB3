@@ -160,6 +160,23 @@ BaseRule* NewContext::recall(const ulong op_idx, const ulong label_idx) {
     return result;
 }
 
+/*
+BaseRule* NewContext::active_recall(const ulong op_idx, const ulong label_idx) {
+    BaseRule* tmp = this->recall(op_idx, label_idx);
+    if (tmp->type() == STOREDRULE) {
+        Sequence *seq = new Sequence(tmp->Compile(*this));
+        return seq;
+    } else (tmp->type() == MEMOIZINGRULE) {
+        Sequence *seq = new Sequence(tmp->Compile(*this));
+        this->learn(op_idx, label_idx, seq);
+        return seq;
+    } else {
+        return tmp;
+    }
+
+}
+*/
+
 void NewContext::print_universe() {
     std::string s, op, label;
     ulong supported_ops_idx;

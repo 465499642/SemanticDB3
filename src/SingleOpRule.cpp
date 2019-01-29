@@ -22,6 +22,14 @@ Sequence SingleOpRule::Compile(ContextList& context) {
     return seq;
 }
 
+Sequence SingleOpRule::Compile(ContextList& context, const ulong label_idx) {
+    Sequence seq;
+    Sequence b_seq = b_rule->Compile(context, label_idx);
+    seq = op_seq->Compile(context, b_seq);
+    return seq;
+}
+
+
 std::string SingleOpRule::to_string() {
     std::string s;
     if (b_rule->type() == KET) {

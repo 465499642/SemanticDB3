@@ -27,7 +27,7 @@ class StoredRule : public BaseRule {
         Sequence to_seq() { Sequence tmp; return tmp; };
 
         Sequence Compile(ContextList& context) { return s_rule->Compile(context); };
-
+        Sequence Compile(ContextList& context, const ulong label_idx) { return s_rule->Compile(context, label_idx); }
 };
 
 #endif

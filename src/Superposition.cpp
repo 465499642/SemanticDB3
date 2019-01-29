@@ -258,3 +258,8 @@ BaseRule* Superposition::b_append(BaseRule* brule) {
 Sequence Superposition::Compile(ContextList& context) {
     return this->to_seq();
 }
+
+Sequence Superposition::Compile(ContextList& context, const ulong label_idx) {
+    return this->to_seq();
+}
+
