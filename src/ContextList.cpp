@@ -30,6 +30,10 @@ void ContextList::set(const std::string& s) {
     }
 }
 
+void ContextList::learn(const ulong op_idx, const ulong label_idx, BaseRule* brule) {
+    data[index].learn(op_idx, label_idx, brule);
+}
+
 void ContextList::learn(const std::string& op, const std::string& label, BaseRule* brule) {
     data[index].learn(op, label, brule);
 }

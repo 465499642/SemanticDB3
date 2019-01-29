@@ -40,19 +40,20 @@
     OpRule *op_rule;
 }
 
-%token <string> TKET TOP_LABEL TPARAMETER_STR
-%token <u> TINTEGER
+%token <string> TPARAMETER_STR
+%token <u> TKET TOP_LABEL TINTEGER
 %token <d> TDOUBLE
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
 %token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW TQUOTE TSTAR
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
 %token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET
 
-%type <string> rule ket coeff_ket simple_op compound_op function_op general_op parameter_string parameter parameters
+%type <string> rule coeff_ket compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
 %type <string> context_learn_rule
 %type <context> swfile learn_rule
 %type <k> real_ket
+%type <u> ket simple_op
 %type <d> numeric fraction
 %type <seq> real_seq
 %type <base_op> real_general_op real_powered_op real_op
@@ -75,24 +76,24 @@ swfile : %empty { $$ = new ContextList("global context"); }
            // $1->learn(*$3, *$5, $9); 
 
            Sequence *seq = new Sequence($9->Compile(*$1));
-           $1->learn(*$3, *$5, seq);
+           $1->learn($3, $5, seq);
        }
-       | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn(*$3, *$5, $9); }
-       | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn(*$3, *$5, $9); }
+       | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn($3, $5, $9); }
+       | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn($3, $5, $9); }
        | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
            /*Sequence *k_seq = new Sequence(*$11);
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
            $1->learn(*$3, *$5, seq); */
 
            StoredRule *s_rule = new StoredRule($9);
-           $1->learn(*$3, *$5, s_rule);
+           $1->learn($3, $5, s_rule);
        }
        | swfile space simple_op space ket space TMEM_LEARN_SYM space real_op_rule endl {
            /* Sequence *seq = new Sequence($9->Compile(*$1));
            $1->learn(*$3, *$5, seq); */
 
            MemoizingRule *m_rule = new MemoizingRule($9);
-           $1->learn(*$3, *$5, m_rule);
+           $1->learn($3, $5, m_rule);
        }
        ;
 
@@ -113,7 +114,7 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
      | TCOLON op_sequence { }
      ;
 
-context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = $6; }
+context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = new std::string(ket_map.get_str($6)); }
                    ;
 
 numeric : TINTEGER { $$ = (double)$1; std::cout << "int: " << $1 << std::endl; }
@@ -124,9 +125,9 @@ fraction : numeric { $$ = $1; }
          | numeric TDIVIDE numeric { $$ = $1 / $3; std::cout << "fraction: " << $1 << "/" << $3 << std::endl; }
          ;
 
-real_ket : ket { $$ = new Ket(*$1); }
-         | TMINUS space numeric space ket { $$ = new Ket(*$5, - $3); }
-         | numeric space ket { $$ = new Ket(*$3, $1); }
+real_ket : ket { $$ = new Ket($1); }
+         | TMINUS space numeric space ket { $$ = new Ket($5, - $3); }
+         | numeric space ket { $$ = new Ket($3, $1); }
          ;
 
 real_seq : real_ket { $$ = new Sequence(*$1); }
@@ -137,7 +138,7 @@ real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TMERGE2 space real_ket { Sequence tmp(*$5); $1->merge(tmp, " "); }
         ;
 
-real_general_op : simple_op { $$ = new SimpleOp(*$1); }
+real_general_op : simple_op { $$ = new SimpleOp($1); }
                 | fraction { $$ = new NumericOp($1); }
                 ;
 
@@ -167,7 +168,7 @@ real_op_rule : real_single_op_rule { $$ = new OpRule(); $$->push(*$1); }
              | space TLPAREN space real_op_rule space TRPAREN { $$ = $4; }
              ;
 
-ket : TKET { $$ = new std::string(tidy_ket(*$1)); std::cout << "ket: " << *$1 << std::endl; }
+ket : TKET { $$ = $1; std::cout << "ket: " << $1 << std::endl; }
     ;
 
 coeff_ket : ket { $$ = $1; }
@@ -186,7 +187,7 @@ op_symbol : TPLUS
           | TMERGE
           ;
 
-simple_op : TOP_LABEL { $$ = $1; std::cout << "simple op: " << *$1 << std::endl; }
+simple_op : TOP_LABEL { $$ = $1; std::cout << "simple op: " << $1 << std::endl; }
           ;
 
 parameter_string : TPARAMETER_STR { $$ = $1; std::cout << "parameter string: " << *$1 << std::endl; }

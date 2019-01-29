@@ -16,6 +16,19 @@
 extern int yylex();
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 #define TOKEN(t) (yylval.token = t)
+
+ulong get_ket_idx(char *str, yy_size_t len) { // tidy later!!
+    std::string s(str, len);
+    ulong idx = ket_map.get_idx(s.substr(1, s.size() - 2));
+    return idx;
+}
+
+ulong get_op_idx(char *str, yy_size_t len) {
+    std::string s(str, len);
+    ulong idx = ket_map.get_idx(s);
+    return idx;
+}
+
 %}
 
 %option noyywrap
@@ -30,8 +43,8 @@ digit					[0-9]
 "supported-ops".*			return TOKEN(TSUPPORTED_OPS);
 {digit}+\.{digit}*			{ yylval.d = atof(yytext); return TDOUBLE; }
 {digit}+				{ yylval.u = atoll(yytext); return TINTEGER; }
-"|"[^<|>]*">"				SAVE_TOKEN; return TKET;
-[a-zA-Z!][a-zA-Z0-9\-\+!?\.:]+		SAVE_TOKEN; return TOP_LABEL;
+"|"[^<|>]*">"				{ yylval.u = get_ket_idx(yytext, yyleng); return TKET; }
+[a-zA-Z!][a-zA-Z0-9\-\+!?\.:]+		{ yylval.u = get_op_idx(yytext, yyleng); return TOP_LABEL; }
 "\""[^\"\[\]<|>]*"\""			SAVE_TOKEN; return TPARAMETER_STR;
 "|"					return TOKEN(TPIPE);
 "+=>"					return TOKEN(TADD_LEARN_SYM);
