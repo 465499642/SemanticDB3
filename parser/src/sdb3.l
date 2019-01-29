@@ -1,6 +1,7 @@
 %{
 #include <iostream>
 #include <string>
+#include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
 #include "Sequence.h"
@@ -27,8 +28,8 @@ digit					[0-9]
 "--".*					return TOKEN(TCOMMENT);
 "|context>"				return TOKEN(TCONTEXT_KET);
 "supported-ops".*			return TOKEN(TSUPPORTED_OPS);
-{digit}+\.{digit}*			SAVE_TOKEN; return TDOUBLE;
-{digit}+				SAVE_TOKEN; return TINTEGER;
+{digit}+\.{digit}*			{ yylval.d = atof(yytext); return TDOUBLE; }
+{digit}+				{ yylval.u = atoll(yytext); return TINTEGER; }
 "|"[^<|>]*">"				SAVE_TOKEN; return TKET;
 [a-zA-Z!][a-zA-Z0-9\-\+!?\.:]+		SAVE_TOKEN; return TOP_LABEL;
 "\""[^\"\[\]<|>]*"\""			SAVE_TOKEN; return TPARAMETER_STR;

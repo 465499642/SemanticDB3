@@ -2,6 +2,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <iostream>
+    #include "KetMap.h"
     #include "Ket.h"
     #include "Superposition.h"
     #include "Sequence.h"
@@ -32,13 +33,16 @@
     Sequence *seq;
     int token;
     double d;
+    ulong u;
     BaseOp *base_op;
     OpSeq *op_seq;
     SingleOpRule *single_op_rule;
     OpRule *op_rule;
 }
 
-%token <string> TINTEGER TDOUBLE TKET TOP_LABEL TPARAMETER_STR
+%token <string> TKET TOP_LABEL TPARAMETER_STR
+%token <u> TINTEGER
+%token <d> TDOUBLE
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
 %token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW TQUOTE TSTAR
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
@@ -112,8 +116,8 @@ rule : space comment { $$ = new std::string(); std::cout << "comment" << std::en
 context_learn_rule : space TCONTEXT_KET space TLEARN_SYM space ket { $$ = $6; }
                    ;
 
-numeric : TINTEGER { $$ = std::stod(*$1); std::cout << "int: " << *$1 << std::endl; }
-        | TDOUBLE { $$ = std::stod(*$1); std::cout << "double: " << *$1 << std::endl; }
+numeric : TINTEGER { $$ = (double)$1; std::cout << "int: " << $1 << std::endl; }
+        | TDOUBLE { $$ = $1; std::cout << "double: " << $1 << std::endl; }
         ;
 
 fraction : numeric { $$ = $1; }
@@ -137,7 +141,7 @@ real_general_op : simple_op { $$ = new SimpleOp(*$1); }
                 | fraction { $$ = new NumericOp($1); }
                 ;
 
-real_powered_op : real_general_op TPOW TINTEGER { ulong pow = std::stoul(*$3); $$ = new PoweredOp($1, pow); }
+real_powered_op : real_general_op TPOW TINTEGER { $$ = new PoweredOp($1, $3); }
                 ;
 
 real_op : real_powered_op { $$ = $1; }
