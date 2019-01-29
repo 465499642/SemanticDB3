@@ -11,6 +11,7 @@
 #include "OpSeq.h"
 #include "SingleOpRule.h"
 #include "OpRule.h"
+#include "SelfKet.h"
 #include "sdb3.tab.h"
 
 extern int yylex();
@@ -40,6 +41,7 @@ digit					[0-9]
 "\n"					return TOKEN(TENDL);
 "--".*					return TOKEN(TCOMMENT);
 "|context>"				return TOKEN(TCONTEXT_KET);
+"|_self>"				return TOKEN(TSELF_KET);
 "supported-ops".*			return TOKEN(TSUPPORTED_OPS);
 {digit}+\.{digit}*			{ yylval.d = atof(yytext); return TDOUBLE; }
 {digit}+				{ yylval.u = atoll(yytext); return TINTEGER; }

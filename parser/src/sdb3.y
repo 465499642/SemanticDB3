@@ -18,6 +18,7 @@
     #include "OpRule.h"
     #include "StoredRule.h"
     #include "MemoizingRule.h"
+    #include "SelfKet.h"
 
     extern int yylex();
     extern int yyparse();
@@ -30,6 +31,7 @@
     std::string *string;
     ContextList *context;
     Ket *k;
+    SelfKet *s_k;
     Superposition *sp;
     Sequence *seq;
     int token;
@@ -47,13 +49,14 @@
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
 %token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW TQUOTE TSTAR
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
-%token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET
+%token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET TSELF_KET
 
 %type <string> rule coeff_ket compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
 %type <string> context_learn_rule
 %type <context> swfile learn_rule
 %type <k> real_ket
+%type <s_k> real_self_ket
 %type <u> ket simple_op
 %type <d> numeric fraction
 %type <seq> real_seq
@@ -132,6 +135,11 @@ real_ket : ket { $$ = new Ket($1); }
          | numeric space ket { $$ = new Ket($3, $1); }
          ;
 
+real_self_ket : TSELF_KET { $$ = new SelfKet(1); }
+              | TMINUS space numeric space TSELF_KET { $$ = new SelfKet(1, - $3); }
+              | numeric space TSELF_KET { $$ = new SelfKet(1, $1); }
+              ;
+
 real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TPLUS space real_ket { $1->add(*$5); } 
         | real_seq space TMINUS space real_ket { Ket tmp = *$5; tmp.multiply(-1); $1->add(tmp); }
@@ -161,7 +169,8 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 
-real_single_op_rule : real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
+real_single_op_rule : real_op_sequence space real_self_ket { $$ = new SingleOpRule($1, $3); }
+                    | real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
                     | real_op_sequence space TLPAREN space real_op_rule space TRPAREN { $$ = new SingleOpRule($1, $5); }
                     ;
 
