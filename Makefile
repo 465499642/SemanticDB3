@@ -20,6 +20,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     SuperpositionIter.o \
     SingleOpRule.o \
     OpRule.o \
+    SelfKet.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 

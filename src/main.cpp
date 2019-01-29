@@ -17,6 +17,7 @@
 #include "PoweredOp.h"
 #include "SingleOpRule.h"
 #include "OpRule.h"
+#include "SelfKet.h"
 
 
 // for now, use main to test our components:
@@ -456,6 +457,13 @@ int main() {
     std::cout << "op_rule3: " << op_rule3.to_string() << std::endl;
     std::cout << "full_op_rule2: " << full_op_rule2.to_string() << std::endl;
     std::cout << "compiled full_op_rule2: " << full_op_rule2.Compile(context_list).to_string() << std::endl;
+
+    // test SelfKet:
+    SelfKet s_ket;
+    SelfKet s_ket2(5, 3.142);
+    std::cout << "s_ket: " << s_ket.to_string() << std::endl;
+    std::cout << "s_ket2: " << s_ket2.to_string() << std::endl;
+    std::cout << "compiled s_ket: " << s_ket.Compile(context_list, 2).to_string() << std::endl;
 
     return 0;
 }

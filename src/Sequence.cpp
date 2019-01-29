@@ -182,3 +182,8 @@ BaseRule* Sequence::b_append(BaseRule* brule) {
 Sequence Sequence::Compile(ContextList& context) {
     return this->to_seq();
 }
+
+Sequence Sequence::Compile(ContextList& context, const ulong label_idx) {
+    return this->to_seq();
+}
+
