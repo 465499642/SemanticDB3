@@ -2,6 +2,7 @@
 #include "SingleOpRule.h"
 #include "Sequence.h"
 #include "Ket.h"
+#include "SelfKet.h"
 
 SingleOpRule::SingleOpRule(BaseRule* b_rule2) {
     op_seq = new OpSeq();
@@ -32,7 +33,7 @@ Sequence SingleOpRule::Compile(ContextList& context, const ulong label_idx) {
 
 std::string SingleOpRule::to_string() {
     std::string s;
-    if (b_rule->type() == KET) {
+    if (b_rule->type() == KET || b_rule->type() == SELFKET) {
         s = op_seq->to_string() + " " + b_rule->to_string();
     } else {
         s = op_seq->to_string() + " ( " + b_rule->to_string() + " )";

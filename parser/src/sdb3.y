@@ -20,10 +20,11 @@
     #include "MemoizingRule.h"
     #include "SelfKet.h"
 
+    extern int line_num;
     extern int yylex();
     extern int yyparse();
     extern FILE* yyin;
-    void yyerror(const char *s) { std::cout << "ERROR: " << s << std::endl; }
+    void yyerror(const char *s) { std::cout << "ERROR: " << s << " on line: " << line_num << std::endl; }
     std::string tidy_ket(const std::string &s) { std::string result = s.substr(1, s.size() - 2); return result; } // improve later!
 %}
 
@@ -169,11 +170,11 @@ real_op : %empty { $$ = new EmptyOp(); /* change later? */}
         ;
 
 real_op_sequence : real_op { $$ = new OpSeq($1); }
-                 | space TPLUS space real_op { $$ = new OpSeq(SPLUS, $4); }
-                 | space TMINUS space real_op { $$ = new OpSeq(SMINUS, $4); }
-                 | space TSEQ space real_op { $$ = new OpSeq(SSEQ, $4); }
-                 | space TMERGE space real_op { $$ = new OpSeq(SMERGE, $4); }
-                 | space TMERGE2 space real_op { $$ = new OpSeq(SMERGE2, $4); }
+                 | TPLUS space real_op { $$ = new OpSeq(SPLUS, $3); }
+                 | TMINUS space real_op { $$ = new OpSeq(SMINUS, $3); }
+                 | TSEQ space real_op { $$ = new OpSeq(SSEQ, $3); }
+                 | TMERGE space real_op { $$ = new OpSeq(SMERGE, $3); }
+                 | TMERGE2 space real_op { $$ = new OpSeq(SMERGE2, $3); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 

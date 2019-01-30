@@ -14,6 +14,8 @@
 #include "SelfKet.h"
 #include "sdb3.tab.h"
 
+int line_num = 1;
+
 extern int yylex();
 #define SAVE_TOKEN yylval.string = new std::string(yytext, yyleng)
 #define TOKEN(t) (yylval.token = t)
@@ -38,7 +40,7 @@ digit					[0-9]
 
 %%
 [ \t]+					return TOKEN(TSPACE);
-"\n"					return TOKEN(TENDL);
+"\n"					{ ++line_num; return TOKEN(TENDL); }
 "--".*					return TOKEN(TCOMMENT);
 "|context>"				return TOKEN(TCONTEXT_KET);
 "|_self>"				return TOKEN(TSELF_KET);
