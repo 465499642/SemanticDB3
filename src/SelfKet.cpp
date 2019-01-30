@@ -47,3 +47,9 @@ Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) {
     return this->to_seq();
 }
 
+Sequence SelfKet::Compile(ContextList& context, std::vector<Sequence>& args) {
+    if (idx < args.size()) {
+        return args.at(idx);
+    }
+    return this->to_seq();
+}

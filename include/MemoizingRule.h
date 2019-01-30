@@ -27,6 +27,7 @@ class MemoizingRule : public BaseRule {
 
         Sequence Compile(ContextList& context) { return m_rule->Compile(context); };
         Sequence Compile(ContextList& context, const ulong label_idx) { return m_rule->Compile(context, label_idx); }
+        Sequence Compile(ContextList& context, std::vector<Sequence>& args) { return m_rule->Compile(context, args); }
 };
 
 #endif

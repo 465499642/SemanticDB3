@@ -112,3 +112,6 @@ Sequence Ket::Compile(ContextList& context, const ulong label_idx) {
     return this->to_seq();
 }
 
+Sequence Ket::Compile(ContextList& context, std::vector<Sequence>& args) {
+    return this->to_seq();
+}

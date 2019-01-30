@@ -23,6 +23,7 @@ class SingleOpRule : public BaseRule {
         unsigned int symbol_type() { return op_seq->symbol_type(); };
         Sequence Compile(ContextList& context);
         Sequence Compile(ContextList& context, const ulong label_idx);
+        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 
         int type() { return SINGLEOPRULE; };
         const ulong size() { return 1; };

@@ -1,9 +1,21 @@
+#include <iostream>
 #include <string>
+#include <vector>
 #include "KetMap.h"
+#include "Sequence.h"
 #include "FnOp.h"
 
 Sequence FnOp::Compile(ContextList& context, Sequence& seq) {
-    return seq;
+    std::vector<Sequence> args;
+    args.push_back(seq);
+    for (auto op_rule: op_rules) {
+        Sequence tmp = op_rule->Compile(context);
+        args.push_back(tmp);
+        std::cout << "arg: " << tmp.to_string() << std::endl;
+    }
+    BaseRule *brule = context.fn_recall(op_idx, op_rules.size());
+    std::cout << "brule: " << brule->to_string() << std::endl;
+    return brule->Compile(context, args);
 }
 
 std::string FnOp::to_string() {

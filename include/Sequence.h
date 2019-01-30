@@ -62,6 +62,7 @@ class Sequence : public BaseRule {
 
         Sequence Compile(ContextList& context);
         Sequence Compile(ContextList& context, const ulong label_idx);
+        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 };
 
 #endif

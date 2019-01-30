@@ -42,6 +42,20 @@ Sequence OpRule::Compile(ContextList& context, const ulong label_idx) {
     return seq2;
 }
 
+Sequence OpRule::Compile(ContextList& context, std::vector<Sequence>& args) {
+    Sequence seq2;
+    for (auto seq: op_rule_vec) {
+        Sequence compiled_seq = seq.Compile(context, args);
+        switch (seq.symbol_type()) {  // should this be in the parser??
+            case SPLUS: { seq2.add(compiled_seq); break; }
+            case SMINUS: { seq2.add(compiled_seq); break; } // the SMINUS branch is now handled inside OpSeq
+            case SSEQ: { seq2.append(compiled_seq); break; } // I don't think it makes sense to do the same with SSEQ, SMERGE, SMERGE2 though.
+            case SMERGE: { seq2.merge(compiled_seq); break; }
+            case SMERGE2: { seq2.merge(compiled_seq, " "); break; }
+        }
+    }
+    return seq2;
+}
 
 std::string OpRule::to_string() {
     std::string s = "";

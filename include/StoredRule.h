@@ -28,6 +28,7 @@ class StoredRule : public BaseRule {
 
         Sequence Compile(ContextList& context) { return s_rule->Compile(context); };
         Sequence Compile(ContextList& context, const ulong label_idx) { return s_rule->Compile(context, label_idx); }
+        Sequence Compile(ContextList& context, std::vector<Sequence>& args) { return s_rule->Compile(context, args); }
 };
 
 #endif

@@ -20,6 +20,7 @@ class OpRule : public BaseRule {
         void push(SingleOpRule &single_op_rule);
         Sequence Compile(ContextList& context);
         Sequence Compile(ContextList& context, const ulong label_idx);
+        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 
         int type() { return OPRULE; };
         const ulong size() { return op_rule_vec.size(); };

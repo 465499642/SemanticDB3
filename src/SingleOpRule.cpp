@@ -30,6 +30,12 @@ Sequence SingleOpRule::Compile(ContextList& context, const ulong label_idx) {
     return seq;
 }
 
+Sequence SingleOpRule::Compile(ContextList& context, std::vector<Sequence>& args) {
+    Sequence seq;
+    Sequence b_seq = b_rule->Compile(context, args);
+    seq = op_seq->Compile(context, b_seq);
+    return seq;
+}
 
 std::string SingleOpRule::to_string() {
     std::string s;

@@ -2,6 +2,7 @@
 #define BASERULE_H
 
 #include <string>
+#include <vector>
 #include "KetMap.h"
 
 class Ket;
@@ -23,6 +24,7 @@ class BaseRule {
         virtual BaseRule* b_append(BaseRule* brule) = 0;
         virtual Sequence Compile(ContextList& context) = 0;
         virtual Sequence Compile(ContextList& context, const ulong label_idx) = 0;
+        virtual Sequence Compile(ContextList& context, std::vector<Sequence>& args) = 0;
 };
 
 #endif
