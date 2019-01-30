@@ -42,6 +42,7 @@ digit					[0-9]
 "--".*					return TOKEN(TCOMMENT);
 "|context>"				return TOKEN(TCONTEXT_KET);
 "|_self>"				return TOKEN(TSELF_KET);
+"|_self"{digit}">"			{ yylval.token = yytext[6] - '0'; return TSELF_KETK; }
 "supported-ops".*			return TOKEN(TSUPPORTED_OPS);
 {digit}+\.{digit}*			{ yylval.d = atof(yytext); return TDOUBLE; }
 {digit}+				{ yylval.u = atoll(yytext); return TINTEGER; }

@@ -49,7 +49,7 @@
 %token <token> TADD_LEARN_SYM TSEQ_LEARN_SYM TSTORE_LEARN_SYM TMEM_LEARN_SYM TLEARN_SYM
 %token <token> TPLUS TMINUS TSEQ TMERGE2 TMERGE TDIVIDE TCOMMA TCOLON TPOW TQUOTE TSTAR
 %token <token> TPIPE TGT TLT TLPAREN TRPAREN TLSQUARE TRSQUARE TENDL TSPACE
-%token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET TSELF_KET
+%token <token> TCOMMENT TSUPPORTED_OPS TCONTEXT_KET TSELF_KET TSELF_KETK
 
 %type <string> rule coeff_ket compound_op function_op general_op parameter_string parameter parameters
 %type <string> sp_parameters literal_sequence powered_op op op_sequence bracket_ops symbol_op_sequence
@@ -64,6 +64,7 @@
 %type <op_seq> real_op_sequence
 %type <single_op_rule> real_single_op_rule 
 %type <op_rule> real_op_rule
+%type <token> real_self_ket_k
 
 %start start
 
@@ -135,9 +136,13 @@ real_ket : ket { $$ = new Ket($1); }
          | numeric space ket { $$ = new Ket($3, $1); }
          ;
 
-real_self_ket : TSELF_KET { $$ = new SelfKet(1); }
-              | TMINUS space numeric space TSELF_KET { $$ = new SelfKet(1, - $3); }
-              | numeric space TSELF_KET { $$ = new SelfKet(1, $1); }
+real_self_ket_k : TSELF_KET { $$ = 1; }
+                | TSELF_KETK { $$ = $1; }
+                ;
+
+real_self_ket : real_self_ket_k { $$ = new SelfKet($1); }
+              | TMINUS space numeric space real_self_ket_k { $$ = new SelfKet($5, - $3); }
+              | numeric space real_self_ket_k { $$ = new SelfKet($3, $1); }
               ;
 
 real_seq : real_ket { $$ = new Sequence(*$1); }
