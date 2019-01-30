@@ -19,6 +19,7 @@
     #include "StoredRule.h"
     #include "MemoizingRule.h"
     #include "SelfKet.h"
+    #include "FnOp.h"
 
     extern int line_num;
     extern int yylex();
@@ -61,7 +62,7 @@
 %type <u> ket simple_op
 %type <d> numeric fraction
 %type <seq> real_seq
-%type <base_op> real_general_op real_powered_op real_op
+%type <base_op> real_general_op real_powered_op real_op real_fn_op
 %type <op_seq> real_op_sequence
 %type <single_op_rule> real_single_op_rule 
 %type <op_rule> real_op_rule
@@ -159,8 +160,18 @@ real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TMERGE2 space real_ket { Sequence tmp(*$5); $1->merge(tmp, " "); }
         ;
 
+real_fn_op : simple_op TLPAREN space real_op_rule space TRPAREN { FnOp *tmp = new FnOp($1); tmp->push($4); $$ = tmp; }
+           | simple_op TLPAREN space real_op_rule space TCOMMA space real_op_rule space TRPAREN { 
+               FnOp *tmp = new FnOp($1); tmp->push($4); tmp->push($8); $$ = tmp; 
+           }
+           | simple_op TLPAREN space real_op_rule space TCOMMA space real_op_rule space TCOMMA space real_op_rule space TRPAREN {
+               FnOp *tmp = new FnOp($1); tmp->push($4); tmp->push($8); tmp->push($12); $$ = tmp;
+           }
+           ;
+
 real_general_op : simple_op { $$ = new SimpleOp($1); }
                 | fraction { $$ = new NumericOp($1); }
+                | real_fn_op { $$ = $1; }
                 ;
 
 real_powered_op : real_general_op TPOW TINTEGER { $$ = new PoweredOp($1, $3); }

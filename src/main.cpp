@@ -18,6 +18,7 @@
 #include "SingleOpRule.h"
 #include "OpRule.h"
 #include "SelfKet.h"
+#include "FnOp.h"
 
 
 // for now, use main to test our components:
@@ -471,6 +472,13 @@ int main() {
     context_list.set("testing fn_learn");
     context_list.fn_learn(fn_idx, 3, &s_ket3);
     context_list.print_universe();
+
+    // test FnOp:
+    FnOp fn_op(fn_idx);
+    Ket sam("Sam", 3);
+    fn_op.push(&full_op_rule);
+    fn_op.push(&full_op_rule2);
+    std::cout << "fn_op: " << fn_op.to_string() << std::endl;
 
     return 0;
 }

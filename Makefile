@@ -21,6 +21,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     SingleOpRule.o \
     OpRule.o \
     SelfKet.o \
+    FnOp.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 
