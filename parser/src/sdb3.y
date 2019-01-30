@@ -6,6 +6,7 @@
     #include "Ket.h"
     #include "Superposition.h"
     #include "Sequence.h"
+    #include "BaseRule.h"
     #include "NewContext.h"
     #include "ContextList.h"
     #include "BaseOp.h"
@@ -37,6 +38,7 @@
     SelfKet *s_k;
     Superposition *sp;
     Sequence *seq;
+    BaseRule *b_rule;
     int token;
     double d;
     ulong u;
@@ -70,6 +72,7 @@
 %type <op_rule> real_op_rule
 %type <op_rules> real_fn_op_args
 %type <token> real_self_ket_k real_seq_fn_type real_seq_fn_param
+%type <b_rule> real_merged_ket
 
 %start start
 
@@ -155,6 +158,10 @@ real_self_ket : real_self_ket_k { $$ = new SelfKet($1); }
               | numeric space real_self_ket_k { $$ = new SelfKet($3, $1); }
               ;
 
+real_merged_ket : real_self_ket { $$ = $1; }
+                | real_ket { $$ = $1; }
+                ;
+
 real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TPLUS space real_ket { $1->add(*$5); } 
         | real_seq space TMINUS space real_ket { Ket tmp = *$5; tmp.multiply(-1); $1->add(tmp); }
@@ -192,8 +199,7 @@ real_op_sequence : real_op { $$ = new OpSeq($1); }
                  | real_op_sequence TSPACE real_op { $1->append($3); }
                  ;
 
-real_single_op_rule : real_op_sequence space real_self_ket { $$ = new SingleOpRule($1, $3); }
-                    | real_op_sequence space real_ket { $$ = new SingleOpRule($1, $3); }
+real_single_op_rule : real_op_sequence space real_merged_ket { $$ = new SingleOpRule($1, $3); }
                     | real_op_sequence space TLPAREN space real_op_rule space TRPAREN { $$ = new SingleOpRule($1, $5); }
                     ;
 

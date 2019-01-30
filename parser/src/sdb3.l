@@ -5,6 +5,7 @@
 #include "Ket.h"
 #include "Superposition.h"
 #include "Sequence.h"
+#include "BaseRule.h"
 #include "NewContext.h"
 #include "ContextList.h"
 #include "BaseOp.h"
