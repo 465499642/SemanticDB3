@@ -64,7 +64,7 @@
 %type <op_seq> real_op_sequence
 %type <single_op_rule> real_single_op_rule 
 %type <op_rule> real_op_rule
-%type <token> real_self_ket_k
+%type <token> real_self_ket_k real_seq_fn_type
 
 %start start
 
@@ -86,6 +86,9 @@ swfile : %empty { $$ = new ContextList("global context"); }
        }
        | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn($3, $5, $9); }
        | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn($3, $5, $9); }
+       | swfile space simple_op space real_seq_fn_type space TSTORE_LEARN_SYM space real_op_rule endl {
+           std::cout << "real_seq_fn_type: " << $5 << std::endl;
+       }
        | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
            /*Sequence *k_seq = new Sequence(*$11);
            Sequence *seq = new Sequence($9->Compile(*$1, *k_seq));
@@ -190,6 +193,13 @@ ket : TKET { $$ = $1; std::cout << "ket: " << $1 << std::endl; }
 coeff_ket : ket { $$ = $1; }
           | numeric space ket { $$ = $3; std::cout << "coeff_ket: " << $1 << *$3 << std::endl; }
           ;
+
+real_seq_fn_type : TLPAREN TSTAR TRPAREN { $$ = 1; }
+                 | TLPAREN TSTAR TCOMMA TSTAR TRPAREN { $$ = 2; }
+                 | TLPAREN TSTAR TCOMMA TSTAR TCOMMA TSTAR TRPAREN { $$ = 3; }
+                 | TLPAREN TSTAR TCOMMA TSTAR TCOMMA TSTAR TCOMMA TSTAR TRPAREN { $$ = 4; }
+                 ;
+
 
 literal_sequence : coeff_ket { $$ = $1; }
               | TMINUS space coeff_ket { $$ = $3; }
