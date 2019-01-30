@@ -84,6 +84,14 @@ BaseRule* ContextList::active_recall(const ulong op_idx, const ulong label_idx) 
     }
 }
 
+void ContextList::fn_learn(const ulong op_idx, const ulong param_size, BaseRule* brule) {
+    data[index].fn_learn(op_idx, param_size, brule);
+}
+
+BaseRule* ContextList::fn_recall(const ulong op_idx, const ulong param_size) {
+    return data[index].fn_recall(op_idx, param_size);
+}
+
 
 void ContextList::print_multiverse() {
     for (auto context: data) {

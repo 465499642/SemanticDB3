@@ -177,6 +177,24 @@ BaseRule* NewContext::active_recall(const ulong op_idx, const ulong label_idx) {
 }
 */
 
+void NewContext::fn_learn(const ulong op_idx, const ulong param_size, BaseRule* brule) {
+    Frame frame;
+    if (fn_rules_dict.find(param_size) == fn_rules_dict.end()) {
+        fn_sort_order.push_back(param_size);
+        fn_rules_dict[param_size] = frame;
+    }
+    fn_rules_dict[param_size].learn(op_idx, brule);
+}
+
+
+BaseRule* NewContext::fn_recall(const ulong op_idx, const ulong param_size) {
+    if (fn_rules_dict.find(param_size) == fn_rules_dict.end()) {
+        Superposition *sp = new Superposition();
+        return sp;
+    }
+    return fn_rules_dict[param_size].recall(op_idx);
+}
+
 void NewContext::print_universe() {
     std::string s, op, label;
     ulong supported_ops_idx;
@@ -208,6 +226,31 @@ void NewContext::print_universe() {
                 rule_type = "!";
             }
             s += op + " |" + label + "> " + rule_type + "=> " + rule->to_string() + "\n";
+        }
+        s += "\n";
+    }
+
+    for (const ulong param_size: fn_sort_order) {
+        switch(param_size) {
+            case 1 : label = "(*)"; break;
+            case 2 : label = "(*,*)"; break;
+            case 3 : label = "(*,*,*)"; break;
+            case 4 : label = "(*,*,*,*)"; break;
+        }
+        frame = fn_rules_dict[param_size];
+        rule = frame.recall(supported_ops_idx);
+        s += "supported-ops " + label + " => " + rule->to_string() + "\n";
+        for (const ulong op_idx: frame.supported_ops()) {
+            op = ket_map.get_str(op_idx);
+            rule = frame.recall(op_idx);
+            std::string rule_type;
+            if (rule->type() == STOREDRULE) {
+                rule_type = "#";
+            }
+            else if (rule->type() == MEMOIZINGRULE) {
+                rule_type = "!";
+            }
+            s += op + " " + label + " " + rule_type + "=> " + rule->to_string() + "\n";
         }
         s += "\n";
     }

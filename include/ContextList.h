@@ -29,6 +29,10 @@ class ContextList {
         BaseRule* recall(const std::string& op, const std::string& label);
         BaseRule* recall(const ulong op_idx, const ulong label_idx);
         BaseRule* active_recall(const ulong op_idx, const ulong label_idx);
+
+        void fn_learn(const ulong op_idx, const ulong param_size, BaseRule* brule);
+        BaseRule* fn_recall(const ulong op_idx, const ulong param_size);
+
         void print_universe();
         void print_multiverse();
 };

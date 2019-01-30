@@ -465,5 +465,12 @@ int main() {
     std::cout << "s_ket2: " << s_ket2.to_string() << std::endl;
     std::cout << "compiled s_ket: " << s_ket.Compile(context_list, 2).to_string() << std::endl;
 
+    // test context.fn_learn() and context.fn_recall():
+    ulong fn_idx = ket_map.get_idx("foo");
+    SelfKet s_ket3(3, 7.25);
+    context_list.set("testing fn_learn");
+    context_list.fn_learn(fn_idx, 3, &s_ket3);
+    context_list.print_universe();
+
     return 0;
 }
