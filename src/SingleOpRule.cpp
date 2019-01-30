@@ -40,9 +40,10 @@ Sequence SingleOpRule::Compile(ContextList& context, std::vector<Sequence>& args
 std::string SingleOpRule::to_string() {
     std::string s;
     if (b_rule->type() == KET || b_rule->type() == SELFKET) {
-        s = op_seq->to_string() + " " + b_rule->to_string();
+        // s = op_seq->to_string() + " " + b_rule->to_string();
+        s = op_seq->to_string() + b_rule->to_string();
     } else {
-        s = op_seq->to_string() + " ( " + b_rule->to_string() + " )";
+        s = op_seq->to_string() + "(" + b_rule->to_string() + ")";
     }
     return s;
 }
