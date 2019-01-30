@@ -27,6 +27,7 @@
     extern FILE* yyin;
     void yyerror(const char *s) { std::cout << "ERROR: " << s << " on line: " << line_num << std::endl; }
     std::string tidy_ket(const std::string &s) { std::string result = s.substr(1, s.size() - 2); return result; } // improve later!
+    typedef std::vector<OpRule*> ArgVec; // do we need/want this?
 %}
 
 %union {
@@ -43,6 +44,7 @@
     OpSeq *op_seq;
     SingleOpRule *single_op_rule;
     OpRule *op_rule;
+    std::vector<OpRule*> *op_rules;
 }
 
 %token <string> TPARAMETER_STR
@@ -66,6 +68,7 @@
 %type <op_seq> real_op_sequence
 %type <single_op_rule> real_single_op_rule 
 %type <op_rule> real_op_rule
+%type <op_rules> real_fn_op_args
 %type <token> real_self_ket_k real_seq_fn_type real_seq_fn_param
 
 %start start
@@ -160,13 +163,11 @@ real_seq : real_ket { $$ = new Sequence(*$1); }
         | real_seq space TMERGE2 space real_ket { Sequence tmp(*$5); $1->merge(tmp, " "); }
         ;
 
-real_fn_op : simple_op TLPAREN space real_op_rule space TRPAREN { FnOp *tmp = new FnOp($1); tmp->push($4); $$ = tmp; }
-           | simple_op TLPAREN space real_op_rule space TCOMMA space real_op_rule space TRPAREN { 
-               FnOp *tmp = new FnOp($1); tmp->push($4); tmp->push($8); $$ = tmp; 
-           }
-           | simple_op TLPAREN space real_op_rule space TCOMMA space real_op_rule space TCOMMA space real_op_rule space TRPAREN {
-               FnOp *tmp = new FnOp($1); tmp->push($4); tmp->push($8); tmp->push($12); $$ = tmp;
-           }
+real_fn_op_args : space real_op_rule space { $$ = new ArgVec(); $$->push_back($2); }
+                | real_fn_op_args TCOMMA space real_op_rule space { $1->push_back($4); }
+                ;
+
+real_fn_op : simple_op TLPAREN real_fn_op_args TRPAREN { $$ = new FnOp($1, $3); }
            ;
 
 real_general_op : simple_op { $$ = new SimpleOp($1); }
