@@ -66,7 +66,7 @@
 %type <op_seq> real_op_sequence
 %type <single_op_rule> real_single_op_rule 
 %type <op_rule> real_op_rule
-%type <token> real_self_ket_k real_seq_fn_type
+%type <token> real_self_ket_k real_seq_fn_type real_seq_fn_param
 
 %start start
 
@@ -208,12 +208,12 @@ coeff_ket : ket { $$ = $1; }
           | numeric space ket { $$ = $3; std::cout << "coeff_ket: " << $1 << *$3 << std::endl; }
           ;
 
-real_seq_fn_type : TLPAREN TSTAR TRPAREN { $$ = 1; }
-                 | TLPAREN TSTAR TCOMMA TSTAR TRPAREN { $$ = 2; }
-                 | TLPAREN TSTAR TCOMMA TSTAR TCOMMA TSTAR TRPAREN { $$ = 3; }
-                 | TLPAREN TSTAR TCOMMA TSTAR TCOMMA TSTAR TCOMMA TSTAR TRPAREN { $$ = 4; }
-                 ;
+real_seq_fn_param : TSTAR { $$ = 1; }
+                  | real_seq_fn_param TCOMMA TSTAR { $$++; }
+                  ;
 
+real_seq_fn_type : TLPAREN real_seq_fn_param TRPAREN { $$ = $2; }
+                 ;
 
 literal_sequence : coeff_ket { $$ = $1; }
               | TMINUS space coeff_ket { $$ = $3; }
