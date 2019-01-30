@@ -10,3 +10,5 @@ op5 |bah> => op4 |a>
 op6 (*) #=> |one>
 op7 (*,*) #=> |two>
 
+op8 (*,*) #=> 3|_self0> . 5|_self1> . 7|_self2>
+

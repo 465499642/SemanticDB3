@@ -89,6 +89,8 @@ swfile : %empty { $$ = new ContextList("global context"); }
        | swfile space simple_op space ket space TSEQ_LEARN_SYM space real_seq endl { $1->seq_learn($3, $5, $9); }
        | swfile space simple_op space real_seq_fn_type space TSTORE_LEARN_SYM space real_op_rule endl {
            std::cout << "real_seq_fn_type: " << $5 << std::endl;
+           StoredRule *s_rule = new StoredRule($9);
+           $1->fn_learn($3, $5, s_rule);
        }
        | swfile space simple_op space ket space TSTORE_LEARN_SYM space real_op_rule endl { 
            /*Sequence *k_seq = new Sequence(*$11);
