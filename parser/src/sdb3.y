@@ -21,6 +21,7 @@
     #include "MemoizingRule.h"
     #include "SelfKet.h"
     #include "FnOp.h"
+    #include "BracketOp.h"
 
     extern int line_num;
     extern int yylex();
@@ -47,6 +48,7 @@
     SingleOpRule *single_op_rule;
     OpRule *op_rule;
     std::vector<OpRule*> *op_rules;
+    BracketOp *bracket_op;
 }
 
 %token <string> TPARAMETER_STR
@@ -73,6 +75,7 @@
 %type <op_rules> real_fn_op_args
 %type <token> real_self_ket_k real_seq_fn_type real_seq_fn_param
 %type <b_rule> real_merged_ket
+%type <bracket_op> real_bracket_op_vec real_bracket_op
 
 %start start
 
@@ -177,9 +180,17 @@ real_fn_op_args : space real_op_rule space { $$ = new ArgVec(); $$->push_back($2
 real_fn_op : simple_op TLPAREN real_fn_op_args TRPAREN { $$ = new FnOp($1, $3); }
            ;
 
+real_bracket_op_vec : real_op_sequence { $$ = new BracketOp(*$1); }
+                    | real_bracket_op_vec space real_op_sequence { $1->push(*$3); }
+                    ;
+
+real_bracket_op : TLPAREN real_bracket_op_vec TRPAREN { $$ = $2; }
+                ;
+
 real_general_op : simple_op { $$ = new SimpleOp($1); }
                 | fraction { $$ = new NumericOp($1); }
                 | real_fn_op { $$ = $1; }
+                | real_bracket_op { $$ = $1; }
                 ;
 
 real_powered_op : real_general_op TPOW TINTEGER { $$ = new PoweredOp($1, $3); }

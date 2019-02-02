@@ -16,3 +16,5 @@ op9 |bah> #=> fn( 2|x> + 3.2|y> - 5.7|z> ) |>
 op10 |bah> #=> fn(3|Sam>, |x> + op|y>) |>
 op11 |bah> #=> fn(|x>, |y> , |z>) |>
 
+op12 |bah> #=> ( op1 + op2 op3 - op4 op5) |>
+

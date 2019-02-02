@@ -13,6 +13,7 @@
 #include "SingleOpRule.h"
 #include "OpRule.h"
 #include "SelfKet.h"
+#include "BracketOp.h"
 #include "sdb3.tab.h"
 
 int line_num = 1;
