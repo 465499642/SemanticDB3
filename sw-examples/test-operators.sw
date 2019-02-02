@@ -20,3 +20,7 @@ op |bah4> => (op1 + op2 op3 - op4 op5 . op6 ) |d>
 op |foo2> #=> (op1 . op4 op5 - op6 + op7 ) |e>
 op |bah5> => op |foo2>
 
+-- op |foo3> #=> op1 |f> . op2 |f>
+op |foo3> #=> |y> . |z>
+op |bah6> => op |foo3>
+

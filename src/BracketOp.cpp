@@ -8,9 +8,9 @@ Sequence BracketOp::Compile(ContextList& context, Sequence& seq) {
     Sequence seq2;
     for (auto op_seq : op_seq_vec) {
         Sequence compiled_seq = op_seq.Compile(context, seq);
-        std::cout << "op_seq: " << op_seq.to_string() << std::endl;
-        std::cout << "op_seq symbol type: " << op_seq.symbol_type() << std::endl;
-        std::cout << "compiled_seq: " << compiled_seq.to_string() << std::endl;
+        // std::cout << "op_seq: " << op_seq.to_string() << std::endl;
+        // std::cout << "op_seq symbol type: " << op_seq.symbol_type() << std::endl;
+        // std::cout << "compiled_seq: " << compiled_seq.to_string() << std::endl;
         switch (op_seq.symbol_type()) {
             case SPLUS: { seq2.add(compiled_seq); break; }
             case SMINUS: { seq2.add(compiled_seq); break; }
@@ -19,7 +19,7 @@ Sequence BracketOp::Compile(ContextList& context, Sequence& seq) {
             case SMERGE2: { seq2.merge(compiled_seq, " "); break; }
         }
     }
-    std::cout << "seq2: " << seq2.to_string() << std::endl;
+    std::cout << "BracketOp::seq2: " << seq2.to_string() << std::endl;
     return seq2;
 }
 
