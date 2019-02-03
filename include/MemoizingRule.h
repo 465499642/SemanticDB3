@@ -21,9 +21,9 @@ class MemoizingRule : public BaseRule {
         BaseRule* b_add(BaseRule* brule) { return this; }; // do something better here later.
         BaseRule* b_append(BaseRule* brule) { return this; };
 
-        Ket to_ket() { Ket tmp; return tmp; };
-        Superposition to_sp() { Superposition tmp; return tmp; };
-        Sequence to_seq() { Sequence tmp; return tmp; };
+        Ket to_ket() const { Ket tmp; return tmp; };
+        Superposition to_sp() const { Superposition tmp; return tmp; };
+        Sequence to_seq() const { Sequence tmp; return tmp; };
 
         Sequence Compile(ContextList& context) { return m_rule->Compile(context); };
         Sequence Compile(ContextList& context, const ulong label_idx) { return m_rule->Compile(context, label_idx); }
