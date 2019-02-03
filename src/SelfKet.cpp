@@ -5,7 +5,7 @@
 #include "Sequence.h"
 #include "Functions.h"
 
-std::string SelfKet::to_string() {
+const std::string SelfKet::to_string() const {
     std::string coeff = "";
     if ( !double_eq(value, 1.0) ) {
         coeff = std::to_string(value);
@@ -19,17 +19,17 @@ std::string SelfKet::to_string() {
     return coeff + s;
 }
 
-Ket SelfKet::to_ket() {
+Ket SelfKet::to_ket() const {
     Ket tmp("_self", value);
     return tmp;
 }
 
-Superposition SelfKet::to_sp() {
+Superposition SelfKet::to_sp() const {
     Superposition tmp("_self", value);
     return tmp;
 }
 
-Sequence SelfKet::to_seq() {
+Sequence SelfKet::to_seq() const {
     Ket tmp("_self", value);
     Sequence seq(tmp);
     return seq;

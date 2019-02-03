@@ -13,20 +13,20 @@ Superposition Ket::operator+(Ket& a) {
 }
 
 
-const ulong Ket::label_idx() {
+const ulong Ket::label_idx() const {
     return ket_label_idx;
 }
 
-std::string Ket::label() {
+const std::string Ket::label() const {
     std::string result = ket_map.get_str(ket_label_idx);
     return result;
 }
 
-const double Ket::value() {
+const double Ket::value() const {
     return ket_value;
 }
 
-const ulong Ket::size() {
+const ulong Ket::size() const {
     ulong result;
     if (ket_map.get_idx("") == ket_label_idx) {
         result = 0;
@@ -37,7 +37,7 @@ const ulong Ket::size() {
     return result;
 }
 
-std::string Ket::to_string() {
+const std::string Ket::to_string() const {
     std::string s;
     if ( double_eq(ket_value, 1.0) ) {
         s = "|" + ket_map.get_str(ket_label_idx) + ">";
@@ -51,7 +51,7 @@ std::string Ket::to_string() {
 }
 
 
-std::vector<ulong> Ket::label_split_idx() {
+const std::vector<ulong> Ket::label_split_idx() const {
     return ket_map.get_split_idx(ket_label_idx);
 }
 
@@ -59,17 +59,17 @@ void Ket::multiply(const double d) {
     ket_value *= d;
 }
 
-Ket Ket::to_ket() {
+Ket Ket::to_ket() const {
     Ket tmp(*this);
     return tmp;
 }
 
-Superposition Ket::to_sp() {
+Superposition Ket::to_sp() const {
     Superposition tmp(this->label_idx(), this->value());
     return tmp;
 }
 
-Sequence Ket::to_seq() {
+Sequence Ket::to_seq() const {
     Sequence tmp(*this);
     return tmp;
 }

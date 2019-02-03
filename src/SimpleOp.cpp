@@ -54,7 +54,7 @@ Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) {
 }
 
 
-std::string SimpleOp::to_string() {
+const std::string SimpleOp::to_string() const {
     return ket_map.get_str(op_idx);
 }
 

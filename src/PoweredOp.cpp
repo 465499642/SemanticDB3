@@ -17,7 +17,7 @@ Sequence PoweredOp::Compile(ContextList& context, Sequence& seq) {
     return result;
 }
 
-std::string PoweredOp::to_string() {
+const std::string PoweredOp::to_string() const {
     std::string s = "";
     s = b_op->to_string() + "^" + std::to_string(pow);
     return s;

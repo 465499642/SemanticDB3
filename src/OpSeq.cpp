@@ -28,7 +28,7 @@ Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
     return result;
 }
 
-std::string OpSeq::to_string() {
+const std::string OpSeq::to_string() const {
     std::string s = "";
     switch(op_symbol) {
         case SPLUS: s = " + "; break;

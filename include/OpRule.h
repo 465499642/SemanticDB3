@@ -23,15 +23,15 @@ class OpRule : public BaseRule {
         Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 
         int type() { return OPRULE; };
-        const ulong size() { return op_rule_vec.size(); };
-        std::string to_string();
+        const ulong size() const { return op_rule_vec.size(); };
+        const std::string to_string() const;
 
         BaseRule* b_add(BaseRule* brule) { return this; }; // do something better here later.
         BaseRule* b_append(BaseRule* brule) { return this; };
 
-        Ket to_ket() { Ket tmp; return tmp; };
-        Superposition to_sp() { Superposition tmp; return tmp; };
-        Sequence to_seq() { Sequence tmp; return tmp; };
+        Ket to_ket() const { Ket tmp; return tmp; };
+        Superposition to_sp() const { Superposition tmp; return tmp; };
+        Sequence to_seq() const { Sequence tmp; return tmp; };
 
 };
 

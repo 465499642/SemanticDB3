@@ -113,7 +113,7 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
 }
 
 
-double simm(Superposition &sp1, Superposition &sp2) {
+double simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
     std::set<ulong> merged;
     std::unordered_map<ulong, double> one, two;
@@ -141,7 +141,7 @@ double simm(Superposition &sp1, Superposition &sp2) {
     return merged_sum / std::max(one_sum, two_sum);
 }
 
-double scaled_simm(Superposition &sp1, Superposition &sp2) {
+double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
 
     if (sp1.size() == 1 && sp2.size() == 1) {
@@ -179,4 +179,25 @@ double scaled_simm(Superposition &sp1, Superposition &sp2) {
     }
     return merged_sum;
 }
+
+double simm(const Sequence &seq1, const Sequence &seq2) {
+    ulong size = std::min(seq1.size(), seq2.size());
+    if (size == 0) { return 0; }
+    double r = 0;
+    for (ulong k = 0; k < size; k++) {
+        r += simm(seq1.get(k), seq2.get(k));
+    }
+    return r / size;
+}
+
+double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
+    ulong size = std::min(seq1.size(), seq2.size());
+    if (size == 0) { return 0; }
+    double r = 0;
+    for (ulong k = 0; k < size; k++) {
+        r += scaled_simm(seq1.get(k), seq2.get(k));
+    }
+    return r / size;
+}
+
 

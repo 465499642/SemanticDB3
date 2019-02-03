@@ -10,6 +10,6 @@ Sequence NumericOp::Compile(ContextList& context, Sequence& seq) {
     return result;
 }
 
-std::string NumericOp::to_string() {
+const std::string NumericOp::to_string() const {
     return std::string(std::to_string(value));
 }

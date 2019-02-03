@@ -11,13 +11,13 @@ Sequence::Sequence(const std::string& s) {
     seq.push_back(tmp);
 }
 
-Sequence::Sequence(Ket& k) {
+Sequence::Sequence(const Ket& k) {
     Superposition tmp;
     tmp.add(k);
     seq.push_back(tmp);
 }
 
-Sequence::Sequence(Superposition& sp) {
+Sequence::Sequence(const Superposition& sp) {
     Superposition tmp;
     tmp.add(sp);
     seq.push_back(tmp);
@@ -36,7 +36,7 @@ Sequence Sequence::operator+(Sequence& b) {
     return tmp;
 }
 
-const ulong Sequence::size() {
+const ulong Sequence::size() const {
     ulong result;
     result = seq.size();
     return result;
@@ -101,7 +101,7 @@ void Sequence::append(const Sequence& seq2) {
     }
 }
 
-std::string Sequence::to_string() {
+const std::string Sequence::to_string() const {
     std::string s;
     bool first_pass = true;
     for (auto sp: seq) {
@@ -122,19 +122,19 @@ Superposition Sequence::get(ulong idx) const {
     return seq[idx];
 }
 
-Ket Sequence::to_ket() {
+Ket Sequence::to_ket() const {
     if (seq.size() == 0) { Ket tmp; return tmp; }
     Ket tmp = seq[0].to_ket();
     return tmp;
 }
 
-Superposition Sequence::to_sp() {
+Superposition Sequence::to_sp() const {
     if (seq.size() == 0 ) { Superposition tmp; return tmp; }
     Superposition tmp = seq[0];
     return tmp;
 }
 
-Sequence Sequence::to_seq() {
+Sequence Sequence::to_seq() const {
     Sequence tmp(*this);
     return tmp;
 }

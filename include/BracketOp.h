@@ -18,7 +18,7 @@ class BracketOp : public BaseOp {
         BracketOp(OpSeq &op_seq) { op_seq_vec.push_back(op_seq); }
         void push(OpSeq &op_seq) { op_seq_vec.push_back(op_seq); }
         Sequence Compile(ContextList& context, Sequence& seq);
-        std::string to_string();
+        const std::string to_string() const;
 
 };
 

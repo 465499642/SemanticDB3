@@ -9,7 +9,7 @@ class BaseOp {
     private:
 
     public:
-        virtual std::string to_string() = 0;
+        virtual const std::string to_string() const = 0;
         virtual Sequence Compile(ContextList& context, Sequence& seq) = 0;
 
 };

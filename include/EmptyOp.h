@@ -14,7 +14,7 @@ class EmptyOp : public BaseOp {
     public:
         EmptyOp() { }
         Sequence Compile(ContextList& context, Sequence& seq) { return seq; };
-        std::string to_string() { std::string s = ""; return s; };
+        const std::string to_string() const { std::string s = ""; return s; };
 
 };
 

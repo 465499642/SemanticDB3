@@ -40,18 +40,18 @@ class Ket : public BaseRule {
         }
         int type() { return KET; };
         Superposition operator+(Ket& a);
-        const ulong size();
-        const ulong label_idx();
-        std::string label();
-        const double value();
-        std::string to_string();
-        std::vector<ulong> label_split_idx();
+        const ulong size() const;
+        const ulong label_idx() const;
+        const std::string label() const;
+        const double value() const;
+        const std::string to_string() const;
+        const std::vector<ulong> label_split_idx() const;
 
         void multiply(const double d);
 
-        Ket to_ket();
-        Superposition to_sp();
-        Sequence to_seq();
+        Ket to_ket() const;
+        Superposition to_sp() const;
+        Sequence to_seq() const;
 
         BaseRule* b_add(BaseRule* brule);
         BaseRule* b_append(BaseRule* brule);

@@ -18,7 +18,7 @@ Sequence FnOp::Compile(ContextList& context, Sequence& seq) {
     return brule->Compile(context, args);
 }
 
-std::string FnOp::to_string() {
+const std::string FnOp::to_string() const {
     std::string s = ket_map.get_str(op_idx) + "(";
     bool first_pass = true;
     for (auto op_rule : op_rules) {

@@ -57,7 +57,7 @@ Sequence OpRule::Compile(ContextList& context, std::vector<Sequence>& args) {
     return seq2;
 }
 
-std::string OpRule::to_string() {
+const std::string OpRule::to_string() const {
     std::string s = "";
     for (auto seq: op_rule_vec) {
         s += seq.to_string();

@@ -23,7 +23,7 @@ Sequence BracketOp::Compile(ContextList& context, Sequence& seq) {
     return seq2;
 }
 
-std::string BracketOp::to_string() {
+const std::string BracketOp::to_string() const {
     std::string s = "(";
     bool first_pass = true;
     for (auto op_seq : op_seq_vec) {

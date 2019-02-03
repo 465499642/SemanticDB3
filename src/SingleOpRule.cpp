@@ -37,7 +37,7 @@ Sequence SingleOpRule::Compile(ContextList& context, std::vector<Sequence>& args
     return seq;
 }
 
-std::string SingleOpRule::to_string() {
+const std::string SingleOpRule::to_string() const {
     std::string s;
     if (b_rule->type() == KET || b_rule->type() == SELFKET) {
         // s = op_seq->to_string() + " " + b_rule->to_string();

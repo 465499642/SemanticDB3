@@ -24,7 +24,7 @@ class OpSeq : public BaseOp {
         unsigned int symbol_type() { return op_symbol; }
         void append(BaseOp* b_op);
         Sequence Compile(ContextList& context, Sequence& seq);
-        std::string to_string();
+        const std::string to_string() const;
 
 };
 
