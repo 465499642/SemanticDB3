@@ -480,5 +480,10 @@ int main() {
     fn_op.push(&full_op_rule2);
     std::cout << "fn_op: " << fn_op.to_string() << std::endl;
 
+    // test arithmetic:
+    Sequence arith_0, arith_1("3"), arith_2("+"), arith_3("5");
+    Sequence arith_result = arithmetic(context_list, arith_0, arith_1, arith_2, arith_3);
+    std::cout << "arith_result: " << arith_result.to_string() << std::endl;
+
     return 0;
 }

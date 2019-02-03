@@ -41,6 +41,8 @@ std::string Ket::to_string() {
     std::string s;
     if ( double_eq(ket_value, 1.0) ) {
         s = "|" + ket_map.get_str(ket_label_idx) + ">";
+    } else if ( double_eq(ket_value, -1.0) ) {
+        s = "- |" + ket_map.get_str(ket_label_idx) + ">";
     }
     else {
         s = std::to_string(ket_value) + "|" + ket_map.get_str(ket_label_idx) + ">";
@@ -48,9 +50,9 @@ std::string Ket::to_string() {
     return s;
 }
 
+
 std::vector<ulong> Ket::label_split_idx() {
-    std::vector<ulong> result = ket_map.get_split_idx(ket_label_idx);
-    return result;
+    return ket_map.get_split_idx(ket_label_idx);
 }
 
 void Ket::multiply(const double d) {

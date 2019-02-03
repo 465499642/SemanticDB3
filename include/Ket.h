@@ -4,8 +4,10 @@
 #define KET 0
 
 #include <string>
+#include <vector>
 #include "KetMap.h"
 #include "BaseRule.h"
+
 
 class Superposition;
 class Sequence;

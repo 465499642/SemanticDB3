@@ -1,11 +1,13 @@
 #include <math.h>
+#include <iostream>
 #include <string>
 #include <vector>
 #include "Functions.h"
 #include "KetMap.h"
 #include "Ket.h"
 
-const double EPSILON = 0.0001;
+const double EPSILON = 0.0001; // shift to Functions.h?
+
 
 // from here:
 // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
@@ -71,3 +73,29 @@ Ket extract_value(Ket k) {
     return result;
 }
 
+
+Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Sequence &symbol_ket, Sequence &two) {
+    auto one_idx_vec = one.to_ket().label_split_idx();
+    auto symbol = symbol_ket.to_ket().label();
+    auto two_idx_vec = two.to_ket().label_split_idx();
+
+    if (one_idx_vec.size() == 0 || two_idx_vec.size() == 0 || symbol.size() == 0) { Sequence tmp; return tmp; }
+    auto one_str = ket_map.get_str(one_idx_vec.back());
+    auto two_str = ket_map.get_str(two_idx_vec.back());
+    one_idx_vec.pop_back();
+    two_idx_vec.pop_back();
+
+    if (one_idx_vec != two_idx_vec) { Sequence tmp; return tmp; }
+
+    char symbol_char = symbol.front();
+    double value;
+    switch(symbol_char) {
+        case '+' : { value = std::stod(one_str) + std::stod(two_str); break; }
+        case '-' : { value = std::stod(one_str) - std::stod(two_str); break; }
+        case '*' : { value = std::stod(one_str) * std::stod(two_str); break; }
+        case '/' : { value = std::stod(one_str) / std::stod(two_str); break; }
+        // case "%" : { value = std::stod(one_str) % std::stod(two_str); break; }
+    }
+    Sequence result(std::to_string(value));
+    return result;
+}
