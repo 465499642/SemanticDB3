@@ -20,7 +20,7 @@ class SingleOpRule : public BaseRule {
     public:
         SingleOpRule(BaseRule* b_rule2);
         SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2);
-        unsigned int symbol_type() { return op_seq->symbol_type(); };
+        const unsigned int symbol_type() const { return op_seq->symbol_type(); };
         Sequence Compile(ContextList& context);
         Sequence Compile(ContextList& context, const ulong label_idx);
         Sequence Compile(ContextList& context, std::vector<Sequence>& args);
