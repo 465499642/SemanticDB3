@@ -3,6 +3,7 @@
 
 #include "Ket.h"
 #include "Sequence.h"
+#include "Superposition.h"
 #include "ContextList.h"
 
 
@@ -17,5 +18,7 @@ Ket extract_value(Ket k);
 
 // Sequence arithmetic(ContextList &context, std::vector<Sequence> seq_vec);
 Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Sequence &symbol_ket, Sequence &two);
+double simm(Superposition &sp1, Superposition &sp2);
+double scaled_simm(Superposition &sp1, Superposition &sp2);
 
 #endif

@@ -489,5 +489,17 @@ int main() {
     Sequence arith_result2 = arithmetic(context_list, arith_0, arith_4, arith_5, arith_6);
     std::cout << "arith_result2: " << arith_result2.to_string() << std::endl;
 
+    // test simm:
+    Superposition sp_1, sp_2, sp_3;
+    sp_1.add("a");
+    sp_2.add("a");
+    sp_2.add("b");
+    sp_2.add("c");
+    std::cout << "simm(sp2, sp2): " << simm(sp_2, sp_2) << std::endl;
+    std::cout << "simm(sp1, sp2): " << simm(sp_1, sp_2) << std::endl;
+
+    std::cout << "scaled_simm(sp2, sp2): " << scaled_simm(sp_2, sp_2) << std::endl;
+    std::cout << "scaled_simm(sp1, sp2): " << scaled_simm(sp_1, sp_2) << std::endl;
+
     return 0;
 }

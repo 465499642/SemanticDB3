@@ -4,6 +4,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <set>
+#include <algorithm>
 #include "Functions.h"
 #include "KetMap.h"
 #include "Ket.h"
@@ -108,3 +111,72 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
     // Sequence result(std::to_string(value));
     return result;
 }
+
+
+double simm(Superposition &sp1, Superposition &sp2) {
+    if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
+    std::set<ulong> merged;
+    std::unordered_map<ulong, double> one, two;
+    double one_sum(0), two_sum(0), merged_sum(0);
+    for (auto k : sp1) {
+        one[k.label_idx()] = k.value();
+        merged.insert(k.label_idx());
+        one_sum += k.value();
+    }
+    for (auto k : sp2) {
+        two[k.label_idx()] = k.value();
+        merged.insert(k.label_idx());
+        two_sum += k.value();
+    }
+
+    if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
+
+    for (auto it = merged.begin(); it != merged.end(); it++) {
+        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
+            double v1 = one[*it];
+            double v2 = two[*it];
+            merged_sum += std::min(v1, v2);
+        }
+    }
+    return merged_sum / std::max(one_sum, two_sum);
+}
+
+double scaled_simm(Superposition &sp1, Superposition &sp2) {
+    if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
+
+    if (sp1.size() == 1 && sp2.size() == 1) {
+        Ket k1 = sp1.to_ket();
+        Ket k2 = sp2.to_ket();
+        if (k1.label_idx() != k2.label_idx()) { return 0; }
+        double a = std::max(k1.value(), 0.0);
+        double b = std::max(k2.value(), 0.0);
+        if ( double_eq(a, 0) && double_eq(b, 0)) { return 0; }
+        return std::min(a, b) / std::max(a, b);
+    }
+
+    std::set<ulong> merged;
+    std::unordered_map<ulong, double> one, two;
+    double one_sum(0), two_sum(0), merged_sum(0);
+    for (auto k : sp1) {
+        one[k.label_idx()] = k.value();
+        merged.insert(k.label_idx());
+        one_sum += k.value();
+    }
+    for (auto k : sp2) {
+        two[k.label_idx()] = k.value();
+        merged.insert(k.label_idx());
+        two_sum += k.value();
+    }
+
+    if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
+
+    for (auto it = merged.begin(); it != merged.end(); it++) {
+        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
+            double v1 = one[*it] / one_sum;
+            double v2 = two[*it] / two_sum;
+            merged_sum += std::min(v1, v2);
+        }
+    }
+    return merged_sum;
+}
+
