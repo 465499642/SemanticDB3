@@ -27,7 +27,7 @@ class Superposition : public BaseRule {
         Superposition(Ket k);
 
         Superposition operator+(Ket& b);
-        int type() { return SUPERPOSITION; };
+        const int type() const { return SUPERPOSITION; };
         const ulong size() const;
         // void add(const Ket& a); // bugs out for now
 

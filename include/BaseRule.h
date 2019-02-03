@@ -14,7 +14,7 @@ class BaseRule {
     private:
 
     public:
-        virtual int type() const = 0;
+        virtual const int type() const = 0;
         virtual const std::string to_string() const = 0;
         virtual const ulong size() const = 0;
         virtual Ket to_ket() const = 0;

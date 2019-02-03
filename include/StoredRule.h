@@ -15,7 +15,7 @@ class StoredRule : public BaseRule {
     public:
         StoredRule(const std::string& s) {s_rule = new OpRule(); }; // do something better here later.
         StoredRule(OpRule *op_rule) {s_rule = op_rule; };
-        int type() { return STOREDRULE; };
+        const int type() const { return STOREDRULE; };
         const ulong size() const { return s_rule->size(); };
         const std::string to_string() const { return s_rule->to_string(); };
 

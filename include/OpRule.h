@@ -22,7 +22,7 @@ class OpRule : public BaseRule {
         Sequence Compile(ContextList& context, const ulong label_idx);
         Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 
-        int type() { return OPRULE; };
+        const int type() const { return OPRULE; };
         const ulong size() const { return op_rule_vec.size(); };
         const std::string to_string() const;
 

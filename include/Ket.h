@@ -38,7 +38,7 @@ class Ket : public BaseRule {
             ket_label_idx = ket_map.get_idx(s);
             ket_value = v;
         }
-        int type() { return KET; };
+        const int type() const { return KET; };
         Superposition operator+(Ket& a);
         const ulong size() const;
         const ulong label_idx() const;

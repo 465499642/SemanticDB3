@@ -21,7 +21,7 @@ class SelfKet : public BaseRule {
         SelfKet() { idx = 1; value = 1;}
         SelfKet(const unsigned int idx2) { idx = idx2; value = 1;}
         SelfKet(const unsigned int idx2, const double d) { idx = idx2; value = d; }
-        int type() { return SELFKET; }
+        const int type() const { return SELFKET; }
         const std::string to_string() const;
         const ulong size() const { return 1; }
         void multiply(const double d) { value *= d; }

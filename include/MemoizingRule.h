@@ -14,7 +14,7 @@ class MemoizingRule : public BaseRule {
     public:
         MemoizingRule(const std::string& s) {m_rule = new OpRule(); }; // do something better here later.
         MemoizingRule(OpRule *op_rule) { m_rule = op_rule; };
-        int type() { return MEMOIZINGRULE; };
+        const int type() const { return MEMOIZINGRULE; };
         const ulong size() const { return m_rule->size(); };
         const std::string to_string() const { return m_rule->to_string(); };
 

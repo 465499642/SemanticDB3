@@ -23,7 +23,7 @@ class Sequence : public BaseRule {
         Sequence(const Superposition& sp);
         Sequence(const Sequence& seq);
         Sequence operator+(Sequence& b);
-        int type() { return SEQUENCE; };
+        const int type() const { return SEQUENCE; };
         const ulong size() const;
 
         BaseRule* b_add(BaseRule* brule);

@@ -25,7 +25,7 @@ class SingleOpRule : public BaseRule {
         Sequence Compile(ContextList& context, const ulong label_idx);
         Sequence Compile(ContextList& context, std::vector<Sequence>& args);
 
-        int type() { return SINGLEOPRULE; };
+        const int type() const { return SINGLEOPRULE; };
         const ulong size() const { return 1; };
         const std::string to_string() const;
 
