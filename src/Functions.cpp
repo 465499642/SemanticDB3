@@ -1,6 +1,7 @@
 #include <gmpxx.h>
 #include <math.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "Functions.h"
@@ -88,7 +89,8 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
 
     if (one_idx_vec != two_idx_vec) { Sequence tmp; return tmp; }
 
-    mpz_class x(one_str), y(two_str), value;
+    // mpz_class x(one_str), y(two_str), value;
+    mpf_class x(one_str), y(two_str), value;
 
     char symbol_char = symbol.front();
     switch(symbol_char) {
@@ -96,9 +98,13 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
         case '-' : { value = x - y; break; }
         case '*' : { value = x * y; break; }
         case '/' : { value = x / y; break; }
-        case '%' : { value = x % y; break; }
+        // case '%' : { value = x % y; break; }
     }
-    Sequence result(value.get_str(10));
+    std::stringstream buffer;
+    buffer.precision(10);
+    buffer << value;
+    Sequence result(buffer.str());
+    // Sequence result(value.get_str(10));
     // Sequence result(std::to_string(value));
     return result;
 }

@@ -485,5 +485,9 @@ int main() {
     Sequence arith_result = arithmetic(context_list, arith_0, arith_1, arith_2, arith_3);
     std::cout << "arith_result: " << arith_result.to_string() << std::endl;
 
+    Sequence arith_4("3.14159265"), arith_5("+"), arith_6("5.2");
+    Sequence arith_result2 = arithmetic(context_list, arith_0, arith_4, arith_5, arith_6);
+    std::cout << "arith_result2: " << arith_result2.to_string() << std::endl;
+
     return 0;
 }
