@@ -1,3 +1,4 @@
+#include <gmpxx.h>
 #include <math.h>
 #include <iostream>
 #include <string>
@@ -87,15 +88,17 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
 
     if (one_idx_vec != two_idx_vec) { Sequence tmp; return tmp; }
 
+    mpz_class x(one_str), y(two_str), value;
+
     char symbol_char = symbol.front();
-    double value;
     switch(symbol_char) {
-        case '+' : { value = std::stod(one_str) + std::stod(two_str); break; }
-        case '-' : { value = std::stod(one_str) - std::stod(two_str); break; }
-        case '*' : { value = std::stod(one_str) * std::stod(two_str); break; }
-        case '/' : { value = std::stod(one_str) / std::stod(two_str); break; }
-        // case "%" : { value = std::stod(one_str) % std::stod(two_str); break; }
+        case '+' : { value = x + y; break; }
+        case '-' : { value = x - y; break; }
+        case '*' : { value = x * y; break; }
+        case '/' : { value = x / y; break; }
+        case '%' : { value = x % y; break; }
     }
-    Sequence result(std::to_string(value));
+    Sequence result(value.get_str(10));
+    // Sequence result(std::to_string(value));
     return result;
 }
