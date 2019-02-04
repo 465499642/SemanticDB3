@@ -141,7 +141,7 @@ const std::string Superposition::to_string() const {
     std::string value_string;
     std::string sign;
     bool first_pass = true;
-    for (auto idx: sort_order) {
+    for (const auto idx: sort_order) {
         auto label = ket_map.get_str(idx);
         auto value = sp.at(idx);
         sign = " + ";

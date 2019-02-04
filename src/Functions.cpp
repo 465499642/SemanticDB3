@@ -33,7 +33,7 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 std::string join(const std::vector<std::string>& v, const std::string& delimiter) {
     std::string s;
     bool first_pass = true;
-    for (auto token: v) {
+    for (const auto &token: v) {
         if (first_pass) {
             s += token;
             first_pass = false;
@@ -118,12 +118,12 @@ double simm(const Superposition &sp1, const Superposition &sp2) {
     std::set<ulong> merged;
     std::unordered_map<ulong, double> one, two;
     double one_sum(0), two_sum(0), merged_sum(0);
-    for (auto k : sp1) {
+    for (const auto k : sp1) {
         one[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         one_sum += k.value();
     }
-    for (auto k : sp2) {
+    for (const auto k : sp2) {
         two[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         two_sum += k.value();
@@ -131,10 +131,10 @@ double simm(const Superposition &sp1, const Superposition &sp2) {
 
     if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
 
-    for (auto it = merged.begin(); it != merged.end(); it++) {
-        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
-            double v1 = one[*it];
-            double v2 = two[*it];
+    for (const auto idx : merged) {
+        if (one.find(idx) != one.end() && two.find(idx) != two.end()) {
+            double v1 = one[idx];
+            double v2 = two[idx];
             merged_sum += std::min(v1, v2);
         }
     }
@@ -157,12 +157,12 @@ double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
     std::set<ulong> merged;
     std::unordered_map<ulong, double> one, two;
     double one_sum(0), two_sum(0), merged_sum(0);
-    for (auto k : sp1) {
+    for (const auto k : sp1) {
         one[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         one_sum += k.value();
     }
-    for (auto k : sp2) {
+    for (const auto k : sp2) {
         two[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         two_sum += k.value();
@@ -170,10 +170,10 @@ double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
 
     if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
 
-    for (auto it = merged.begin(); it != merged.end(); it++) {
-        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
-            double v1 = one[*it] / one_sum;
-            double v2 = two[*it] / two_sum;
+    for (const auto idx : merged) {
+        if (one.find(idx) != one.end() && two.find(idx) != two.end()) {
+            double v1 = one[idx] / one_sum;
+            double v2 = two[idx] / two_sum;
             merged_sum += std::min(v1, v2);
         }
     }
