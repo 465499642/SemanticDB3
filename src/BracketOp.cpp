@@ -4,9 +4,9 @@
 #include "Sequence.h"
 #include "OpSeq.h"
 
-Sequence BracketOp::Compile(ContextList& context, Sequence& seq) {
+Sequence BracketOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence seq2;
-    for (auto op_seq : op_seq_vec) {
+    for (const auto &op_seq : op_seq_vec) {
         Sequence compiled_seq = op_seq.Compile(context, seq);
         // std::cout << "op_seq: " << op_seq.to_string() << std::endl;
         // std::cout << "op_seq symbol type: " << op_seq.symbol_type() << std::endl;
@@ -26,7 +26,7 @@ Sequence BracketOp::Compile(ContextList& context, Sequence& seq) {
 const std::string BracketOp::to_string() const {
     std::string s = "(";
     bool first_pass = true;
-    for (const auto op_seq : op_seq_vec) {
+    for (const auto &op_seq : op_seq_vec) {
         if (first_pass) {
             s += op_seq.to_string();
             first_pass = false;

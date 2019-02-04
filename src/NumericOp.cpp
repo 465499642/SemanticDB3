@@ -4,7 +4,7 @@
 #include "ContextList.h"
 #include "Sequence.h"
 
-Sequence NumericOp::Compile(ContextList& context, Sequence& seq) {
+Sequence NumericOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result(seq);
     result.multiply(value);
     return result;

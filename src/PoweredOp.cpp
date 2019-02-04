@@ -9,7 +9,7 @@ PoweredOp::PoweredOp(BaseOp* base_op, const unsigned int power) {
     pow = power;
 }
 
-Sequence PoweredOp::Compile(ContextList& context, Sequence& seq) {
+Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result = seq;
     for (unsigned int i = 0; i < pow; i++) {
         result = b_op->Compile(context, result);

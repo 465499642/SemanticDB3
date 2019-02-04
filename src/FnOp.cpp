@@ -5,10 +5,10 @@
 #include "Sequence.h"
 #include "FnOp.h"
 
-Sequence FnOp::Compile(ContextList& context, Sequence& seq) {
+Sequence FnOp::Compile(ContextList& context, const Sequence& seq) const {
     std::vector<Sequence> args;
     args.push_back(seq);
-    for (auto op_rule: op_rules) {
+    for (const auto op_rule: op_rules) {
         Sequence tmp = op_rule->Compile(context);
         args.push_back(tmp);
         std::cout << "arg: " << tmp.to_string() << std::endl;
@@ -21,7 +21,7 @@ Sequence FnOp::Compile(ContextList& context, Sequence& seq) {
 const std::string FnOp::to_string() const {
     std::string s = ket_map.get_str(op_idx) + "(";
     bool first_pass = true;
-    for (auto op_rule : op_rules) {
+    for (const auto op_rule: op_rules) {
         if (first_pass) {
             s += op_rule->to_string();
             first_pass = false;

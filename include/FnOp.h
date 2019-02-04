@@ -19,7 +19,7 @@ class FnOp : public BaseOp {
         FnOp(const ulong idx) { op_idx = idx; }
         FnOp(const ulong idx, std::vector<OpRule*> *op_rules2) { op_idx = idx; op_rules = *op_rules2; }
         void push(OpRule *op_rule) { op_rules.push_back(op_rule); }
-        Sequence Compile(ContextList& context, Sequence& seq);
+        Sequence Compile(ContextList& context, const Sequence& seq) const;
         const std::string to_string() const;
 
 };

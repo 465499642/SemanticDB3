@@ -10,7 +10,7 @@ class BaseOp {
 
     public:
         virtual const std::string to_string() const = 0;
-        virtual Sequence Compile(ContextList& context, Sequence& seq) = 0;
+        virtual Sequence Compile(ContextList& context, const Sequence& seq) const = 0;
 
 };
 

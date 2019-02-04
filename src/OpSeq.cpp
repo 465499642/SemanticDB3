@@ -19,7 +19,7 @@ void OpSeq::append(BaseOp* b_op) {
     op_seq.push_back(b_op);
 }
 
-Sequence OpSeq::Compile(ContextList& context, Sequence& seq) {
+Sequence OpSeq::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result = seq;
     for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
         result = (*it)->Compile(context, result);
@@ -38,7 +38,7 @@ const std::string OpSeq::to_string() const {
         case SMERGE2: s = " __ "; break;
     }
     bool first_pass = true;
-    for (auto op: op_seq ) {
+    for (const auto op: op_seq ) {
         if (first_pass) {
             s += op->to_string();
             first_pass = false;

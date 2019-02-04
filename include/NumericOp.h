@@ -14,7 +14,7 @@ class NumericOp : public BaseOp {
 
     public:
         NumericOp(const double d) { value = d; };
-        Sequence Compile(ContextList& context, Sequence& seq);
+        Sequence Compile(ContextList& context, const Sequence& seq) const;
         const std::string to_string() const;
 
 };
