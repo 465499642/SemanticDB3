@@ -5,7 +5,7 @@
 #include "Sequence.h"
 #include "Functions.h"
 
-std::string SelfKet::to_string() {
+const std::string SelfKet::to_string() const {
     std::string coeff = "";
     if ( !double_eq(value, 1.0) ) {
         coeff = std::to_string(value);
@@ -19,27 +19,27 @@ std::string SelfKet::to_string() {
     return coeff + s;
 }
 
-Ket SelfKet::to_ket() {
+Ket SelfKet::to_ket() const {
     Ket tmp("_self", value);
     return tmp;
 }
 
-Superposition SelfKet::to_sp() {
+Superposition SelfKet::to_sp() const {
     Superposition tmp("_self", value);
     return tmp;
 }
 
-Sequence SelfKet::to_seq() {
+Sequence SelfKet::to_seq() const {
     Ket tmp("_self", value);
     Sequence seq(tmp);
     return seq;
 }
 
-Sequence SelfKet::Compile(ContextList& context) {
+Sequence SelfKet::Compile(ContextList& context) const {
     return this->to_seq();
 }
 
-Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) {
+Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) const {
     if (idx == 1) {
         Ket tmp(label_idx, value);
         return tmp.to_seq();
@@ -47,7 +47,7 @@ Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) {
     return this->to_seq();
 }
 
-Sequence SelfKet::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence SelfKet::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     if (idx < args.size()) {
         return args.at(idx);
     }

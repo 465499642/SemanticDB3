@@ -10,8 +10,8 @@ class PoweredOp : public BaseOp {
 
     public:
         PoweredOp(BaseOp* base_op, const unsigned int power);
-        Sequence Compile(ContextList& context, Sequence& seq);
-        std::string to_string();
+        Sequence Compile(ContextList& context, const Sequence& seq) const;
+        const std::string to_string() const;
 };
 
 #endif

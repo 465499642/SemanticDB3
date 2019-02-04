@@ -14,17 +14,17 @@ class BaseRule {
     private:
 
     public:
-        virtual int type() = 0;
-        virtual std::string to_string() = 0;
-        virtual const ulong size() = 0;
-        virtual Ket to_ket() = 0;
-        virtual Superposition to_sp() = 0;
-        virtual Sequence to_seq() = 0;
+        virtual const int type() const = 0;
+        virtual const std::string to_string() const = 0;
+        virtual const ulong size() const = 0;
+        virtual Ket to_ket() const = 0;
+        virtual Superposition to_sp() const = 0;
+        virtual Sequence to_seq() const = 0;
         virtual BaseRule* b_add(BaseRule* brule) = 0;
         virtual BaseRule* b_append(BaseRule* brule) = 0;
-        virtual Sequence Compile(ContextList& context) = 0;
-        virtual Sequence Compile(ContextList& context, const ulong label_idx) = 0;
-        virtual Sequence Compile(ContextList& context, std::vector<Sequence>& args) = 0;
+        virtual Sequence Compile(ContextList& context) const = 0;
+        virtual Sequence Compile(ContextList& context, const ulong label_idx) const = 0;
+        virtual Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const = 0;
 };
 
 #endif

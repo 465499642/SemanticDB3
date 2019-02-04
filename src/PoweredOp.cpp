@@ -9,7 +9,7 @@ PoweredOp::PoweredOp(BaseOp* base_op, const unsigned int power) {
     pow = power;
 }
 
-Sequence PoweredOp::Compile(ContextList& context, Sequence& seq) {
+Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result = seq;
     for (unsigned int i = 0; i < pow; i++) {
         result = b_op->Compile(context, result);
@@ -17,7 +17,7 @@ Sequence PoweredOp::Compile(ContextList& context, Sequence& seq) {
     return result;
 }
 
-std::string PoweredOp::to_string() {
+const std::string PoweredOp::to_string() const {
     std::string s = "";
     s = b_op->to_string() + "^" + std::to_string(pow);
     return s;

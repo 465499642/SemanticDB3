@@ -33,8 +33,8 @@ class ContextList {
         void fn_learn(const ulong op_idx, const ulong param_size, BaseRule* brule);
         BaseRule* fn_recall(const ulong op_idx, const ulong param_size);
 
-        void print_universe();
-        void print_multiverse();
+        void print_universe() const;
+        void print_multiverse() const;
 };
 
 #endif

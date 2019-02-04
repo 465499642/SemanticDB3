@@ -38,20 +38,20 @@ class Ket : public BaseRule {
             ket_label_idx = ket_map.get_idx(s);
             ket_value = v;
         }
-        int type() { return KET; };
+        const int type() const { return KET; };
         Superposition operator+(Ket& a);
-        const ulong size();
-        const ulong label_idx();
-        std::string label();
-        const double value();
-        std::string to_string();
-        std::vector<ulong> label_split_idx();
+        const ulong size() const;
+        const ulong label_idx() const;
+        const std::string label() const;
+        const double value() const;
+        const std::string to_string() const;
+        const std::vector<ulong> label_split_idx() const;
 
         void multiply(const double d);
 
-        Ket to_ket();
-        Superposition to_sp();
-        Sequence to_seq();
+        Ket to_ket() const;
+        Superposition to_sp() const;
+        Sequence to_seq() const;
 
         BaseRule* b_add(BaseRule* brule);
         BaseRule* b_append(BaseRule* brule);
@@ -59,9 +59,9 @@ class Ket : public BaseRule {
         void merge(Ket k);
         void merge(Ket k, const std::string& s);
 
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 };
 
 #endif

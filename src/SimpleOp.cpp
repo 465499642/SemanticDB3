@@ -36,11 +36,11 @@ Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) { // make more e
 }
 */
 
-Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) {
+Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result;
-    for (auto sp: seq) {
+    for (const auto &sp: seq) {
         Sequence seq2;
-        for (auto k: sp) {
+        for (const auto &k: sp) {
             BaseRule *b_rule = context.active_recall(op_idx, k.label_idx());
             // std::cout << "b_rule: " << b_rule->to_string() << std::endl;
             // std::cout << "b_rule type: " << b_rule->type() << std::endl;
@@ -54,7 +54,7 @@ Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) {
 }
 
 
-std::string SimpleOp::to_string() {
+const std::string SimpleOp::to_string() const {
     return ket_map.get_str(op_idx);
 }
 

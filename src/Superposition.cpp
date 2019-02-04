@@ -51,7 +51,7 @@ Superposition Superposition::operator+(Ket& b) {
     return tmp;
 }
 
-const ulong Superposition::size() {
+const ulong Superposition::size() const {
     ulong result;
     result = sort_order.size();
     return result;
@@ -133,7 +133,7 @@ void Superposition::add(const Superposition& a) {
     return;
 }
 
-std::string Superposition::to_string() {
+const std::string Superposition::to_string() const {
     std::string s;
     if (sp.size() == 0) {s = "|>"; return s; }
 
@@ -141,9 +141,9 @@ std::string Superposition::to_string() {
     std::string value_string;
     std::string sign;
     bool first_pass = true;
-    for (auto idx: sort_order) {
+    for (const auto idx: sort_order) {
         auto label = ket_map.get_str(idx);
-        auto value = sp[idx];
+        auto value = sp.at(idx);
         sign = " + ";
         if (double_eq(value, 1.0)) {
             value_string = "";
@@ -174,20 +174,20 @@ void Superposition::multiply(const double d) {
     }
 }
 
-Ket Superposition::to_ket() {
+Ket Superposition::to_ket() const {
     if (sp.size() == 0) { Ket tmp; return tmp; }
     ulong op_idx = sort_order[0];
-    double value = sp[op_idx];
+    double value = sp.at(op_idx);
     Ket tmp(op_idx, value);
     return tmp;
 }
 
-Superposition Superposition::to_sp() {
+Superposition Superposition::to_sp() const {
     Superposition tmp(*this);
     return tmp;
 }
 
-Sequence Superposition::to_seq() {
+Sequence Superposition::to_seq() const {
     Sequence tmp(*this);
     return tmp;
 }
@@ -255,14 +255,14 @@ BaseRule* Superposition::b_append(BaseRule* brule) {
 }
 
 
-Sequence Superposition::Compile(ContextList& context) {
+Sequence Superposition::Compile(ContextList& context) const {
     return this->to_seq();
 }
 
-Sequence Superposition::Compile(ContextList& context, const ulong label_idx) {
+Sequence Superposition::Compile(ContextList& context, const ulong label_idx) const {
     return this->to_seq();
 }
 
-Sequence Superposition::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence Superposition::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     return this->to_seq();
 }

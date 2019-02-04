@@ -93,13 +93,13 @@ BaseRule* ContextList::fn_recall(const ulong op_idx, const ulong param_size) {
 }
 
 
-void ContextList::print_multiverse() {
-    for (auto context: data) {
+void ContextList::print_multiverse() const {
+    for (const auto &context: data) {
         context.print_universe();
         std::cout << std::endl;
     }
 }
 
-void ContextList::print_universe() {
+void ContextList::print_universe() const {
     data[index].print_universe();
 }

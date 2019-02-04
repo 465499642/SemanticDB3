@@ -27,8 +27,8 @@ class Superposition : public BaseRule {
         Superposition(Ket k);
 
         Superposition operator+(Ket& b);
-        int type() { return SUPERPOSITION; };
-        const ulong size();
+        const int type() const { return SUPERPOSITION; };
+        const ulong size() const;
         // void add(const Ket& a); // bugs out for now
 
         BaseRule* b_add(BaseRule* brule);
@@ -40,11 +40,11 @@ class Superposition : public BaseRule {
         void add(Ket& a);
         void add(const Superposition& a);
         void multiply(const double d);
-        std::string to_string();
+        const std::string to_string() const;
 
-        Ket to_ket();
-        Superposition to_sp();
-        Sequence to_seq();
+        Ket to_ket() const;
+        Superposition to_sp() const;
+        Sequence to_seq() const;
 
         // SuperpositionIter:
         Ket get(ulong idx) const;
@@ -54,9 +54,9 @@ class Superposition : public BaseRule {
         void merge(const Superposition& sp2);
         void merge(const Superposition& sp2, const std::string& s);
 
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 };
 
 #endif

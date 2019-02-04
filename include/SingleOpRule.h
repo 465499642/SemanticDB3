@@ -20,21 +20,21 @@ class SingleOpRule : public BaseRule {
     public:
         SingleOpRule(BaseRule* b_rule2);
         SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2);
-        unsigned int symbol_type() { return op_seq->symbol_type(); };
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        const unsigned int symbol_type() const { return op_seq->symbol_type(); };
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 
-        int type() { return SINGLEOPRULE; };
-        const ulong size() { return 1; };
-        std::string to_string();
+        const int type() const { return SINGLEOPRULE; };
+        const ulong size() const { return 1; };
+        const std::string to_string() const;
 
         BaseRule* b_add(BaseRule* brule) { return this; }; // do something better here later.
         BaseRule* b_append(BaseRule* brule) { return this; };
 
-        Ket to_ket() { Ket tmp; return tmp; };
-        Superposition to_sp() { Superposition tmp; return tmp; };
-        Sequence to_seq() { Sequence tmp; return tmp; };
+        Ket to_ket() const { Ket tmp; return tmp; };
+        Superposition to_sp() const { Superposition tmp; return tmp; };
+        Sequence to_seq() const { Sequence tmp; return tmp; };
 
 };
 

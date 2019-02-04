@@ -13,8 +13,8 @@ class EmptyOp : public BaseOp {
 
     public:
         EmptyOp() { }
-        Sequence Compile(ContextList& context, Sequence& seq) { return seq; };
-        std::string to_string() { std::string s = ""; return s; };
+        Sequence Compile(ContextList& context, const Sequence& seq) const { return seq; };
+        const std::string to_string() const { std::string s = ""; return s; };
 
 };
 

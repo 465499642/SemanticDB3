@@ -33,7 +33,7 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 std::string join(const std::vector<std::string>& v, const std::string& delimiter) {
     std::string s;
     bool first_pass = true;
-    for (auto token: v) {
+    for (const auto &token: v) {
         if (first_pass) {
             s += token;
             first_pass = false;
@@ -113,17 +113,17 @@ Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Se
 }
 
 
-double simm(Superposition &sp1, Superposition &sp2) {
+double simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
     std::set<ulong> merged;
     std::unordered_map<ulong, double> one, two;
     double one_sum(0), two_sum(0), merged_sum(0);
-    for (auto k : sp1) {
+    for (const auto k : sp1) {
         one[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         one_sum += k.value();
     }
-    for (auto k : sp2) {
+    for (const auto k : sp2) {
         two[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         two_sum += k.value();
@@ -131,17 +131,17 @@ double simm(Superposition &sp1, Superposition &sp2) {
 
     if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
 
-    for (auto it = merged.begin(); it != merged.end(); it++) {
-        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
-            double v1 = one[*it];
-            double v2 = two[*it];
+    for (const auto idx : merged) {
+        if (one.find(idx) != one.end() && two.find(idx) != two.end()) {
+            double v1 = one[idx];
+            double v2 = two[idx];
             merged_sum += std::min(v1, v2);
         }
     }
     return merged_sum / std::max(one_sum, two_sum);
 }
 
-double scaled_simm(Superposition &sp1, Superposition &sp2) {
+double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
 
     if (sp1.size() == 1 && sp2.size() == 1) {
@@ -157,12 +157,12 @@ double scaled_simm(Superposition &sp1, Superposition &sp2) {
     std::set<ulong> merged;
     std::unordered_map<ulong, double> one, two;
     double one_sum(0), two_sum(0), merged_sum(0);
-    for (auto k : sp1) {
+    for (const auto k : sp1) {
         one[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         one_sum += k.value();
     }
-    for (auto k : sp2) {
+    for (const auto k : sp2) {
         two[k.label_idx()] = k.value();
         merged.insert(k.label_idx());
         two_sum += k.value();
@@ -170,13 +170,34 @@ double scaled_simm(Superposition &sp1, Superposition &sp2) {
 
     if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
 
-    for (auto it = merged.begin(); it != merged.end(); it++) {
-        if (one.find(*it) != one.end() && two.find(*it) != two.end()) {
-            double v1 = one[*it] / one_sum;
-            double v2 = two[*it] / two_sum;
+    for (const auto idx : merged) {
+        if (one.find(idx) != one.end() && two.find(idx) != two.end()) {
+            double v1 = one[idx] / one_sum;
+            double v2 = two[idx] / two_sum;
             merged_sum += std::min(v1, v2);
         }
     }
     return merged_sum;
 }
+
+double simm(const Sequence &seq1, const Sequence &seq2) {
+    ulong size = std::min(seq1.size(), seq2.size());
+    if (size == 0) { return 0; }
+    double r = 0;
+    for (ulong k = 0; k < size; k++) {
+        r += simm(seq1.get(k), seq2.get(k));
+    }
+    return r / size;
+}
+
+double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
+    ulong size = std::min(seq1.size(), seq2.size());
+    if (size == 0) { return 0; }
+    double r = 0;
+    for (ulong k = 0; k < size; k++) {
+        r += scaled_simm(seq1.get(k), seq2.get(k));
+    }
+    return r / size;
+}
+
 

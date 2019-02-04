@@ -4,12 +4,12 @@
 #include "ContextList.h"
 #include "Sequence.h"
 
-Sequence NumericOp::Compile(ContextList& context, Sequence& seq) {
+Sequence NumericOp::Compile(ContextList& context, const Sequence& seq) const {
     Sequence result(seq);
     result.multiply(value);
     return result;
 }
 
-std::string NumericOp::to_string() {
+const std::string NumericOp::to_string() const {
     return std::string(std::to_string(value));
 }

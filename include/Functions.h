@@ -11,14 +11,16 @@ std::vector<std::string> split(const std::string& s, const std::string& delimite
 std::string join(const std::vector<std::string>& v, const std::string& delimiter);
 bool double_eq(const double v1, const double v2);
 
-Ket extract_head(Ket k);
-Ket extract_tail(Ket k);
-Ket extract_category(Ket k);
-Ket extract_value(Ket k);
+Ket extract_head(const Ket k);
+Ket extract_tail(const Ket k);
+Ket extract_category(const Ket k);
+Ket extract_value(const Ket k);
 
 // Sequence arithmetic(ContextList &context, std::vector<Sequence> seq_vec);
 Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Sequence &symbol_ket, Sequence &two);
-double simm(Superposition &sp1, Superposition &sp2);
-double scaled_simm(Superposition &sp1, Superposition &sp2);
+double simm(const Superposition &sp1, const Superposition &sp2);
+double scaled_simm(const Superposition &sp1, const Superposition &sp2);
+double simm(const Sequence &seq1, const Sequence &seq2);
+double scaled_simm(const Sequence &seq1, const Sequence &seq2);
 
 #endif

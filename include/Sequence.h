@@ -19,12 +19,12 @@ class Sequence : public BaseRule {
         Sequence() {};
         ~Sequence() {};
         Sequence(const std::string& s);
-        Sequence(Ket& k);
-        Sequence(Superposition& sp);
+        Sequence(const Ket& k);
+        Sequence(const Superposition& sp);
         Sequence(const Sequence& seq);
         Sequence operator+(Sequence& b);
-        int type() { return SEQUENCE; };
-        const ulong size();
+        const int type() const { return SEQUENCE; };
+        const ulong size() const;
 
         BaseRule* b_add(BaseRule* brule);
         BaseRule* b_append(BaseRule* brule);
@@ -39,7 +39,7 @@ class Sequence : public BaseRule {
         void append(const Superposition& sp);
         void append(const Sequence& seq);
 
-        std::string to_string();
+        const std::string to_string() const;
 
         // define an iterator for our sequence class:
         Superposition get(ulong idx) const;
@@ -53,16 +53,16 @@ class Sequence : public BaseRule {
         const_iterator end() const {return seq.end();}
         const_iterator cend() const {return seq.cend();}
 
-        Ket to_ket();
-        Superposition to_sp();
-        Sequence to_seq();
+        Ket to_ket() const;
+        Superposition to_sp() const;
+        Sequence to_seq() const;
 
         void merge(const Sequence& seq2);
         void merge(const Sequence& seq2, const std::string& s);
 
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 };
 
 #endif
