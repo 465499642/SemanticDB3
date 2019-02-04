@@ -17,7 +17,7 @@ class NewContext {
 
     public:
         NewContext(const std::string& s);
-        std::string get_name();
+        std::string get_name() const;
         void learn(const ulong op_idx, const ulong label_idx, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, BaseRule* brule);
         void learn(const std::string& op, const std::string& label, const std::string& rule);
@@ -32,7 +32,7 @@ class NewContext {
 
         void fn_learn(const ulong op_idx, const ulong param_size, BaseRule* brule);
         BaseRule* fn_recall(const ulong op_idx, const ulong param_size);
-        void print_universe();
+        void print_universe() const;
 };
 
 #endif

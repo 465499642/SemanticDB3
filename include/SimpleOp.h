@@ -12,7 +12,6 @@
 class SimpleOp : public BaseOp {
     private:
         ulong op_idx;
-        // std::string op;  // not yet sure if want to store ulong or string.
 
     public:
         SimpleOp(const ulong idx) { op_idx = idx; }

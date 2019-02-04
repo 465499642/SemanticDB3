@@ -15,7 +15,7 @@ NewContext::NewContext(const std::string& s) {
     name = s;
 }
 
-std::string NewContext::get_name() {
+std::string NewContext::get_name() const {
     return name;
 }
 
@@ -195,7 +195,7 @@ BaseRule* NewContext::fn_recall(const ulong op_idx, const ulong param_size) {
     return fn_rules_dict[param_size].recall(op_idx);
 }
 
-void NewContext::print_universe() {
+void NewContext::print_universe() const {
     std::string s, op, label;
     ulong supported_ops_idx;
     Frame frame;
@@ -210,7 +210,8 @@ void NewContext::print_universe() {
 
     for (const ulong label_idx: sort_order) {
         label = ket_map.get_str(label_idx);
-        frame = rules_dict[label_idx];
+        // frame = rules_dict[label_idx];
+        frame = rules_dict.at(label_idx);
         rule = frame.recall(supported_ops_idx);
         s += "supported-ops |" + label + "> => " + rule->to_string() + "\n";
         for (const ulong op_idx: frame.supported_ops()) {
@@ -237,7 +238,8 @@ void NewContext::print_universe() {
             case 3 : label = "(*,*,*)"; break;
             case 4 : label = "(*,*,*,*)"; break;
         }
-        frame = fn_rules_dict[param_size];
+        // frame = fn_rules_dict[param_size];
+        frame = fn_rules_dict.at(param_size);
         rule = frame.recall(supported_ops_idx);
         s += "supported-ops " + label + " => " + rule->to_string() + "\n";
         for (const ulong op_idx: frame.supported_ops()) {
