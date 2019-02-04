@@ -60,9 +60,9 @@ class Sequence : public BaseRule {
         void merge(const Sequence& seq2);
         void merge(const Sequence& seq2, const std::string& s);
 
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 };
 
 #endif

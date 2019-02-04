@@ -35,11 +35,11 @@ Sequence SelfKet::to_seq() const {
     return seq;
 }
 
-Sequence SelfKet::Compile(ContextList& context) {
+Sequence SelfKet::Compile(ContextList& context) const {
     return this->to_seq();
 }
 
-Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) {
+Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) const {
     if (idx == 1) {
         Ket tmp(label_idx, value);
         return tmp.to_seq();
@@ -47,7 +47,7 @@ Sequence SelfKet::Compile(ContextList& context, const ulong label_idx) {
     return this->to_seq();
 }
 
-Sequence SelfKet::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence SelfKet::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     if (idx < args.size()) {
         return args.at(idx);
     }

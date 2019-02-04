@@ -18,9 +18,9 @@ class OpRule : public BaseRule {
     public:
         OpRule() {};
         void push(SingleOpRule &single_op_rule);
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 
         const int type() const { return OPRULE; };
         const ulong size() const { return op_rule_vec.size(); };

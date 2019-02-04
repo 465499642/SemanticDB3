@@ -78,7 +78,7 @@ void Frame::print() {
         std::cout << "    " << op_idx << " " << ket_map.get_str(op_idx) << std::endl;
     }
     std::cout << "rules:" << std::endl;
-    for (auto pair: rules) {
+    for (const auto &pair: rules) {
         std::cout << "    " << pair.first << " " << pair.second->to_string() << std::endl;
     }
 }

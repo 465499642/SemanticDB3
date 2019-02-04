@@ -11,9 +11,9 @@ void OpRule::push(SingleOpRule &single_op_rule) {
     op_rule_vec.push_back(single_op_rule);
 }
 
-Sequence OpRule::Compile(ContextList& context) {
+Sequence OpRule::Compile(ContextList& context) const {
     Sequence seq2;
-    for (auto seq: op_rule_vec) {
+    for (const auto &seq: op_rule_vec) {
         Sequence compiled_seq = seq.Compile(context);
         switch (seq.symbol_type()) {  // should this be in the parser??
             case SPLUS: { seq2.add(compiled_seq); break; }
@@ -27,9 +27,9 @@ Sequence OpRule::Compile(ContextList& context) {
     return seq2;
 }
 
-Sequence OpRule::Compile(ContextList& context, const ulong label_idx) {
+Sequence OpRule::Compile(ContextList& context, const ulong label_idx) const {
     Sequence seq2;
-    for (auto seq: op_rule_vec) {
+    for (const auto &seq: op_rule_vec) {
         Sequence compiled_seq = seq.Compile(context, label_idx);
         switch (seq.symbol_type()) {  // should this be in the parser??
             case SPLUS: { seq2.add(compiled_seq); break; }
@@ -42,9 +42,9 @@ Sequence OpRule::Compile(ContextList& context, const ulong label_idx) {
     return seq2;
 }
 
-Sequence OpRule::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence OpRule::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     Sequence seq2;
-    for (auto seq: op_rule_vec) {
+    for (const auto &seq: op_rule_vec) {
         Sequence compiled_seq = seq.Compile(context, args);
         switch (seq.symbol_type()) {  // should this be in the parser??
             case SPLUS: { seq2.add(compiled_seq); break; }
@@ -59,7 +59,7 @@ Sequence OpRule::Compile(ContextList& context, std::vector<Sequence>& args) {
 
 const std::string OpRule::to_string() const {
     std::string s = "";
-    for (auto seq: op_rule_vec) {
+    for (const auto &seq: op_rule_vec) {
         s += seq.to_string();
     }
     return s;

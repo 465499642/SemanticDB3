@@ -22,9 +22,9 @@ class BaseRule {
         virtual Sequence to_seq() const = 0;
         virtual BaseRule* b_add(BaseRule* brule) = 0;
         virtual BaseRule* b_append(BaseRule* brule) = 0;
-        virtual Sequence Compile(ContextList& context) = 0;
-        virtual Sequence Compile(ContextList& context, const ulong label_idx) = 0;
-        virtual Sequence Compile(ContextList& context, std::vector<Sequence>& args) = 0;
+        virtual Sequence Compile(ContextList& context) const = 0;
+        virtual Sequence Compile(ContextList& context, const ulong label_idx) const = 0;
+        virtual Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const = 0;
 };
 
 #endif

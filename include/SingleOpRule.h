@@ -21,9 +21,9 @@ class SingleOpRule : public BaseRule {
         SingleOpRule(BaseRule* b_rule2);
         SingleOpRule(OpSeq* op_seq2, BaseRule* b_rule2);
         const unsigned int symbol_type() const { return op_seq->symbol_type(); };
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 
         const int type() const { return SINGLEOPRULE; };
         const ulong size() const { return 1; };

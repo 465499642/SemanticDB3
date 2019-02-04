@@ -24,7 +24,7 @@ Sequence::Sequence(const Superposition& sp) {
 }
 
 Sequence::Sequence(const Sequence& seq2) {
-    for (auto sp: seq2.seq) {
+    for (const auto sp: seq2.seq) {
         seq.push_back(sp);
     }
 }
@@ -96,7 +96,7 @@ void Sequence::append(const Superposition& sp) {
 }
 
 void Sequence::append(const Sequence& seq2) {
-    for (auto sp: seq2.seq) {
+    for (const auto sp: seq2.seq) {
         seq.push_back(sp);
     }
 }
@@ -104,7 +104,7 @@ void Sequence::append(const Sequence& seq2) {
 const std::string Sequence::to_string() const {
     std::string s;
     bool first_pass = true;
-    for (auto sp: seq) {
+    for (const auto &sp: seq) {
         if (first_pass) {
             s += sp.to_string();
             first_pass = false;
@@ -179,14 +179,14 @@ BaseRule* Sequence::b_append(BaseRule* brule) {
     }
 }
 
-Sequence Sequence::Compile(ContextList& context) {
+Sequence Sequence::Compile(ContextList& context) const {
     return this->to_seq();
 }
 
-Sequence Sequence::Compile(ContextList& context, const ulong label_idx) {
+Sequence Sequence::Compile(ContextList& context, const ulong label_idx) const {
     return this->to_seq();
 }
 
-Sequence Sequence::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence Sequence::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     return this->to_seq();
 }

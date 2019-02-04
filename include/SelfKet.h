@@ -30,9 +30,9 @@ class SelfKet : public BaseRule {
         Sequence to_seq() const;
         BaseRule* b_add(BaseRule* brule) { return this; }
         BaseRule* b_append(BaseRule* brule) { return this; }
-        Sequence Compile(ContextList& context);
-        Sequence Compile(ContextList& context, const ulong label_idx);
-        Sequence Compile(ContextList& context, std::vector<Sequence>& args);
+        Sequence Compile(ContextList& context) const;
+        Sequence Compile(ContextList& context, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 };
 
 #endif

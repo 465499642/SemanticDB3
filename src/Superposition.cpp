@@ -255,14 +255,14 @@ BaseRule* Superposition::b_append(BaseRule* brule) {
 }
 
 
-Sequence Superposition::Compile(ContextList& context) {
+Sequence Superposition::Compile(ContextList& context) const {
     return this->to_seq();
 }
 
-Sequence Superposition::Compile(ContextList& context, const ulong label_idx) {
+Sequence Superposition::Compile(ContextList& context, const ulong label_idx) const {
     return this->to_seq();
 }
 
-Sequence Superposition::Compile(ContextList& context, std::vector<Sequence>& args) {
+Sequence Superposition::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     return this->to_seq();
 }
