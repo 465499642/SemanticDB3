@@ -11,8 +11,6 @@
 #include "KetMap.h"
 #include "Ket.h"
 
-const double EPSILON = 0.0001; // shift to Functions.h?
-
 
 // from here:
 // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
