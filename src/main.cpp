@@ -501,5 +501,18 @@ int main() {
     std::cout << "scaled_simm(sp2, sp2): " << scaled_simm(sp_2, sp_2) << std::endl;
     std::cout << "scaled_simm(sp1, sp2): " << scaled_simm(sp_1, sp_2) << std::endl;
 
+    // test push_float():
+    Ket pk0("",7), pk1("a: b", 3.2), pk2(" ",5), pk3("x: y");
+    std::cout << "push_float 7|> " << push_float(pk0).to_string() << std::endl;
+    std::cout << "push_float 3.2|a: b> " << push_float(pk1).to_string() << std::endl;
+    std::cout << "push_float 5| > " << push_float(pk2).to_string() << std::endl;
+    std::cout << "push_float |x: y> " << push_float(pk3).to_string() << std::endl;
+
+    // test pop_float():
+    Ket pk4("3.14159"), pk5("a: b: c: 5.1", 3), pk6("a: b: c");
+    std::cout << "pop_float |3.14159> " << pop_float(pk4).to_string() << std::endl;
+    std::cout << "pop_float 3|a: b: c: 5.1> " << pop_float(pk5).to_string() << std::endl;
+    std::cout << "pop_float |a: b: c> " << pop_float(pk6).to_string() << std::endl;
+
     return 0;
 }

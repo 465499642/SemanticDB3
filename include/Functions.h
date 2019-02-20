@@ -24,4 +24,7 @@ double scaled_simm(const Superposition &sp1, const Superposition &sp2);
 double simm(const Sequence &seq1, const Sequence &seq2);
 double scaled_simm(const Sequence &seq1, const Sequence &seq2);
 
+Ket push_float(const Ket k);
+Ket pop_float(const Ket k);
+
 #endif

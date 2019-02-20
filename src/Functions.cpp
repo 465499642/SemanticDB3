@@ -199,3 +199,42 @@ double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
 }
 
 
+Ket push_float(const Ket k) {  // optimize later!
+    std::string label = k.label();
+    if (label == "") { return k; }
+    std::string s;
+    if (label == " ") {
+        s = "";
+    } else {
+        s = label + ": ";
+    }
+    // s += std::to_string(k.value());
+    // Ket result(s);
+    mpf_class value(k.value());
+    std::stringstream buffer;
+    buffer.precision(10);
+    buffer << value;
+    Ket result(s + buffer.str());
+    return result;
+}
+
+Ket pop_float(const Ket k) { // optimize later!
+    auto k_vec = k.label_split_idx();
+    if (k_vec.size() == 0) { Ket result; return result; } // should never happen
+    std::string value_str = ket_map.get_str(k_vec.back());
+    try {
+        //double value = std::stod(value_str);
+        mpf_class mpf_value(value_str);
+        double value = mpf_value.get_d();
+        if ( k_vec.size() == 1 ) {
+            Ket result(" ", value);
+            return result;
+        }
+        k_vec.pop_back();
+        ulong label_idx = ket_map.get_idx(k_vec);
+        Ket result(label_idx, value * k.value());
+        return result;
+    } catch (std::invalid_argument) {
+        return k;
+    }
+}
