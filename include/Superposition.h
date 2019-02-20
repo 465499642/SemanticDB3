@@ -68,6 +68,8 @@ class Superposition : public BaseRule {
 
         Ket how_many() const;
         Ket pick_elt() const;
+
+        Superposition reverse() const;
 };
 
 #endif

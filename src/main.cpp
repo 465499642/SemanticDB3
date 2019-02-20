@@ -564,5 +564,8 @@ int main() {
         std::cout << "dsp1.pick_elt(): " << dsp1.pick_elt().to_string() << std::endl;
     }
 
+    // test Superposition::reverse():
+    std::cout << "dsp1.reverse(): " << dsp1.reverse().to_string() << std::endl;
+
     return 0;
 }

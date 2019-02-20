@@ -333,12 +333,22 @@ Ket Superposition::how_many() const {
 }
 
 Ket Superposition::pick_elt() const {
-    std::random_device rd;
-    std::mt19937 eng(rd());
+    std::random_device rd;  // is this correct to re-seed on every invoke?
+    std::mt19937 eng(rd()); // code from here: https://stackoverflow.com/questions/7560114/random-number-c-in-some-range
     std::uniform_int_distribution<> distr(0, sort_order.size() - 1);
     ulong pos = distr(eng);
     ulong idx = sort_order[pos];
     double value = sp.at(idx);
     Ket result(idx, value);
+    return result;
+}
+
+Superposition Superposition::reverse() const {
+    Superposition result;
+    for ( auto it = sort_order.rbegin(); it != sort_order.rend(); ++it) {
+        double value = sp.at(*it);
+        result.sp[*it] = value;
+        result.sort_order.push_back(*it);
+    }
     return result;
 }
