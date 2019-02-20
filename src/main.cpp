@@ -546,11 +546,13 @@ int main() {
     std::cout << "nfc c: " << normed_frequency_class(nfc_k3, nfc_sp2) << std::endl;
     std::cout << "nfc d: " << normed_frequency_class(nfc_k4, nfc_sp1) << std::endl;
 
-    // test Superposition::drop():
+    // test Superposition::drop(), drop_below(), drop_above():
     Ket dk1("a"), dk2("b",-2.2), dk3("c",0), dk4("d",3);
     Superposition dsp1 = dk1 + dk2 + dk3 + dk4;
     std::cout << "dsp1: " << dsp1.to_string() << std::endl;
     std::cout << "dsp1.drop(): " << dsp1.drop().to_string() << std::endl;
+    std::cout << "dsp1.drop_below(2): " << dsp1.drop_below(2).to_string() << std::endl;
+    std::cout << "dsp1.drop_above(0): " << dsp1.drop_above(0).to_string() << std::endl;
 
     return 0;
 }

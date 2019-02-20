@@ -63,6 +63,8 @@ class Superposition : public BaseRule {
         double find_value(const Ket &k) const;
 
         Superposition drop() const;
+        Superposition drop_below(const double t) const;
+        Superposition drop_above(const double t) const;
 };
 
 #endif

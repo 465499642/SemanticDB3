@@ -300,3 +300,28 @@ Superposition Superposition::drop() const {
     }
     return result;
 }
+
+Superposition Superposition::drop_below(const double t) const {
+    Superposition result;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        if (value >= t) {
+            result.sp[idx] = value;
+            result.sort_order.push_back(idx);
+        }
+    }
+    return result;
+}
+
+Superposition Superposition::drop_above(const double t) const {
+    Superposition result;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        if (value <= t) {
+            result.sp[idx] = value;
+            result.sort_order.push_back(idx);
+        }
+    }
+    return result;
+}
+
