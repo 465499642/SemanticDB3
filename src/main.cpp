@@ -525,5 +525,10 @@ int main() {
     std::cout << "min_coeff: " << spm.find_min_coeff() << std::endl;
     std::cout << "max_coeff: " << spm.find_max_coeff() << std::endl;
 
+    // test Superposition::find_value(ket):
+    std::cout << "a: " << spm.find_value(sk1) << std::endl;
+    std::cout << "b: " << spm.find_value(sk2) << std::endl;
+    std::cout << "c: " << spm.find_value(sk3) << std::endl;
+
     return 0;
 }

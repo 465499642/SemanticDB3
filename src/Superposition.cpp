@@ -282,3 +282,8 @@ double Superposition::find_max_coeff() const {
     return largest;
 }
 
+
+double Superposition::find_value(const Ket &k) const {
+    ulong idx = k.label_idx();
+    return sp.at(idx);
+}
