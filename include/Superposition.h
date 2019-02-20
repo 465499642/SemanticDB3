@@ -72,6 +72,9 @@ class Superposition : public BaseRule {
         Superposition reverse() const;
         Superposition normalize() const;
         Superposition normalize(const double t) const;
+        Superposition rescale() const;
+        Superposition rescale(const double t) const;
+
 };
 
 #endif

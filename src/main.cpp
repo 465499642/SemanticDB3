@@ -579,5 +579,14 @@ int main() {
     std::cout << "nsp1.normalize(100): " << nsp1.normalize(100).to_string() << std::endl;
     std::cout << "nsp2.normalize(100): " << nsp2.normalize(100).to_string() << std::endl;
 
+   // test Superposition::rescale():
+    std::cout << "dsp1.rescale(): " << dsp1.rescale().to_string() << std::endl;
+    std::cout << "nsp1.rescale(): " << nsp1.rescale().to_string() << std::endl;
+    std::cout << "nsp2.rescale(): " << nsp2.rescale().to_string() << std::endl;
+
+    std::cout << "dsp1.rescale(100): " << dsp1.rescale(100).to_string() << std::endl;
+    std::cout << "nsp1.rescale(100): " << nsp1.rescale(100).to_string() << std::endl;
+    std::cout << "nsp2.rescale(100): " << nsp2.rescale(100).to_string() << std::endl;
+
     return 0;
 }

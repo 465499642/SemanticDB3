@@ -278,7 +278,7 @@ double Superposition::find_min_coeff() const {
     return smallest;
 }
 
-double Superposition::find_max_coeff() const {
+double Superposition::find_max_coeff() const { // what happens if sp is empty?
     double largest = std::max_element(sp.begin(), sp.end(), compare)->second;
     return largest;
 }
@@ -373,3 +373,18 @@ Superposition Superposition::normalize(const double t) const {
     return result;
 }
 
+Superposition Superposition::rescale() const {
+    return this->rescale(1);
+}
+
+Superposition Superposition::rescale(const double t) const {
+    double the_max = this->find_max_coeff();
+    if (the_max == 0) { return *this; }
+    Superposition result;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        result.sp[idx] = t * value / the_max;
+        result.sort_order.push_back(idx);
+    }
+    return result;
+}
