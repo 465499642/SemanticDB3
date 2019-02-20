@@ -1,5 +1,6 @@
 #include <math.h>
 #include <algorithm>
+#include <random>
 #include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
@@ -328,5 +329,16 @@ Superposition Superposition::drop_above(const double t) const {
 Ket Superposition::how_many() const {
     ulong count = sort_order.size();
     Ket result("number: " + std::to_string(count));
+    return result;
+}
+
+Ket Superposition::pick_elt() const {
+    std::random_device rd;
+    std::mt19937 eng(rd());
+    std::uniform_int_distribution<> distr(0, sort_order.size() - 1);
+    ulong pos = distr(eng);
+    ulong idx = sort_order[pos];
+    double value = sp.at(idx);
+    Ket result(idx, value);
     return result;
 }
