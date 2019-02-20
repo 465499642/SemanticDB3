@@ -567,5 +567,17 @@ int main() {
     // test Superposition::reverse():
     std::cout << "dsp1.reverse(): " << dsp1.reverse().to_string() << std::endl;
 
+   // test Superposition::normalize():
+    Ket nk1("a"), nk2("b"), nk3("c"), nk4("d"), nk5("e");
+    Superposition nsp1 = nk1 + nk2 + nk3 + nk4 + nk5;
+    Superposition nsp2 = nk1 + nk1 + nk2;
+    std::cout << "dsp1.normalize(): " << dsp1.normalize().to_string() << std::endl;
+    std::cout << "nsp1.normalize(): " << nsp1.normalize().to_string() << std::endl;
+    std::cout << "nsp2.normalize(): " << nsp2.normalize().to_string() << std::endl;
+
+    std::cout << "dsp1.normalize(100): " << dsp1.normalize(100).to_string() << std::endl;
+    std::cout << "nsp1.normalize(100): " << nsp1.normalize(100).to_string() << std::endl;
+    std::cout << "nsp2.normalize(100): " << nsp2.normalize(100).to_string() << std::endl;
+
     return 0;
 }

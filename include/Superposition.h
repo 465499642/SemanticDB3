@@ -70,6 +70,8 @@ class Superposition : public BaseRule {
         Ket pick_elt() const;
 
         Superposition reverse() const;
+        Superposition normalize() const;
+        Superposition normalize(const double t) const;
 };
 
 #endif

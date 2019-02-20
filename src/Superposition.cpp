@@ -352,3 +352,24 @@ Superposition Superposition::reverse() const {
     }
     return result;
 }
+
+Superposition Superposition::normalize() const {
+    return this->normalize(1);
+}
+
+Superposition Superposition::normalize(const double t) const {
+    double sum = 0;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        sum += value;
+    }
+    if (sum == 0) { return *this; }
+    Superposition result;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        result.sp[idx] = t * value / sum;
+        result.sort_order.push_back(idx);
+    }
+    return result;
+}
+
