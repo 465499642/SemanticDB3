@@ -45,6 +45,13 @@ Superposition::Superposition(Ket k) {
     sort_order.push_back(idx);
 }
 
+Superposition::Superposition(const Superposition &sp1) {
+    for (const auto idx : sp1.sort_order) {
+       double value = sp1.sp.at(idx);
+       sp[idx] = value;
+       sort_order.push_back(idx);
+    }
+}
 
 Superposition Superposition::operator+(Ket& b) {
     Superposition tmp;
@@ -386,5 +393,15 @@ Superposition Superposition::rescale(const double t) const {
         result.sp[idx] = t * value / the_max;
         result.sort_order.push_back(idx);
     }
+    return result;
+}
+
+Superposition Superposition::shuffle() const {
+    Superposition result(*this);
+
+    std::random_device rd; // code from here: https://en.cppreference.com/w/cpp/algorithm/random_shuffle
+    std::mt19937 g(rd());
+    std::shuffle(result.sort_order.begin(), result.sort_order.end(), g);
+
     return result;
 }

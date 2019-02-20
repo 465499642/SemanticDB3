@@ -588,5 +588,8 @@ int main() {
     std::cout << "nsp1.rescale(100): " << nsp1.rescale(100).to_string() << std::endl;
     std::cout << "nsp2.rescale(100): " << nsp2.rescale(100).to_string() << std::endl;
 
+    // test Superposition::shuffle():
+    std::cout << "nsp1.shuffle(): " << nsp1.shuffle().to_string() << std::endl;
+
     return 0;
 }

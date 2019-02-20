@@ -25,6 +25,7 @@ class Superposition : public BaseRule {
         Superposition(const std::string&s, const double v);
         Superposition(const ulong idx, const double v);
         Superposition(Ket k);
+        Superposition(const Superposition &sp);
 
         Superposition operator+(Ket& b);
         const int type() const { return SUPERPOSITION; };
@@ -74,7 +75,7 @@ class Superposition : public BaseRule {
         Superposition normalize(const double t) const;
         Superposition rescale() const;
         Superposition rescale(const double t) const;
-
+        Superposition shuffle() const;
 };
 
 #endif
