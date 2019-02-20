@@ -514,5 +514,16 @@ int main() {
     std::cout << "pop_float 3|a: b: c: 5.1> " << pop_float(pk5).to_string() << std::endl;
     std::cout << "pop_float |a: b: c> " << pop_float(pk6).to_string() << std::endl;
 
+    // test Superposition::find_min_coeff() and find_max_coeff():
+    Superposition spm;
+    Ket sk1("a"), sk2("b", 3), sk3("c",5);
+    spm.add(sk1);
+    spm.add(sk2);
+    spm.add(sk3);
+    spm.add(sk2);
+    std::cout << "|a> + 3|b> + 5|c> + 3|b>: " << spm.to_string() << std::endl;
+    std::cout << "min_coeff: " << spm.find_min_coeff() << std::endl;
+    std::cout << "max_coeff: " << spm.find_max_coeff() << std::endl;
+
     return 0;
 }

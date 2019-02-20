@@ -1,4 +1,5 @@
 #include <math.h>
+#include <algorithm>
 #include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
@@ -266,3 +267,18 @@ Sequence Superposition::Compile(ContextList& context, const ulong label_idx) con
 Sequence Superposition::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     return this->to_seq();
 }
+
+bool compare(const std::pair<ulong, double>&a, const std::pair<ulong, double>&b) {
+    return a.second < b.second;
+}
+
+double Superposition::find_min_coeff() const {
+    double smallest = std::min_element(sp.begin(), sp.end(), compare)->second;
+    return smallest;
+}
+
+double Superposition::find_max_coeff() const {
+    double largest = std::max_element(sp.begin(), sp.end(), compare)->second;
+    return largest;
+}
+

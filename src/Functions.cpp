@@ -238,3 +238,16 @@ Ket pop_float(const Ket k) { // optimize later!
         return k;
     }
 }
+
+
+/*
+bool compare_ket_value(const Ket &k1, const Ket &k2) {
+    return k1.value() < k2.value();
+}
+
+double normed_frequency_class(const Ket k, const Superposition &sp) {
+    double smallest = (*std::min_element(sp.begin(), sp.end(), compare_ket_value)).value();
+    return smallest;
+}
+*/
+

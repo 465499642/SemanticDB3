@@ -57,6 +57,9 @@ class Superposition : public BaseRule {
         Sequence Compile(ContextList& context) const;
         Sequence Compile(ContextList& context, const ulong label_idx) const;
         Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
+
+        double find_min_coeff() const;
+        double find_max_coeff() const;
 };
 
 #endif
