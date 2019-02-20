@@ -16,6 +16,8 @@ class SuperpositionIter{
         bool operator!= (const SuperpositionIter& other) const;
         Ket operator* () const;
         const SuperpositionIter& operator++ ();
+
+        SuperpositionIter& operator- (const SuperpositionIter& other);
 };
 
 #endif

@@ -405,3 +405,13 @@ Superposition Superposition::shuffle() const {
 
     return result;
 }
+
+bool compare_coeff(const SuperpositionIter &a, const SuperpositionIter &b) {
+    return (*a).value() < (*b).value();
+}
+
+Superposition Superposition::coeff_sort() const {
+    Superposition result(*this);
+//    std::sort(result.begin(), result.end(), compare_coeff);
+    return result;
+}

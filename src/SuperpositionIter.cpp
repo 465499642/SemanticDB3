@@ -19,3 +19,8 @@ const SuperpositionIter& SuperpositionIter::operator++ () {
     ++_idx;
     return *this;
 }
+
+SuperpositionIter& SuperpositionIter::operator- (const SuperpositionIter& other) {
+    _idx -= other._idx;
+    return *this;
+}
