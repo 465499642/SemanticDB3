@@ -285,5 +285,6 @@ double Superposition::find_max_coeff() const {
 
 double Superposition::find_value(const Ket &k) const {
     ulong idx = k.label_idx();
+    if (sp.find(idx) == sp.end()) { return 0; }
     return sp.at(idx);
 }

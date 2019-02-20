@@ -24,9 +24,9 @@ double scaled_simm(const Superposition &sp1, const Superposition &sp2);
 double simm(const Sequence &seq1, const Sequence &seq2);
 double scaled_simm(const Sequence &seq1, const Sequence &seq2);
 
-Ket push_float(const Ket k);
-Ket pop_float(const Ket k);
+Ket push_float(const Ket &k);
+Ket pop_float(const Ket &k);
 
-// double normed_frequency_class(const Ket k, const Superposition &sp);
+double normed_frequency_class(const Ket &k, const Superposition &sp);
 
 #endif

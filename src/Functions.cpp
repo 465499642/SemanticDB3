@@ -1,5 +1,6 @@
 #include <gmpxx.h>
 #include <math.h>
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -199,7 +200,7 @@ double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
 }
 
 
-Ket push_float(const Ket k) {  // optimize later!
+Ket push_float(const Ket &k) {  // optimize later!
     std::string label = k.label();
     if (label == "") { return k; }
     std::string s;
@@ -218,7 +219,7 @@ Ket push_float(const Ket k) {  // optimize later!
     return result;
 }
 
-Ket pop_float(const Ket k) { // optimize later!
+Ket pop_float(const Ket &k) { // optimize later!
     auto k_vec = k.label_split_idx();
     if (k_vec.size() == 0) { Ket result; return result; } // should never happen
     std::string value_str = ket_map.get_str(k_vec.back());
@@ -240,14 +241,15 @@ Ket pop_float(const Ket k) { // optimize later!
 }
 
 
-/*
-bool compare_ket_value(const Ket &k1, const Ket &k2) {
-    return k1.value() < k2.value();
-}
 
-double normed_frequency_class(const Ket k, const Superposition &sp) {
-    double smallest = (*std::min_element(sp.begin(), sp.end(), compare_ket_value)).value();
-    return smallest;
+double normed_frequency_class(const Ket &k, const Superposition &sp) {
+    double smallest = sp.find_min_coeff();
+    double largest = sp.find_max_coeff();
+    double f = sp.find_value(k);
+
+    if (largest <= 0 or f <= 0) { return 0; }
+
+    double fc_max = floor(0.5 - std::log(smallest / largest)/std::log(2)) + 1;
+    return 1 - floor(0.5 - std::log(f / largest)/std::log(2)) / fc_max;
 }
-*/
 

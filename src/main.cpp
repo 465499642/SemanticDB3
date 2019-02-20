@@ -530,5 +530,21 @@ int main() {
     std::cout << "b: " << spm.find_value(sk2) << std::endl;
     std::cout << "c: " << spm.find_value(sk3) << std::endl;
 
+    // test normed_frequency_class:
+    // double normed_frequency_class(const Ket &k, const Superposition &sp)
+
+    Ket nfc_k1("a"), nfc_k2("b"), nfc_k3("c"), nfc_k4("d");
+    Superposition nfc_sp1;
+    nfc_sp1 = nfc_k1 + nfc_k2 + nfc_k3;
+    Superposition nfc_sp2 = nfc_sp1;
+    nfc_sp2.multiply(7.2);
+
+    std::cout << "nfc_sp1: " << nfc_sp1.to_string() << std::endl;
+    std::cout << "nfc_sp2: " << nfc_sp2.to_string() << std::endl;
+
+    std::cout << "nfc b: " << normed_frequency_class(nfc_k2, nfc_sp1) << std::endl;
+    std::cout << "nfc c: " << normed_frequency_class(nfc_k3, nfc_sp2) << std::endl;
+    std::cout << "nfc d: " << normed_frequency_class(nfc_k4, nfc_sp1) << std::endl;
+
     return 0;
 }
