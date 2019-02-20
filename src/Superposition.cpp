@@ -288,3 +288,15 @@ double Superposition::find_value(const Ket &k) const {
     if (sp.find(idx) == sp.end()) { return 0; }
     return sp.at(idx);
 }
+
+Superposition Superposition::drop() const {
+    Superposition result;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        if (value > 0) {
+            result.sp[idx] = value;
+            result.sort_order.push_back(idx);
+        }
+    }
+    return result;
+}

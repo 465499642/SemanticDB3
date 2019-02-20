@@ -61,6 +61,8 @@ class Superposition : public BaseRule {
         double find_min_coeff() const;
         double find_max_coeff() const;
         double find_value(const Ket &k) const;
+
+        Superposition drop() const;
 };
 
 #endif
