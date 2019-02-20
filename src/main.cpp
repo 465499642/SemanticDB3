@@ -554,5 +554,10 @@ int main() {
     std::cout << "dsp1.drop_below(2): " << dsp1.drop_below(2).to_string() << std::endl;
     std::cout << "dsp1.drop_above(0): " << dsp1.drop_above(0).to_string() << std::endl;
 
+    // test Superposition::how_many():
+    Superposition hsp_empty;
+    std::cout << "dsp1.how_many(): " << dsp1.how_many().to_string() << std::endl;
+    std::cout << "hsp_empty.how_many(): " << hsp_empty.how_many().to_string() << std::endl;
+
     return 0;
 }

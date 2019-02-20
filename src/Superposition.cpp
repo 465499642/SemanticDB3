@@ -325,3 +325,8 @@ Superposition Superposition::drop_above(const double t) const {
     return result;
 }
 
+Ket Superposition::how_many() const {
+    ulong count = sort_order.size();
+    Ket result("number: " + std::to_string(count));
+    return result;
+}

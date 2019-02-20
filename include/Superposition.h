@@ -65,6 +65,8 @@ class Superposition : public BaseRule {
         Superposition drop() const;
         Superposition drop_below(const double t) const;
         Superposition drop_above(const double t) const;
+
+        Ket how_many() const;
 };
 
 #endif
