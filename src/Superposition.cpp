@@ -420,7 +420,8 @@ Superposition Superposition::coeff_sort() const {
 
 struct CompareCoeffStruct {
     CompareCoeffStruct(std::unordered_map<ulong, double> *sp) { this->sp = sp; }
-    bool operator () (ulong a, ulong b) { return sp->at(a) < sp->at(b); }
+//    bool operator () (ulong a, ulong b) { return sp->at(a) < sp->at(b); }
+    bool operator () (ulong a, ulong b) { return sp->at(a) > sp->at(b); }
     std::unordered_map<ulong, double> *sp;
 };
 
