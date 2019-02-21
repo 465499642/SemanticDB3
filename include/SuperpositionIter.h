@@ -23,6 +23,7 @@ class SuperpositionIter : public std::iterator<std::random_access_iterator_tag, 
         // Ket operator[](difference_type rhs) const { return _p_sp->get(rhs); }
         Ket operator* () const;
         Ket operator[](difference_type rhs) const;
+        SuperpositionIter& operator=(const SuperpositionIter& rhs) { _pos = rhs._pos; _p_sp = rhs._p_sp; return *this;}
 
         SuperpositionIter& operator++() { ++_pos; return *this; }
         SuperpositionIter& operator--() { --_pos; return *this; }

@@ -406,6 +406,7 @@ Superposition Superposition::shuffle() const {
     return result;
 }
 
+/*
 bool compare_coeff(const SuperpositionIter &a, const SuperpositionIter &b) {
     return (*a).value() < (*b).value();
 }
@@ -415,3 +416,17 @@ Superposition Superposition::coeff_sort() const {
 //    std::sort(result.begin(), result.end(), compare_coeff);
     return result;
 }
+*/
+
+struct CompareCoeffStruct {
+    CompareCoeffStruct(std::unordered_map<ulong, double> *sp) { this->sp = sp; }
+    bool operator () (ulong a, ulong b) { return sp->at(a) < sp->at(b); }
+    std::unordered_map<ulong, double> *sp;
+};
+
+Superposition Superposition::coeff_sort() const {
+    Superposition result(*this);
+    std::sort(result.sort_order.begin(), result.sort_order.end(), CompareCoeffStruct(&result.sp));
+    return result;
+}
+
