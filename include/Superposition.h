@@ -76,6 +76,8 @@ class Superposition : public BaseRule {
         Superposition rescale() const;
         Superposition rescale(const double t) const;
         Superposition shuffle() const;
+        Superposition coeff_sort() const;
+        Superposition ket_sort() const;
 };
 
 #endif

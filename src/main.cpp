@@ -591,5 +591,11 @@ int main() {
     // test Superposition::shuffle():
     std::cout << "nsp1.shuffle(): " << nsp1.shuffle().to_string() << std::endl;
 
+    // test Superposition::coeff_sort():
+    std::cout << "dsp1.coeff_sort(): " << dsp1.coeff_sort().to_string() << std::endl;
+
+    // test Superposition::ket_sort():
+    std::cout << "dsp1.coeff_sort().ket_sort(): " << dsp1.coeff_sort().ket_sort().to_string() << std::endl;
+
     return 0;
 }
