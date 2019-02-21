@@ -430,3 +430,13 @@ Superposition Superposition::coeff_sort() const {
     return result;
 }
 
+bool compare_ket(const ulong a, const ulong b) {
+    return ket_map.get_str(a) < ket_map.get_str(b);
+}
+
+Superposition Superposition::ket_sort() const {
+    Superposition result(*this);
+    std::sort(result.sort_order.begin(), result.sort_order.end(), compare_ket);
+    return result;
+}
+
