@@ -559,6 +559,10 @@ int main() {
     std::cout << "dsp1.how_many(): " << dsp1.how_many().to_string() << std::endl;
     std::cout << "hsp_empty.how_many(): " << hsp_empty.how_many().to_string() << std::endl;
 
+    // test Superposition::do_you_know():
+    std::cout << "dsp1.do_you_know(): " << dsp1.do_you_know().to_string() << std::endl;
+    std::cout << "hsp_empty.do_you_know(): " << hsp_empty.do_you_know().to_string() << std::endl;
+
     // test Superposition::pick_elt():
     for (int i = 0; i < 10; i++) {
         std::cout << "dsp1.pick_elt(): " << dsp1.pick_elt().to_string() << std::endl;

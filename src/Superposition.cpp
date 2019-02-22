@@ -334,6 +334,11 @@ Superposition Superposition::drop_above(const double t) const {
     return result;
 }
 
+Ket Superposition::do_you_know() const {
+    if (sort_order.size() == 0) { return Ket("no"); }
+    return Ket("yes");
+}
+
 Ket Superposition::how_many() const {
     ulong count = sort_order.size();
     Ket result("number: " + std::to_string(count));
@@ -364,7 +369,7 @@ Ket Superposition::weighted_pick_elt() const {
     std::uniform_int_distribution<> distr(0, sum);
     ulong r = distr(eng);
     double upto = 0;
-    for (const auto k : sp1 ) {
+    for (const auto k : sp1 ) { // maybe iterate using sort_order instead as an optimization?
         double w = k.value();
         if (upto + w > r) { return k; }
         upto += w;
