@@ -610,5 +610,9 @@ int main() {
     std::cout << "dsp1.measure_currency(): " << dsp1.measure_currency().to_string() << std::endl;
     std::cout << "nsp1.measure_currency(): " << nsp1.measure_currency().to_string() << std::endl;
 
+    // test split():
+    Ket split_k("a b c d e f", 3);
+    std::cout << "split 3|a b c d e f>: " << split(split_k).to_string() << std::endl;
+
     return 0;
 }

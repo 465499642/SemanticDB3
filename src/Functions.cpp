@@ -253,3 +253,15 @@ double normed_frequency_class(const Ket &k, const Superposition &sp) {
     return 1 - floor(0.5 - std::log(f / largest)/std::log(2)) / fc_max;
 }
 
+
+// std::vector<std::string> split(const std::string& s, const std::string& delimiter)
+Superposition split(const Ket &k) {
+    Superposition result;
+    auto split_str = split(k.label(), " ");
+    double value = k.value();
+    for (auto s : split_str) {
+        ulong idx = ket_map.get_idx(s);
+        result.add(idx, value);
+    }
+    return result;
+}
