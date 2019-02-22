@@ -1,6 +1,7 @@
 #include <math.h>
 #include <algorithm>
 #include <random>
+#include <assert.h>
 #include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
@@ -348,6 +349,27 @@ Ket Superposition::pick_elt() const {
     double value = sp.at(idx);
     Ket result(idx, value);
     return result;
+}
+
+Ket Superposition::weighted_pick_elt() const {
+    Superposition sp1 = this->drop();
+    if (sp1.size() == 0) { return Ket(); }
+    double sum = 0;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        sum += value;
+    }  // sum should be > 0
+    std::random_device rd;  // is this correct to re-seed on every invoke?
+    std::mt19937 eng(rd()); // code from here: https://stackoverflow.com/questions/7560114/random-number-c-in-some-range
+    std::uniform_int_distribution<> distr(0, sum);
+    ulong r = distr(eng);
+    double upto = 0;
+    for (const auto k : sp1 ) {
+        double w = k.value();
+        if (upto + w > r) { return k; }
+        upto += w;
+    }
+    assert(false); // we shouldn't get here if everything is working correctly
 }
 
 Superposition Superposition::reverse() const {

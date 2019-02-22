@@ -564,6 +564,11 @@ int main() {
         std::cout << "dsp1.pick_elt(): " << dsp1.pick_elt().to_string() << std::endl;
     }
 
+    // test Superposition::weighted_pick_elt():
+    for (int i = 0; i < 10; i++) {
+        std::cout << "dsp1.weighted_pick_elt(): " << dsp1.weighted_pick_elt().to_string() << std::endl;
+    }
+
     // test Superposition::reverse():
     std::cout << "dsp1.reverse(): " << dsp1.reverse().to_string() << std::endl;
 
