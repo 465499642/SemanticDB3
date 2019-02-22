@@ -621,5 +621,8 @@ int main() {
     // test rank():
     std::cout << "rank split |a b c d e f>: " << rank(split(split_k)).to_string() << std::endl;
 
+    // test top(k):
+    std::cout << "top[3] rank split |a b c d e f>: " << rank(split(split_k)).top(3).to_string() << std::endl;
+
     return 0;
 }
