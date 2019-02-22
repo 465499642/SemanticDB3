@@ -3,6 +3,7 @@
 #include <random>
 #include <cstdlib>
 #include <assert.h>
+#include <functional>
 #include "KetMap.h"
 #include "Ket.h"
 #include "Superposition.h"
@@ -501,6 +502,8 @@ Superposition Superposition::rescale(const double t) const {
     return result;
 }
 
+// maybe more efficient to use:
+// https://codereview.stackexchange.com/questions/39001/fisher-yates-modern-shuffle-algorithm
 Superposition Superposition::shuffle() const {
     Superposition result(*this);
 
@@ -563,3 +566,34 @@ Superposition Superposition::top(const ulong a) const {
     double value = this->coeff_sort().select_range(a, a).to_ket().value();
     return this->drop_below(value);
 }
+
+Superposition Superposition::apply_sigmoid(std::function<double(double)> sigmoid) const {
+    Superposition result;
+    for (auto idx : sort_order) {
+        double value = sp.at(idx);
+        double sig_value = sigmoid(value);
+        result.add(idx, sig_value);
+    }
+    return result;
+}
+
+Superposition Superposition::apply_sigmoid(std::function<double(double,double)> sigmoid, const double t) const {
+    Superposition result;
+    for (auto idx : sort_order) {
+        double value = sp.at(idx);
+        double sig_value = sigmoid(value, t);
+        result.add(idx, sig_value);
+    }
+    return result;
+}
+
+Superposition Superposition::apply_sigmoid(std::function<double(double,double,double)> sigmoid, const double t1, const double t2) const {
+    Superposition result;
+    for (auto idx : sort_order) {
+        double value = sp.at(idx);
+        double sig_value = sigmoid(value, t1, t2);
+        result.add(idx, sig_value);
+    }
+    return result;
+}
+

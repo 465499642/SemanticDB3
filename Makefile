@@ -23,6 +23,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     SelfKet.o \
     FnOp.o \
     BracketOp.o \
+    Sigmoids.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 

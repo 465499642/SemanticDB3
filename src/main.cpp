@@ -19,6 +19,7 @@
 #include "OpRule.h"
 #include "SelfKet.h"
 #include "FnOp.h"
+#include "Sigmoids.h"
 
 
 // for now, use main to test our components:
@@ -626,6 +627,12 @@ int main() {
 
     // test Superposition::pick(n):
     std::cout << "pick[3] rank split |a b c d e f>: " << rank(split(split_k)).pick(3).to_string() << std::endl;
+
+    // test Superposition::apply_sigmoid(sigmoid):
+    std::cout << "dsp1: " << dsp1.to_string() << std::endl;
+    std::cout << "clean (|a> - 2.2|b> + 0|c> + 3|d>): " << dsp1.apply_sigmoid(clean).to_string() << std::endl;
+    std::cout << "threshold-filter[3] rank split |a b c d e f>: " << rank(split(split_k)).apply_sigmoid(threshold_filter, 3).to_string() << std::endl;
+    std::cout << "sigmoid_in_range[3,5] rank split |a b c d e f>: " << rank(split(split_k)).apply_sigmoid(sigmoid_in_range, 3, 5).to_string() << std::endl;
 
     return 0;
 }

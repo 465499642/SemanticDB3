@@ -5,6 +5,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <functional>
 
 #include "KetMap.h"
 #include "BaseRule.h"
@@ -84,6 +85,10 @@ class Superposition : public BaseRule {
         Superposition ket_sort() const;
         Superposition select_range(const ulong a, const ulong b) const;
         Superposition top(const ulong a) const;
+
+        Superposition apply_sigmoid(std::function<double(double)> sigmoid) const;
+        Superposition apply_sigmoid(std::function<double(double,double)> sigmoid, const double t) const;
+        Superposition apply_sigmoid(std::function<double(double,double,double)> sigmoid, const double t1, const double t2) const;
 };
 
 #endif
