@@ -606,5 +606,9 @@ int main() {
     // test Superposition::ket_sort():
     std::cout << "dsp1.coeff_sort().ket_sort(): " << dsp1.coeff_sort().ket_sort().to_string() << std::endl;
 
+    // test Superposition::measure_currency():
+    std::cout << "dsp1.measure_currency(): " << dsp1.measure_currency().to_string() << std::endl;
+    std::cout << "nsp1.measure_currency(): " << nsp1.measure_currency().to_string() << std::endl;
+
     return 0;
 }

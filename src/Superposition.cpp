@@ -345,6 +345,15 @@ Ket Superposition::how_many() const {
     return result;
 }
 
+Ket Superposition::measure_currency() const {
+    double sum = 0;
+    for (const auto idx : sort_order) {
+        double value = sp.at(idx);
+        sum += value;
+    }
+    return Ket("number: " + std::to_string(sum)); // use mpf here instead?
+}
+
 Ket Superposition::pick_elt() const {
     std::random_device rd;  // is this correct to re-seed on every invoke?
     std::mt19937 eng(rd()); // code from here: https://stackoverflow.com/questions/7560114/random-number-c-in-some-range
