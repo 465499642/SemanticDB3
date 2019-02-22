@@ -70,6 +70,7 @@ class Superposition : public BaseRule {
         Ket do_you_know() const;
         Ket how_many() const;
         Ket measure_currency() const;
+        Superposition pick(const ulong n) const;
         Ket pick_elt() const;
         Ket weighted_pick_elt() const;
 

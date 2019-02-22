@@ -624,5 +624,8 @@ int main() {
     // test top(k):
     std::cout << "top[3] rank split |a b c d e f>: " << rank(split(split_k)).top(3).to_string() << std::endl;
 
+    // test Superposition::pick(n):
+    std::cout << "pick[3] rank split |a b c d e f>: " << rank(split(split_k)).pick(3).to_string() << std::endl;
+
     return 0;
 }

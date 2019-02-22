@@ -1,6 +1,7 @@
 #include <math.h>
 #include <algorithm>
 #include <random>
+#include <cstdlib>
 #include <assert.h>
 #include "KetMap.h"
 #include "Ket.h"
@@ -353,6 +354,74 @@ Ket Superposition::measure_currency() const {
     }
     return Ket("number: " + std::to_string(sum)); // use mpf here instead?
 }
+
+
+
+// code from here:
+// https://ideone.com/3A3cv
+// https://stackoverflow.com/questions/9345087/choose-m-elements-randomly-from-a-vector-containing-n-elements
+// https://codereview.stackexchange.com/questions/39001/fisher-yates-modern-shuffle-algorithm
+template<class bidiiter>
+bidiiter random_unique(bidiiter begin, bidiiter end, size_t num_random) {
+    // seed the RNG:
+    std::random_device rd;
+    std::mt19937 mt(rd());
+
+    size_t left = std::distance(begin, end);
+    while (num_random--) {
+        bidiiter r = begin;
+        std::uniform_int_distribution<> dis(0, left - 1);
+        const int randomIndex = dis(mt);
+        std::advance(r, randomIndex);
+//        std::advance(r, rand()%left);
+        std::swap(*begin, *r);
+        ++begin;
+        --left;
+    }
+    return begin;
+}
+
+Superposition Superposition::pick(const ulong n) const {
+    std::vector<ulong> sort_order1 = sort_order;
+    random_unique(sort_order1.begin(), sort_order1.end(), n);
+    Superposition result;
+    for (ulong i = 0; i < n; i++) {
+        ulong idx = sort_order1[i];
+        double value = sp.at(idx);
+        result.add(idx, value);
+    }
+    return result;
+}
+
+
+/*
+// works, but shuffle's entire superposition, before returning just the first few elements. ie, bad.
+// code from here:
+// https://codereview.stackexchange.com/questions/39001/fisher-yates-modern-shuffle-algorithm
+Superposition Superposition::pick(const ulong n) const {
+    std::vector<ulong> sort_order1 = sort_order;
+    // seed the RNG:
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    auto currentIndexCounter = sort_order1.size();
+    for (auto iter = sort_order1.rbegin(); iter != sort_order1.rend(); ++iter, --currentIndexCounter) {
+        // get int distribution with new range
+        std::uniform_int_distribution<> dis(0, currentIndexCounter);
+        const int randomIndex = dis(mt);
+
+        if (*iter != sort_order1.at(randomIndex)) {
+            std::swap(sort_order1.at(randomIndex), *iter);
+        }
+    }
+    Superposition result;
+    for (ulong i = 0; i < n; i++) {
+        ulong idx = sort_order1[i];
+        double value = sp.at(idx);
+        result.add(idx, value);
+    }
+    return result;
+}
+*/
 
 Ket Superposition::pick_elt() const {
     std::random_device rd;  // is this correct to re-seed on every invoke?
