@@ -488,3 +488,9 @@ Superposition Superposition::select_range(const ulong a, const ulong b) const {
     }
     return result;
 }
+
+Superposition Superposition::top(const ulong a) const {
+    if (a == 0) { return Superposition(); }
+    double value = this->coeff_sort().select_range(a, a).to_ket().value();
+    return this->drop_below(value);
+}

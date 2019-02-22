@@ -82,6 +82,7 @@ class Superposition : public BaseRule {
         Superposition coeff_sort() const;
         Superposition ket_sort() const;
         Superposition select_range(const ulong a, const ulong b) const;
+        Superposition top(const ulong a) const;
 };
 
 #endif
