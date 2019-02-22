@@ -81,6 +81,7 @@ class Superposition : public BaseRule {
         Superposition shuffle() const;
         Superposition coeff_sort() const;
         Superposition ket_sort() const;
+        Superposition select_range(const ulong a, const ulong b) const;
 };
 
 #endif

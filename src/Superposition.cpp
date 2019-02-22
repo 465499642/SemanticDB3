@@ -477,3 +477,14 @@ Superposition Superposition::ket_sort() const {
     return result;
 }
 
+Superposition Superposition::select_range(const ulong a, const ulong b) const {
+    ulong a1 = std::max((ulong)1, a) - 1;
+    ulong b1 = std::min(b, sort_order.size());
+    Superposition result;
+    for (ulong i = a1; i < b1; i++) {
+        ulong idx = sort_order[i];
+        double value = sp.at(idx);
+        result.add(idx, value);
+    }
+    return result;
+}

@@ -614,5 +614,9 @@ int main() {
     Ket split_k("a b c d e f", 3);
     std::cout << "split 3|a b c d e f>: " << split(split_k).to_string() << std::endl;
 
+    // test Superposition::select_range(a, b):
+    std::cout << "select[2,4] split 3|a b c d e f>: " << split(split_k).select_range(2,4).to_string() << std::endl;
+    std::cout << "select[2,10] split 3|a b c d e f>: " << split(split_k).select_range(2,10).to_string() << std::endl;
+
     return 0;
 }
