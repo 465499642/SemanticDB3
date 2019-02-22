@@ -30,5 +30,6 @@ Ket pop_float(const Ket &k);
 double normed_frequency_class(const Ket &k, const Superposition &sp);
 
 Superposition split(const Ket &k);
+Superposition rank(const Superposition& sp);
 
 #endif

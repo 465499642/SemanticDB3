@@ -265,3 +265,12 @@ Superposition split(const Ket &k) {
     }
     return result;
 }
+
+Superposition rank(const Superposition& sp) {
+    Superposition result;
+    for (ulong i = 0; i < sp.size(); i++) {
+       Ket k = sp.get(i);
+       result.add(k.label_idx(), i+1);
+    }
+    return result;
+}
