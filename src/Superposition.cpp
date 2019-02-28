@@ -70,8 +70,8 @@ const ulong Superposition::size() const {
 }
 
 void Superposition::add(const ulong idx) {
-    if (ket_map.get_idx("") == idx) {return; }
-
+    if (ket_map.get_idx("") == idx) {return; }  // maybe we should make idx for "" = 0, as an optimization
+                                                // especially since we use Superposition::add() a lot!
     if (sp.find(idx) != sp.end()) {
         sp[idx] += 1.0;
     }

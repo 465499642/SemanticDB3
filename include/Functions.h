@@ -38,4 +38,6 @@ Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence 
 Sequence sp2seq(const Superposition &sp);
 Superposition seq2sp(const Sequence &seq);
 
+Sequence bar_chart(const Superposition &sp, const double v);
+
 #endif

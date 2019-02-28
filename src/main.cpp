@@ -669,5 +669,12 @@ int main() {
     std::cout << "seq2sp srev: " << seq2sp(srev).to_string() << std::endl;
     std::cout << "sp2seq range(|1>, |5>): " << sp2seq(range(input_seq, start, stop4).to_sp()).to_string() << std::endl;
 
+    // test bar-chart[50]:
+    Ket kbc("a b c d e f");
+    std::cout << "bar-chart[12] rank split |a b c d e f>:\n" << bar_chart(rank(split(kbc)), 12).to_string() << std::endl;
+    std::cout << "bar-chart[12] shuffle rank split |a b c d e f>:\n" << bar_chart(rank(split(kbc)).shuffle(), 12).to_string() << std::endl;
+
+    Ket kbc2("Fred Sam Robert");
+    std::cout << "bar-chart[6] rank split |Fred Sam Robert>:\n" << bar_chart(rank(split(kbc2)), 6).to_string() << std::endl;
     return 0;
 }

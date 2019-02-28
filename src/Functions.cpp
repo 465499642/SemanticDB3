@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <set>
 #include <algorithm>
+#include <iomanip>
 #include "Functions.h"
 #include "KetMap.h"
 #include "Ket.h"
@@ -335,3 +336,21 @@ Superposition seq2sp(const Sequence &seq) {
     return result;
 }
 
+
+Sequence bar_chart(const Superposition &sp, const double v) {
+    if (sp.size() == 0 || v <= 0) { return Sequence(); }
+    ulong width = (ulong)v;
+    ulong max_len = 0;
+    for (const auto k: sp) {
+        max_len = std::max(k.label().size(), max_len);
+    }
+    // Superposition one = sp.rescale(width); // do we need .drop() too? Probably.
+    Superposition one = sp.drop().rescale(width);
+    std::cout << "----------" << std::endl;
+    for (const auto k: one) {
+        std::cout << std::left << std::setfill(' ') << std::setw(max_len) << k.label() << " : ";
+        std::cout << std::setfill('|') << std::setw((ulong)k.value()) << "|" << std::endl;
+    }
+    std::cout << "----------" << std::endl;
+    return Sequence("bar chart");
+}
