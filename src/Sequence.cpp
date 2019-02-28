@@ -107,6 +107,7 @@ void Sequence::append(const Sequence& seq2) {
 }
 
 const std::string Sequence::to_string() const {
+    if (seq.size() == 0) { return std::string("|>"); }
     std::string s;
     bool first_pass = true;
     for (const auto &sp: seq) {
@@ -194,4 +195,13 @@ Sequence Sequence::Compile(ContextList& context, const ulong label_idx) const {
 
 Sequence Sequence::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     return this->to_seq();
+}
+
+
+Sequence Sequence::sreverse() const {
+    Sequence result;
+    for (auto it = seq.rbegin(); it != seq.rend(); ++it) {
+        result.seq.push_back(*it);
+    }
+    return result;
 }

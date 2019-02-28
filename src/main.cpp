@@ -655,5 +655,15 @@ int main() {
     Sequence stop4("5"), step4("0.5");
     std::cout << "range(|1>, |5>, |0.5>): " << range(input_seq, start, stop4, step4).to_string() << std::endl;
 
+    // test Sequence::sreverse():
+    Sequence srev;
+    Ket krev1("a"), krev2("b", 3.14), krev3("c", -2), krev4("d");
+    srev.append(krev1);
+    srev.append(krev2);
+    srev.append(krev3);
+    srev.append(krev4);
+    std::cout << "srev: " << srev.to_string() << std::endl;
+    std::cout << "sreverse srev: " << srev.sreverse().to_string() << std::endl;
+
     return 0;
 }

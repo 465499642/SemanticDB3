@@ -287,12 +287,12 @@ Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &s
     auto v3 = step_ket.label();
     double direction = step_ket.value();
 
-    if (start_vec.size() == 0 || stop_vec.size() == 0) { return Ket(); }
+    if (start_vec.size() == 0 || stop_vec.size() == 0) { return Sequence(); }
     ulong start_idx = start_vec.back();
     ulong stop_idx = stop_vec.back();
     start_vec.pop_back();
     stop_vec.pop_back();
-    if ( start_vec != stop_vec ) { return Ket(); }
+    if ( start_vec != stop_vec ) { return Sequence(); }
     std::string v1 = ket_map.get_str(start_idx);
     std::string v2 = ket_map.get_str(stop_idx);
     std::string cat = ket_map.get_str(start_vec);  // what if start_vec.size() == 0?
@@ -316,5 +316,5 @@ Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &s
             result.add(label + buffer.str());
         }
     }
-    return result;
+    return result.to_seq();
 }

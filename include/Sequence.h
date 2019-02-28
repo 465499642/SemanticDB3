@@ -64,6 +64,9 @@ class Sequence : public BaseRule {
         Sequence Compile(ContextList& context) const;
         Sequence Compile(ContextList& context, const ulong label_idx) const;
         Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
+
+        Sequence sreverse() const;
+
 };
 
 #endif
