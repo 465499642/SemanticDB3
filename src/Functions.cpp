@@ -78,7 +78,7 @@ Ket extract_value(Ket k) {
 }
 
 
-Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Sequence &symbol_ket, Sequence &two) {
+Sequence arithmetic(ContextList &context, const Sequence &input_seq, const Sequence &one, const Sequence &symbol_ket, const Sequence &two) {
     auto one_idx_vec = one.to_ket().label_split_idx();
     auto symbol = symbol_ket.to_ket().label();
     auto two_idx_vec = two.to_ket().label_split_idx();
@@ -275,12 +275,12 @@ Superposition rank(const Superposition& sp) {
     return result;
 }
 
-Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop) {
+Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence &stop) {
     Sequence step("1");
     return range(input_seq, start, stop, step);
 }
 
-Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &step) {
+Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence &stop, const Sequence &step) {
     auto start_vec = start.to_ket().label_split_idx();
     auto stop_vec = stop.to_ket().label_split_idx();
     auto step_ket = step.to_ket();

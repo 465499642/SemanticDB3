@@ -18,7 +18,7 @@ Ket extract_category(const Ket k);
 Ket extract_value(const Ket k);
 
 // Sequence arithmetic(ContextList &context, std::vector<Sequence> seq_vec);
-Sequence arithmetic(ContextList &context, Sequence &input_seq, Sequence &one, Sequence &symbol_ket, Sequence &two);
+Sequence arithmetic(ContextList &context, const Sequence &input_seq, const Sequence &one, const Sequence &symbol_ket, const Sequence &two);
 double simm(const Superposition &sp1, const Superposition &sp2);
 double scaled_simm(const Superposition &sp1, const Superposition &sp2);
 double simm(const Sequence &seq1, const Sequence &seq2);
@@ -32,8 +32,8 @@ double normed_frequency_class(const Ket &k, const Superposition &sp);
 Superposition split(const Ket &k);
 Superposition rank(const Superposition& sp);
 
-Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop);
-Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &step);
+Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence &stop);
+Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence &stop, const Sequence &step);
 
 Sequence sp2seq(const Superposition &sp);
 Superposition seq2sp(const Sequence &seq);
