@@ -665,5 +665,9 @@ int main() {
     std::cout << "srev: " << srev.to_string() << std::endl;
     std::cout << "sreverse srev: " << srev.sreverse().to_string() << std::endl;
 
+    // test sp2seq and seq2sp:
+    std::cout << "seq2sp srev: " << seq2sp(srev).to_string() << std::endl;
+    std::cout << "sp2seq range(|1>, |5>): " << sp2seq(range(input_seq, start, stop4).to_sp()).to_string() << std::endl;
+
     return 0;
 }

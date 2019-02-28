@@ -35,4 +35,7 @@ Superposition rank(const Superposition& sp);
 Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop);
 Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &step);
 
+Sequence sp2seq(const Superposition &sp);
+Superposition seq2sp(const Sequence &seq);
+
 #endif

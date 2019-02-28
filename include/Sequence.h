@@ -36,7 +36,7 @@ class Sequence : public BaseRule {
 
         void multiply(const double d);
 
-        void append(Ket& k);
+        void append(const Ket& k);
         void append(const Superposition& sp);
         void append(const Sequence& seq);
 

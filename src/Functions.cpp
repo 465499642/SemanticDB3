@@ -318,3 +318,20 @@ Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &s
     }
     return result.to_seq();
 }
+
+Sequence sp2seq(const Superposition &sp) {
+    Sequence result;
+    for (const auto k : sp) {
+        result.append(k);
+    }
+    return result;
+}
+
+Superposition seq2sp(const Sequence &seq) {
+    Superposition result;
+    for (const auto sp: seq) {
+        result.add(sp);
+    }
+    return result;
+}
+

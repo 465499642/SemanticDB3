@@ -88,7 +88,7 @@ void Sequence::multiply(const double d) {
     }
 }
 
-void Sequence::append(Ket& k) {
+void Sequence::append(const Ket& k) {
     Superposition tmp;
     tmp.add(k);
     seq.push_back(tmp);
