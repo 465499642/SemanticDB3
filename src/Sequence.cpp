@@ -47,7 +47,7 @@ const ulong Sequence::size() const {
     return result;
 }
 
-void Sequence::add(Ket& k) {
+void Sequence::add(const Ket& k) {
     if ( seq.size() == 0 ) {
         Superposition tmp;
         tmp.add(k);

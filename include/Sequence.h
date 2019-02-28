@@ -30,7 +30,7 @@ class Sequence : public BaseRule {
         BaseRule* b_add(BaseRule* brule);
         BaseRule* b_append(BaseRule* brule);
 
-        void add(Ket& k);
+        void add(const Ket& k);
         void add(const Superposition& sp);
         void add(const Sequence& seq);
 
