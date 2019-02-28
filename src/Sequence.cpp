@@ -11,6 +11,11 @@ Sequence::Sequence(const std::string& s) {
     seq.push_back(tmp);
 }
 
+Sequence::Sequence(const std::string& s, const double d) {
+    Superposition tmp(s, d);
+    seq.push_back(tmp);
+}
+
 Sequence::Sequence(const Ket& k) {
     Superposition tmp;
     tmp.add(k);

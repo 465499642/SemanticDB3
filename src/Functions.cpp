@@ -275,10 +275,18 @@ Superposition rank(const Superposition& sp) {
     return result;
 }
 
-
 Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop) {
+    Sequence step("1");
+    return range(input_seq, start, stop, step);
+}
+
+Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &step) {
     auto start_vec = start.to_ket().label_split_idx();
     auto stop_vec = stop.to_ket().label_split_idx();
+    auto step_ket = step.to_ket();
+    auto v3 = step_ket.label();
+    double direction = step_ket.value();
+
     if (start_vec.size() == 0 || stop_vec.size() == 0) { return Ket(); }
     ulong start_idx = start_vec.back();
     ulong stop_idx = stop_vec.back();
@@ -291,12 +299,22 @@ Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop) {
     std::string label = "";
     if (cat.size() > 0 ) { label = cat + ": "; }
     Superposition result;
-    mpf_class x(v1), y(v2), z;
-    for (z = x; z < y + 1; z++) {
-        std::stringstream buffer;
-        buffer.precision(10);
-        buffer << z;
-        result.add(label + buffer.str());
+    mpf_class x(v1), y(v2), z(v3), i;
+    if (z == 0) { return start; }
+    if (direction > 0 ) {
+        for (i = x; i <= y; i += z) {
+            std::stringstream buffer;
+            buffer.precision(10);
+            buffer << i;
+            result.add(label + buffer.str());
+        }
+    } else if (direction < 0) {
+        for (i = x; i >= y; i -= z) {
+            std::stringstream buffer;
+            buffer.precision(10);
+            buffer << i;
+            result.add(label + buffer.str());
+        }
     }
     return result;
 }

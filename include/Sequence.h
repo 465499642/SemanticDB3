@@ -19,6 +19,7 @@ class Sequence : public BaseRule {
         Sequence() {};
         ~Sequence() {};
         Sequence(const std::string& s);
+        Sequence(const std::string& s, const double d);
         Sequence(const Ket& k);
         Sequence(const Superposition& sp);
         Sequence(const Sequence& seq);

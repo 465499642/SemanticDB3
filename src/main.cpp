@@ -643,5 +643,17 @@ int main() {
     std::cout << "range(|number: 1>, |price: 5>): " << range(input_seq, start2, stop2).to_string() << std::endl;
     std::cout << "range(|number: 1>, |number: 5>): " << range(input_seq, start2, stop3).to_string() << std::endl;
 
+    Sequence step("3");
+    std::cout << "range(|1>, |15>, |3>): " << range(input_seq, start, stop, step).to_string() << std::endl;
+
+    Sequence step2("0");
+    std::cout << "range(|1>, |15>, |0>): " << range(input_seq, start, stop, step2).to_string() << std::endl;
+
+    Sequence step3("1", -1);
+    std::cout << "range(|15>, |1>, -|1>): " << range(input_seq, stop, start, step3).to_string() << std::endl;
+
+    Sequence stop4("5"), step4("0.5");
+    std::cout << "range(|1>, |5>, |0.5>): " << range(input_seq, start, stop4, step4).to_string() << std::endl;
+
     return 0;
 }
