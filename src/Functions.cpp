@@ -274,3 +274,29 @@ Superposition rank(const Superposition& sp) {
     }
     return result;
 }
+
+
+Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop) {
+    auto start_vec = start.to_ket().label_split_idx();
+    auto stop_vec = stop.to_ket().label_split_idx();
+    if (start_vec.size() == 0 || stop_vec.size() == 0) { return Ket(); }
+    ulong start_idx = start_vec.back();
+    ulong stop_idx = stop_vec.back();
+    start_vec.pop_back();
+    stop_vec.pop_back();
+    if ( start_vec != stop_vec ) { return Ket(); }
+    std::string v1 = ket_map.get_str(start_idx);
+    std::string v2 = ket_map.get_str(stop_idx);
+    std::string cat = ket_map.get_str(start_vec);  // what if start_vec.size() == 0?
+    std::string label = "";
+    if (cat.size() > 0 ) { label = cat + ": "; }
+    Superposition result;
+    mpf_class x(v1), y(v2), z;
+    for (z = x; z < y + 1; z++) {
+        std::stringstream buffer;
+        buffer.precision(10);
+        buffer << z;
+        result.add(label + buffer.str());
+    }
+    return result;
+}

@@ -634,5 +634,14 @@ int main() {
     std::cout << "threshold-filter[3] rank split |a b c d e f>: " << rank(split(split_k)).apply_sigmoid(threshold_filter, 3).to_string() << std::endl;
     std::cout << "sigmoid_in_range[3,5] rank split |a b c d e f>: " << rank(split(split_k)).apply_sigmoid(sigmoid_in_range, 3, 5).to_string() << std::endl;
 
+    // test range(|1>, |15>):
+    // Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop)
+    Sequence input_seq, start("1"), stop("15");
+    std::cout << "range(|1>, |15>): " << range(input_seq, start, stop).to_string() << std::endl;
+
+    Sequence start2("number: 1"), stop2("price: 5"), stop3("number: 5");
+    std::cout << "range(|number: 1>, |price: 5>): " << range(input_seq, start2, stop2).to_string() << std::endl;
+    std::cout << "range(|number: 1>, |number: 5>): " << range(input_seq, start2, stop3).to_string() << std::endl;
+
     return 0;
 }

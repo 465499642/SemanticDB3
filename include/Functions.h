@@ -32,4 +32,7 @@ double normed_frequency_class(const Ket &k, const Superposition &sp);
 Superposition split(const Ket &k);
 Superposition rank(const Superposition& sp);
 
+Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop);
+Sequence range(Sequence &input_seq, Sequence &start, Sequence &stop, Sequence &step);
+
 #endif
