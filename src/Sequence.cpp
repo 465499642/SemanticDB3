@@ -205,3 +205,31 @@ Sequence Sequence::sreverse() const {
     }
     return result;
 }
+
+Sequence Sequence::apply_sigmoid(std::function<double(double)> sigmoid) const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Superposition tmp = sp.apply_sigmoid(sigmoid);
+        result.seq.push_back(tmp);
+    }
+    return result;
+}
+
+Sequence Sequence::apply_sigmoid(std::function<double(double,double)> sigmoid, const double t) const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Superposition tmp = sp.apply_sigmoid(sigmoid, t);
+        result.seq.push_back(tmp);
+    }
+    return result;
+}
+
+Sequence Sequence::apply_sigmoid(std::function<double(double,double,double)> sigmoid, const double t1, const double t2) const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Superposition tmp = sp.apply_sigmoid(sigmoid, t1, t2);
+        result.seq.push_back(tmp);
+    }
+    return result;
+}
+

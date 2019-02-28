@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 
 #include "BaseRule.h"
 
@@ -67,6 +68,9 @@ class Sequence : public BaseRule {
 
         Sequence sreverse() const;
 
+        Sequence apply_sigmoid(std::function<double(double)> sigmoid) const;
+        Sequence apply_sigmoid(std::function<double(double,double)> sigmoid, const double t) const;
+        Sequence apply_sigmoid(std::function<double(double,double,double)> sigmoid, const double t1, const double t2) const;
 };
 
 #endif

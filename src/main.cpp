@@ -676,5 +676,12 @@ int main() {
 
     Ket kbc2("Fred Sam Robert");
     std::cout << "bar-chart[6] rank split |Fred Sam Robert>:\n" << bar_chart(rank(split(kbc2)), 6).to_string() << std::endl;
+
+    // test Sequence::apply_sigmoid():
+    std::cout << "srev: " << srev.to_string() << std::endl;
+    std::cout << "clean (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(clean).to_string() << std::endl;
+    std::cout << "threshold_filter[2] (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(threshold_filter, 2).to_string() << std::endl;
+    std::cout << "sigmoid_in_range[0,2] (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(sigmoid_in_range, 0, 2).to_string() << std::endl;
+
     return 0;
 }
