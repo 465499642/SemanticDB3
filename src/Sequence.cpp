@@ -209,8 +209,9 @@ Sequence Sequence::sreverse() const {
 Sequence Sequence::apply_sigmoid(std::function<double(double)> sigmoid) const {
     Sequence result;
     for (const auto sp: seq) {
-        Superposition tmp = sp.apply_sigmoid(sigmoid);
-        result.seq.push_back(tmp);
+        // Superposition tmp = sp.apply_sigmoid(sigmoid); // not sure which approach is better.
+        // result.seq.push_back(tmp);
+        result.seq.push_back(sp.apply_sigmoid(sigmoid));
     }
     return result;
 }
