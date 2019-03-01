@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -g -std=c++11
+CXXFLAGS = -g -std=c++11 -lgmpxx -lgmp
 INCS = -I./ -I../../include
 OBJS = ../../build/*.o
 
