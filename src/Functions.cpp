@@ -200,6 +200,11 @@ double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
     return r / size;
 }
 
+Sequence ket_simm(const Sequence &input_seq, const Sequence &seq1, const Sequence &seq2) {
+    double value = simm(seq1, seq2);
+    return Sequence("simm", value);
+}
+
 
 Ket push_float(const Ket &k) {  // optimize later!
     std::string label = k.label();
