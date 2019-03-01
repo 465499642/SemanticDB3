@@ -24,6 +24,7 @@ OBJS = $(addprefix ${BUILDDIR}/, \
     FnOp.o \
     BracketOp.o \
     Sigmoids.o \
+    FnMap.o \
     main.o \
     ) # Prepends the BUILDDIR to the OBJS
 

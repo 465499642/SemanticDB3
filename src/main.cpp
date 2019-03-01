@@ -20,6 +20,7 @@
 #include "SelfKet.h"
 #include "FnOp.h"
 #include "Sigmoids.h"
+#include "FnMap.h"
 
 
 // for now, use main to test our components:
@@ -682,6 +683,26 @@ int main() {
     std::cout << "clean (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(clean).to_string() << std::endl;
     std::cout << "threshold_filter[2] (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(threshold_filter, 2).to_string() << std::endl;
     std::cout << "sigmoid_in_range[0,2] (|a> . 3.140000|b> . - 2.000000|c> . |d>): " << srev.apply_sigmoid(sigmoid_in_range, 0, 2).to_string() << std::endl;
+
+    // test FnMap.whitelist_3:
+    ulong arithmetic_idx = ket_map.get_idx("arithmetic");
+    fn_map.context_whitelist_3.emplace(arithmetic_idx, &arithmetic);
+    // fn_map.context_whitelist_3[arithmetic_idx] = &arithmetic;
+    auto our_fn = fn_map.context_whitelist_3[arithmetic_idx];
+    Sequence plus("+");
+    std::cout << "our_fn(context, |>, |1>, |+>, |5>): " << our_fn(context_list, input_seq, start, plus, stop4).to_string() << std::endl;
+
+    ulong range_idx = ket_map.get_idx("range");
+    fn_map.whitelist_2.emplace(range_idx, &range2);
+    // fn_map.whitelist_2[range_idx] = &range2;
+    fn_map.whitelist_3[range_idx] = &range3;
+    auto our_fn2 = fn_map.whitelist_2[range_idx];
+    std::cout << "our_fn2(|>, |1>, |5>): " << our_fn2(input_seq, start, stop4).to_string() << std::endl;
+
+    auto our_fn3 = fn_map.whitelist_3[range_idx];
+    std::cout << "our_fn3(|>, |1>, |5>, |0.5>): " << our_fn3(input_seq, start, stop4, step4).to_string() << std::endl;
+
+    fn_map.print();
 
     return 0;
 }

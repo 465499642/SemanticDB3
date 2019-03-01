@@ -276,6 +276,14 @@ Superposition rank(const Superposition& sp) {
     return result;
 }
 
+Sequence range2(const Sequence &input_seq, const Sequence &start, const Sequence &stop) {
+    return range(input_seq, start, stop);
+}
+
+Sequence range3(const Sequence &input_seq, const Sequence &start, const Sequence &stop, const Sequence &step) {
+    return range(input_seq, start, stop, step);
+}
+
 Sequence range(const Sequence &input_seq, const Sequence &start, const Sequence &stop) {
     Sequence step("1");
     return range(input_seq, start, stop, step);
