@@ -32,6 +32,11 @@ FnMap::FnMap() {
 
 
 void FnMap::print() const {
+    std::cout << "built_in:" << std::endl;
+    for (auto it : built_in) {
+        std::cout << "    " << ket_map.get_str(it.first) << std::endl;
+    }
+
     std::cout << "sigmoids:" << std::endl;
     for (auto it : sigmoids) {
         std::cout << "    " << ket_map.get_str(it.first) << std::endl;
