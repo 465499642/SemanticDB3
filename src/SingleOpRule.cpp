@@ -33,7 +33,7 @@ Sequence SingleOpRule::Compile(ContextList& context, const ulong label_idx) cons
 Sequence SingleOpRule::Compile(ContextList& context, const std::vector<Sequence>& args) const {
     Sequence seq;
     Sequence b_seq = b_rule->Compile(context, args);
-    seq = op_seq->Compile(context, b_seq);
+    seq = op_seq->Compile(context, b_seq, args);
     return seq;
 }
 

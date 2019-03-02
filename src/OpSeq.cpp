@@ -37,6 +37,15 @@ Sequence OpSeq::Compile(ContextList& context, const Sequence& seq, const ulong l
     return result;
 }
 
+Sequence OpSeq::Compile(ContextList& context, const Sequence& seq, const std::vector<Sequence>& args) const {
+    Sequence result = seq;
+    for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
+        result = (*it)->Compile(context, result, args);
+    }
+    if (op_symbol == SMINUS) { result.multiply(-1); } // not 100% sure this should be here.
+    return result;
+}
+
 
 const std::string OpSeq::to_string() const {
     std::string s = "";

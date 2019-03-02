@@ -21,6 +21,7 @@ class FnOp : public BaseOp {
         void push(OpRule *op_rule) { op_rules.push_back(op_rule); }
         Sequence Compile(ContextList& context, const Sequence& seq) const;
         Sequence Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const;
+        Sequence Compile(ContextList& context, const Sequence& seq, const std::vector<Sequence>& args) const;
         const std::string to_string() const;
 
 };

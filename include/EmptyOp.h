@@ -15,6 +15,7 @@ class EmptyOp : public BaseOp {
         EmptyOp() { }
         Sequence Compile(ContextList& context, const Sequence& seq) const { return seq; };
         Sequence Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const { return seq; }
+        Sequence Compile(ContextList& context, const Sequence& seq, const std::vector<Sequence>& args) const { return seq; }
         const std::string to_string() const { std::string s = ""; return s; };
 
 };

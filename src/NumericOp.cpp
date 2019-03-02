@@ -16,6 +16,12 @@ Sequence NumericOp::Compile(ContextList& context, const Sequence& seq, const ulo
     return result;
 }
 
+Sequence NumericOp::Compile(ContextList& context, const Sequence& seq, const std::vector<Sequence>& args) const {
+    Sequence result(seq);
+    result.multiply(value);
+    return result;
+}
+
 
 const std::string NumericOp::to_string() const {
     return std::string(std::to_string(value));  // why?

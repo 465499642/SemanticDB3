@@ -25,6 +25,14 @@ Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq, const ulo
     return result;
 }
 
+Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq, const std::vector<Sequence>& args) const {
+    Sequence result = seq;
+    for (unsigned int i = 0; i < pow; i++) {
+        result = b_op->Compile(context, result, args);
+    }
+    return result;
+}
+
 
 const std::string PoweredOp::to_string() const {
     std::string s = "";
