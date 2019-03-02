@@ -10,6 +10,13 @@ Sequence NumericOp::Compile(ContextList& context, const Sequence& seq) const {
     return result;
 }
 
+Sequence NumericOp::Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const {
+    Sequence result(seq);
+    result.multiply(value);
+    return result;
+}
+
+
 const std::string NumericOp::to_string() const {
-    return std::string(std::to_string(value));
+    return std::string(std::to_string(value));  // why?
 }

@@ -23,6 +23,23 @@ Sequence BracketOp::Compile(ContextList& context, const Sequence& seq) const {
     return seq2;
 }
 
+Sequence BracketOp::Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const {
+    Sequence seq2;
+    for (const auto &op_seq : op_seq_vec) {
+        Sequence compiled_seq = op_seq.Compile(context, seq, label_idx);
+        switch (op_seq.symbol_type()) {
+            case SPLUS: { seq2.add(compiled_seq); break; }
+            case SMINUS: { seq2.add(compiled_seq); break; }
+            case SSEQ: { seq2.append(compiled_seq); break; }
+            case SMERGE: { seq2.merge(compiled_seq); break; }
+            case SMERGE2: { seq2.merge(compiled_seq, " "); break; }
+        }
+    }
+    std::cout << "BracketOp::seq2: " << seq2.to_string() << std::endl;
+    return seq2;
+}
+
+
 const std::string BracketOp::to_string() const {
     std::string s = "(";
     bool first_pass = true;

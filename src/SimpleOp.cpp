@@ -53,6 +53,10 @@ Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq) const {
     return result;
 }
 
+Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const {
+    return this->Compile(context, seq);
+}
+
 
 const std::string SimpleOp::to_string() const {
     return ket_map.get_str(op_idx);

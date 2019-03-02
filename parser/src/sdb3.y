@@ -92,7 +92,8 @@ swfile : %empty { $$ = new ContextList("global context"); }
            // $1->learn(*$3, *$5, $9); 
 
            std::cout << $9->to_string() << std::endl;
-           Sequence *seq = new Sequence($9->Compile(*$1));
+           // Sequence *seq = new Sequence($9->Compile(*$1));
+           Sequence *seq = new Sequence($9->Compile(*$1, $5));
            $1->learn($3, $5, seq);
        }
        | swfile space simple_op space ket space TADD_LEARN_SYM space real_seq endl { $1->add_learn($3, $5, $9); }

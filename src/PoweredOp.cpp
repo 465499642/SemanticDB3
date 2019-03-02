@@ -17,6 +17,15 @@ Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq) const {
     return result;
 }
 
+Sequence PoweredOp::Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const {
+    Sequence result = seq;
+    for (unsigned int i = 0; i < pow; i++) {
+        result = b_op->Compile(context, result, label_idx);
+    }
+    return result;
+}
+
+
 const std::string PoweredOp::to_string() const {
     std::string s = "";
     s = b_op->to_string() + "^" + std::to_string(pow);

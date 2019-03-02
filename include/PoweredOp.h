@@ -11,6 +11,7 @@ class PoweredOp : public BaseOp {
     public:
         PoweredOp(BaseOp* base_op, const unsigned int power);
         Sequence Compile(ContextList& context, const Sequence& seq) const;
+        Sequence Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const;
         const std::string to_string() const;
 };
 

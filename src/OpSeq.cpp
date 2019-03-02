@@ -28,6 +28,16 @@ Sequence OpSeq::Compile(ContextList& context, const Sequence& seq) const {
     return result;
 }
 
+Sequence OpSeq::Compile(ContextList& context, const Sequence& seq, const ulong label_idx) const {
+    Sequence result = seq;
+    for (auto it = op_seq.rbegin(); it != op_seq.rend(); ++it) {
+        result = (*it)->Compile(context, result, label_idx);
+    }
+    if (op_symbol == SMINUS) { result.multiply(-1); } // not 100% sure this should be here.
+    return result;
+}
+
+
 const std::string OpSeq::to_string() const {
     std::string s = "";
     switch(op_symbol) {
