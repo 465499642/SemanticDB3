@@ -319,6 +319,7 @@ endl:    TENDL { std::cout << "TENDL" << std::endl; }
 %%
 
 int main(int argc, char** argv) {
+
     // Open a file handle to a particular file:
     FILE *src = fopen(argv[1], "r");
     // Make sure it is valid:
@@ -328,7 +329,7 @@ int main(int argc, char** argv) {
     }
     // Set Flex to read from it instead of defaulting to STDIN:
     yyin = src;
-  
+
     // Parse through the input until eof:
     do {
         yyparse();

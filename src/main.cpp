@@ -704,5 +704,12 @@ int main() {
 
     fn_map.print();
 
+
+    // test empty KetMap:
+    KetMap ket_map2;
+    ket_map2.print();
+    ket_map2.get_idx("range");
+    ket_map2.print();
+
     return 0;
 }

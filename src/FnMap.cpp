@@ -3,9 +3,11 @@
 #include "FnMap.h"
 #include "Functions.h"
 
+KetMap ket_map;
 FnMap fn_map;
 
 FnMap::FnMap() {
+
     ulong idx = ket_map.get_idx("range");
     fn_map.whitelist_2.emplace(idx, &range2);
     fn_map.whitelist_3.emplace(idx, &range3);
@@ -15,6 +17,7 @@ FnMap::FnMap() {
 
     idx = ket_map.get_idx("simm");
     fn_map.whitelist_2.emplace(idx, &ket_simm);
+
 }
 
 
@@ -53,3 +56,4 @@ void FnMap::print() const {
         std::cout << "    " << ket_map.get_str(it.first) << std::endl;
     }
 }
+

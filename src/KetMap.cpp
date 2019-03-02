@@ -2,6 +2,7 @@
 #include "KetMap.h"
 #include "Functions.h"
 
+
 KetMap::KetMap() {
     std::string s = "";
     our_map[s] = 0;
@@ -171,6 +172,3 @@ void KetMap::print() {
         std::cout << std::endl;
     }
 }
-
-
-KetMap ket_map;
