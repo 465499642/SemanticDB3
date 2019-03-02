@@ -1,3 +1,5 @@
+|context> => |Fibonacci sequence>
+
 fib |0> => |0>
 fib |1> => |1>
 n-1 |*> !=> arithmetic(|_self>, |->, |1>) |>

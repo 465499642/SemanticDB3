@@ -26,7 +26,7 @@ Sequence SingleOpRule::Compile(ContextList& context) const {
 Sequence SingleOpRule::Compile(ContextList& context, const ulong label_idx) const {
     Sequence seq;
     Sequence b_seq = b_rule->Compile(context, label_idx);
-    seq = op_seq->Compile(context, b_seq);
+    seq = op_seq->Compile(context, b_seq, label_idx);
     return seq;
 }
 
