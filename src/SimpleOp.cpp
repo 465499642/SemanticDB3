@@ -7,6 +7,7 @@
 #include "KetMap.h"
 #include "BaseRule.h"
 #include "Ket.h"
+#include "FnMap.h"
 
 
 /*
@@ -37,6 +38,10 @@ Sequence SimpleOp::Compile(ContextList& context, Sequence& seq) { // make more e
 */
 
 Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq) const {
+    if (fn_map.sigmoids.find(op_idx) != fn_map.sigmoids.end()) {
+        auto sigmoid = fn_map.sigmoids[op_idx];
+        return seq.apply_sigmoid(sigmoid);
+    }
     Sequence result;
     for (const auto &sp: seq) {
         Sequence seq2;

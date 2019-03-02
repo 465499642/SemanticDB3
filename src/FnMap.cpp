@@ -2,13 +2,19 @@
 #include "KetMap.h"
 #include "FnMap.h"
 #include "Functions.h"
+#include "Sigmoids.h"
 
 KetMap ket_map;
 FnMap fn_map;
 
 FnMap::FnMap() {
+    ulong idx;
 
-    ulong idx = ket_map.get_idx("range");
+    idx = ket_map.get_idx("clean");
+    fn_map.sigmoids.emplace(idx, &clean);
+
+    // learn some functions:
+    idx = ket_map.get_idx("range");
     fn_map.whitelist_2.emplace(idx, &range2);
     fn_map.whitelist_3.emplace(idx, &range3);
 
@@ -22,6 +28,12 @@ FnMap::FnMap() {
 
 
 void FnMap::print() const {
+    std::cout << "sigmoids:" << std::endl;
+    for (auto it : sigmoids) {
+        std::cout << "    " << ket_map.get_str(it.first) << std::endl;
+    }
+
+
     std::cout << "whitelist_1:" << std::endl;
     for (auto it : whitelist_1) {
         std::cout << "    " << ket_map.get_str(it.first) << std::endl;
