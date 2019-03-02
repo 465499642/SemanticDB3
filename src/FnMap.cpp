@@ -3,12 +3,16 @@
 #include "FnMap.h"
 #include "Functions.h"
 #include "Sigmoids.h"
+#include "Sequence.h"
 
 KetMap ket_map;
 FnMap fn_map;
 
 FnMap::FnMap() {
     ulong idx;
+
+    idx = ket_map.get_idx("sreverse");
+    fn_map.built_in.emplace(idx, &Sequence::sreverse);
 
     idx = ket_map.get_idx("clean");
     fn_map.sigmoids.emplace(idx, &clean);

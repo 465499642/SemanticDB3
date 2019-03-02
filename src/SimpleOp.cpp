@@ -41,6 +41,9 @@ Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq) const {
     if (fn_map.sigmoids.find(op_idx) != fn_map.sigmoids.end()) {
         auto sigmoid = fn_map.sigmoids[op_idx];
         return seq.apply_sigmoid(sigmoid);
+    } else if (fn_map.built_in.find(op_idx) != fn_map.built_in.end()) {
+        auto fn = fn_map.built_in[op_idx];
+        return fn(&seq);
     }
     Sequence result;
     for (const auto &sp: seq) {

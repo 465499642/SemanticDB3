@@ -12,6 +12,9 @@ class FnMap {
     public:
         FnMap();  // this is where we register our functions and operators.
 
+        // below are our tables:
+        std::unordered_map<ulong, std::function<Sequence(const Sequence*)> > built_in;
+
         std::unordered_map<ulong, std::function<double(const double)> > sigmoids;
 
         std::unordered_map<ulong, std::function<Sequence(const Sequence&, const Sequence&)> > whitelist_1;
