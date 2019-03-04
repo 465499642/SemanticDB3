@@ -234,3 +234,11 @@ Sequence Sequence::apply_sigmoid(std::function<double(double,double,double)> sig
     return result;
 }
 
+Sequence Sequence::apply_sp_fn(std::function<Sequence(const Superposition&)> fn) const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Sequence tmp = fn(sp);
+        result.append(tmp);  // not sure if it should be result.add(tmp)
+    }
+    return result;
+}

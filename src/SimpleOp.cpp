@@ -44,6 +44,9 @@ Sequence SimpleOp::Compile(ContextList& context, const Sequence& seq) const {
     } else if (fn_map.built_in.find(op_idx) != fn_map.built_in.end()) {
         auto fn = fn_map.built_in[op_idx];
         return fn(&seq);
+    } else if (fn_map.sp_fn.find(op_idx) != fn_map.sp_fn.end()) {
+        auto fn = fn_map.sp_fn[op_idx];
+        return seq.apply_sp_fn(fn);
     }
     Sequence result;
     for (const auto &sp: seq) {

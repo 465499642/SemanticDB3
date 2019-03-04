@@ -5,6 +5,7 @@
 #include <functional>
 #include "ContextList.h"
 #include "Sequence.h"
+#include "Superposition.h"
 
 
 class FnMap {
@@ -16,6 +17,7 @@ class FnMap {
         std::unordered_map<ulong, std::function<Sequence(const Sequence*)> > built_in;
 
         std::unordered_map<ulong, std::function<double(const double)> > sigmoids;
+        std::unordered_map<ulong, std::function<Sequence(const Superposition&)> > sp_fn;
 
         std::unordered_map<ulong, std::function<Sequence(const Sequence&, const Sequence&)> > whitelist_1;
         std::unordered_map<ulong, std::function<Sequence(const Sequence&, const Sequence&, const Sequence&)> > whitelist_2;

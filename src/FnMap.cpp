@@ -17,6 +17,9 @@ FnMap::FnMap() {
     idx = ket_map.get_idx("clean");
     fn_map.sigmoids.emplace(idx, &clean);
 
+    idx = ket_map.get_idx("sp2seq");
+    fn_map.sp_fn.emplace(idx, &sp2seq);
+
     // learn some functions:
     idx = ket_map.get_idx("range");
     fn_map.whitelist_2.emplace(idx, &range2);
@@ -39,6 +42,11 @@ void FnMap::print() const {
 
     std::cout << "sigmoids:" << std::endl;
     for (auto it : sigmoids) {
+        std::cout << "    " << ket_map.get_str(it.first) << std::endl;
+    }
+
+    std::cout << "sp_fn:" << std::endl;
+    for (auto it : sp_fn) {
         std::cout << "    " << ket_map.get_str(it.first) << std::endl;
     }
 

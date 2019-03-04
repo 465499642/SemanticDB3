@@ -4,3 +4,6 @@ the |simm> => simm(|a> + |b> + |c>, |b>) |>
 
 range |*> #=> range(|1>, |_self>) |>
 the |range2> => range |4>
+
+the |seq range> => sp2seq the |range2>
+
