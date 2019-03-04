@@ -20,3 +20,5 @@ the |dropped sp> => sdrop the |sp>
 the |words> => |the> + |hungry> . |dog> + |ate> . |some> . |food>
 print-the |words> => print the |words>
 
+the |ranked list> => rank split |Fred Sam Robert Max>
+

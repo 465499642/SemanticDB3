@@ -21,11 +21,17 @@ FnMap::FnMap() {
     idx = ket_map.get_idx("clean");
     fn_map.sigmoids.emplace(idx, &clean);
 
+    idx = ket_map.get_idx("split");
+    fn_map.ket_fn.emplace(idx, &seq_split);
+
     idx = ket_map.get_idx("print");
     fn_map.ket_fn.emplace(idx, &print_ket);
 
     idx = ket_map.get_idx("sp2seq");
     fn_map.sp_fn.emplace(idx, &sp2seq);
+
+    idx = ket_map.get_idx("rank");
+    fn_map.sp_fn.emplace(idx, &seq_rank);
 
     // learn some functions:
     idx = ket_map.get_idx("range");

@@ -281,6 +281,14 @@ Superposition rank(const Superposition& sp) {
     return result;
 }
 
+Sequence seq_split(const Ket &k) { // tidy later!
+    return Sequence(split(k));
+}
+
+Sequence seq_rank(const Superposition& sp) {
+    return Sequence(rank(sp));
+}
+
 Sequence range2(const Sequence &input_seq, const Sequence &start, const Sequence &stop) {
     return range(input_seq, start, stop);
 }
