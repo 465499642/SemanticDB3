@@ -41,6 +41,10 @@ Sequence Sequence::operator+(Sequence& b) {
     return tmp;
 }
 
+Superposition Sequence::operator[](const ulong pos) const {
+    return seq[pos];
+}
+
 const ulong Sequence::size() const {
     ulong result;
     result = seq.size();

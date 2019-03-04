@@ -27,7 +27,7 @@ double scaled_simm(const Sequence &seq1, const Sequence &seq2);
 Sequence ket_simm(const Sequence &input_seq, const Sequence &seq1, const Sequence &seq2);
 
 Superposition sp_intersection(const Superposition &sp1, const Superposition &sp2);
-
+Sequence seq_intersection(const Sequence &input_seq, const Sequence &one, const Sequence &two);
 
 Ket push_float(const Ket &k);
 Ket pop_float(const Ket &k);

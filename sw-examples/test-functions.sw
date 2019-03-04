@@ -23,3 +23,5 @@ print-the |words> => print the |words>
 the |ranked list> => rank split |Fred Sam Robert Max>
 the |shuffled ranked list> => shuffle the |ranked list>
 
+the |1st intersection> => intersection(3|a> + 1.2|b>, 3.5|a> + 0.9|b> + 5.13|c>) |>
+the |2nd intersection> => intersection(|a1> + |a2> . 0.3|b1> + 0.5|b2>, 3|a1> + 0.9|a2> . 0.7|b2>) |>

@@ -25,6 +25,7 @@ class Sequence : public BaseRule {
         Sequence(const Superposition& sp);
         Sequence(const Sequence& seq);
         Sequence operator+(Sequence& b);
+        Superposition operator[](const ulong pos) const;
         const int type() const { return SEQUENCE; };
         const ulong size() const;
 

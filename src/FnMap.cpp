@@ -41,6 +41,9 @@ FnMap::FnMap() {
     fn_map.whitelist_2.emplace(idx, &range2);
     fn_map.whitelist_3.emplace(idx, &range3);
 
+    idx = ket_map.get_idx("intersection");
+    fn_map.whitelist_2.emplace(idx, &seq_intersection);
+
     idx = ket_map.get_idx("arithmetic");
     fn_map.context_whitelist_3.emplace(idx, &arithmetic); // later remove context dependence of arithmetic.
 

@@ -219,8 +219,21 @@ Superposition sp_intersection(const Superposition &sp1, const Superposition &sp2
         double v1 = sp1.find_value(idx);
         double v2 = sp2.find_value(idx);
         double value = std::min(v1, v2);
-        result.add(idx, value);
+        if (value > 0) {
+            result.add(idx, value);
+        }
     }
+    return result;
+}
+
+Sequence seq_intersection(const Sequence &input_seq, const Sequence &one, const Sequence &two) {
+    ulong min_size = std::min(one.size(), two.size());
+    ulong max_size = std::max(one.size(), two.size());
+    Sequence result;
+    for (ulong i = 0; i < min_size; i++) {
+        Superposition r = sp_intersection(one[i], two[i]);
+        result.append(r);
+    }  // finish! need to append |> . |> etc.
     return result;
 }
 
