@@ -206,6 +206,17 @@ Sequence Sequence::sreverse() const {
     return result;
 }
 
+Sequence Sequence::sdrop() const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Superposition r = sp.drop();
+        if (r.size() > 0) {
+            result.seq.push_back(r);
+        }
+    }
+    return result;
+}
+
 Sequence Sequence::apply_sigmoid(std::function<double(double)> sigmoid) const {
     Sequence result;
     for (const auto sp: seq) {

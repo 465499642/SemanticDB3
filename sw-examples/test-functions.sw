@@ -6,4 +6,4 @@ range |*> #=> range(|1>, |_self>) |>
 the |range2> => range |4>
 
 the |seq range> => sp2seq the |range2>
-
+the |empty seq range> => sdrop tidy the |seq range>

@@ -67,6 +67,7 @@ class Sequence : public BaseRule {
         Sequence Compile(ContextList& context, const std::vector<Sequence>& args) const;
 
         Sequence sreverse() const;
+        Sequence sdrop() const;
 
         Sequence apply_sigmoid(std::function<double(double)> sigmoid) const;
         Sequence apply_sigmoid(std::function<double(double,double)> sigmoid, const double t) const;

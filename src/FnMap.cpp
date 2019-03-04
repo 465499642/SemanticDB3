@@ -14,6 +14,10 @@ FnMap::FnMap() {
     idx = ket_map.get_idx("sreverse");
     fn_map.built_in.emplace(idx, &Sequence::sreverse);
 
+    idx = ket_map.get_idx("sdrop");
+    fn_map.built_in.emplace(idx, &Sequence::sdrop);
+
+
     idx = ket_map.get_idx("clean");
     fn_map.sigmoids.emplace(idx, &clean);
 
