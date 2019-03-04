@@ -116,7 +116,7 @@ Sequence arithmetic(ContextList &context, const Sequence &input_seq, const Seque
 double simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
     std::set<ulong> merged;
-    std::unordered_map<ulong, double> one, two;
+    std::unordered_map<ulong, double> one, two;  // wait, do we need one, two? Can't we just use sp1 and sp2?
     double one_sum(0), two_sum(0), merged_sum(0);
     for (const auto k : sp1) {
         one[k.label_idx()] = k.value();
@@ -205,6 +205,24 @@ Sequence ket_simm(const Sequence &input_seq, const Sequence &seq1, const Sequenc
     return Sequence("simm", value);
 }
 
+Superposition sp_intersection(const Superposition &sp1, const Superposition &sp2) {
+    if (sp1.size() == 0 || sp2.size() == 0) { return Superposition(); }
+    std::set<ulong> merged;
+    for (const auto k : sp1) {
+        merged.insert(k.label_idx());
+    }
+    for (const auto k : sp2) {
+        merged.insert(k.label_idx());
+    }
+    Superposition result;
+    for (const auto idx: merged) {
+        double v1 = sp1.find_value(idx);
+        double v2 = sp2.find_value(idx);
+        double value = std::min(v1, v2);
+        result.add(idx, value);
+    }
+    return result;
+}
 
 Ket push_float(const Ket &k) {  // optimize later!
     std::string label = k.label();

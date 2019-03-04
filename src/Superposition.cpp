@@ -293,6 +293,10 @@ double Superposition::find_max_coeff() const { // what happens if sp is empty?
     return largest;
 }
 
+double Superposition::find_value(const ulong idx) const {
+    if (sp.find(idx) == sp.end()) { return 0; }
+    return sp.at(idx);
+}
 
 double Superposition::find_value(const Ket &k) const {
     ulong idx = k.label_idx();
