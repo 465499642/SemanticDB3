@@ -46,5 +46,6 @@ Sequence sp2seq(const Superposition &sp);
 Superposition seq2sp(const Sequence &seq);
 
 Sequence bar_chart(const Superposition &sp, const double v);
+Sequence print_ket(const Ket &k);
 
 #endif

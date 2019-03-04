@@ -367,3 +367,8 @@ Sequence bar_chart(const Superposition &sp, const double v) {
     std::cout << "----------" << std::endl;
     return Sequence("bar chart");
 }
+
+Sequence print_ket(const Ket &k) {
+    std::cout << k.label() << std::endl;
+    return Sequence(k);
+}

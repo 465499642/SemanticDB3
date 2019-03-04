@@ -21,6 +21,9 @@ FnMap::FnMap() {
     idx = ket_map.get_idx("clean");
     fn_map.sigmoids.emplace(idx, &clean);
 
+    idx = ket_map.get_idx("print");
+    fn_map.ket_fn.emplace(idx, &print_ket);
+
     idx = ket_map.get_idx("sp2seq");
     fn_map.sp_fn.emplace(idx, &sp2seq);
 
@@ -46,6 +49,11 @@ void FnMap::print() const {
 
     std::cout << "sigmoids:" << std::endl;
     for (auto it : sigmoids) {
+        std::cout << "    " << ket_map.get_str(it.first) << std::endl;
+    }
+
+    std::cout << "ket_fn:" << std::endl;
+    for (auto it : ket_fn) {
         std::cout << "    " << ket_map.get_str(it.first) << std::endl;
     }
 

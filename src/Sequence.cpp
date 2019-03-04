@@ -245,6 +245,19 @@ Sequence Sequence::apply_sigmoid(std::function<double(double,double,double)> sig
     return result;
 }
 
+Sequence Sequence::apply_ket_fn(std::function<Sequence(const Ket&)> fn) const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Sequence tmp;
+        for (const auto k: sp) {
+            Sequence tmp2 = fn(k);
+            tmp.add(tmp2);
+        }
+        result.append(tmp);
+    }
+    return result;
+}
+
 Sequence Sequence::apply_sp_fn(std::function<Sequence(const Superposition&)> fn) const {
     Sequence result;
     for (const auto sp: seq) {
