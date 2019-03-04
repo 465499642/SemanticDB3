@@ -41,7 +41,8 @@ Sequence Sequence::operator+(Sequence& b) {
     return tmp;
 }
 
-Superposition Sequence::operator[](const ulong pos) const {
+Superposition Sequence::operator[](const ulong pos) const { // bugs out if pos is out of range.
+    // if (pos >= seq.size()) { return Superposition(); }   // fix, is to uncomment this line
     return seq[pos];
 }
 

@@ -50,6 +50,9 @@ FnMap::FnMap() {
     idx = ket_map.get_idx("simm");
     fn_map.whitelist_2.emplace(idx, &ket_simm);
 
+    idx = ket_map.get_idx("scaled-simm");
+    fn_map.whitelist_2.emplace(idx, &ket_scaled_simm);
+
 }
 
 

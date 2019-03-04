@@ -25,6 +25,7 @@ double simm(const Sequence &seq1, const Sequence &seq2);
 double scaled_simm(const Sequence &seq1, const Sequence &seq2);
 
 Sequence ket_simm(const Sequence &input_seq, const Sequence &seq1, const Sequence &seq2);
+Sequence ket_scaled_simm(const Sequence &input_seq, const Sequence &seq1, const Sequence &seq2);
 
 Superposition sp_intersection(const Superposition &sp1, const Superposition &sp2);
 Sequence seq_intersection(const Sequence &input_seq, const Sequence &one, const Sequence &two);

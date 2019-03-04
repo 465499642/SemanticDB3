@@ -113,6 +113,7 @@ Sequence arithmetic(ContextList &context, const Sequence &input_seq, const Seque
 }
 
 
+/*
 double simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
     std::set<ulong> merged;
@@ -140,7 +141,32 @@ double simm(const Superposition &sp1, const Superposition &sp2) {
     }
     return merged_sum / std::max(one_sum, two_sum);
 }
+*/
 
+double simm(const Superposition &sp1, const Superposition &sp2) {
+    if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
+    std::set<ulong> merged;
+    double one_sum(0), two_sum(0), merged_sum(0);
+    for (const auto k : sp1) {
+        merged.insert(k.label_idx());
+        one_sum += k.value();
+    }
+    for (const auto k : sp2) {
+        merged.insert(k.label_idx());
+        two_sum += k.value();
+    }
+
+    if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
+
+    for (const auto idx : merged) {
+        double v1 = sp1.find_value(idx);
+        double v2 = sp2.find_value(idx);
+        merged_sum += std::min(v1, v2);
+    }
+    return merged_sum / std::max(one_sum, two_sum);
+}
+
+/*
 double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
 
@@ -179,13 +205,49 @@ double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
     }
     return merged_sum;
 }
+*/
+
+double scaled_simm(const Superposition &sp1, const Superposition &sp2) {
+    if (sp1.size() == 0 || sp2.size() == 0) { return 0; }
+
+    if (sp1.size() == 1 && sp2.size() == 1) {
+        Ket k1 = sp1.to_ket();
+        Ket k2 = sp2.to_ket();
+        if (k1.label_idx() != k2.label_idx()) { return 0; }
+        double a = std::max(k1.value(), 0.0);
+        double b = std::max(k2.value(), 0.0);
+        if ( double_eq(a, 0) && double_eq(b, 0)) { return 0; }
+        return std::min(a, b) / std::max(a, b);
+    }
+
+    std::set<ulong> merged;
+    double one_sum(0), two_sum(0), merged_sum(0);
+    for (const auto k : sp1) {
+        merged.insert(k.label_idx());
+        one_sum += k.value();
+    }
+    for (const auto k : sp2) {
+        merged.insert(k.label_idx());
+        two_sum += k.value();
+    }
+
+    if ( double_eq(one_sum, 0) || double_eq(two_sum, 0)) { return 0; } // prevent div by zero
+
+    for (const auto idx : merged) {
+        double v1 = sp1.find_value(idx) / one_sum;
+        double v2 = sp2.find_value(idx) / two_sum;
+        merged_sum += std::min(v1, v2);
+    }
+    return merged_sum;
+}
+
 
 double simm(const Sequence &seq1, const Sequence &seq2) {
     ulong size = std::min(seq1.size(), seq2.size());
     if (size == 0) { return 0; }
     double r = 0;
     for (ulong k = 0; k < size; k++) {
-        r += simm(seq1.get(k), seq2.get(k));
+        r += simm(seq1[k], seq2[k]);
     }
     return r / size;
 }
@@ -195,7 +257,7 @@ double scaled_simm(const Sequence &seq1, const Sequence &seq2) {
     if (size == 0) { return 0; }
     double r = 0;
     for (ulong k = 0; k < size; k++) {
-        r += scaled_simm(seq1.get(k), seq2.get(k));
+        r += scaled_simm(seq1[k], seq2[k]);
     }
     return r / size;
 }
@@ -204,6 +266,12 @@ Sequence ket_simm(const Sequence &input_seq, const Sequence &seq1, const Sequenc
     double value = simm(seq1, seq2);
     return Sequence("simm", value);
 }
+
+Sequence ket_scaled_simm(const Sequence &input_seq, const Sequence &seq1, const Sequence &seq2) {
+    double value = scaled_simm(seq1, seq2);
+    return Sequence("simm", value);
+}
+
 
 Superposition sp_intersection(const Superposition &sp1, const Superposition &sp2) {
     if (sp1.size() == 0 || sp2.size() == 0) { return Superposition(); }
