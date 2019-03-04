@@ -246,12 +246,21 @@ Sequence Sequence::apply_sigmoid(std::function<double(double,double,double)> sig
 }
 
 Sequence Sequence::apply_ket_fn(std::function<Sequence(const Ket&)> fn) const {
+    if (seq.size() == 0 ) {
+        Ket k;
+        return fn(k);
+    }
     Sequence result;
     for (const auto sp: seq) {
         Sequence tmp;
-        for (const auto k: sp) {
-            Sequence tmp2 = fn(k);
-            tmp.add(tmp2);
+        if (sp.size() == 0 ) {
+            Ket k;
+            tmp.add(fn(k));
+        } else {
+            for (const auto k: sp) {
+                Sequence tmp2 = fn(k);
+                tmp.add(tmp2);
+            }
         }
         result.append(tmp);
     }

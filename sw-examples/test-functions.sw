@@ -16,3 +16,7 @@ the |2nd negative range> => range(-|5>, |5>) |>
 
 the |sp> => |a> -2|b> . |c> -7|d> . |x> + 3|y>
 the |dropped sp> => sdrop the |sp>
+
+the |words> => |the> + |hungry> . |dog> + |ate> . |some> . |food>
+print-the |words> => print the |words>
+
