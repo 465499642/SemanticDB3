@@ -11,6 +11,9 @@ FnMap fn_map;
 FnMap::FnMap() {
     ulong idx;
 
+    idx = ket_map.get_idx("shuffle");
+    fn_map.built_in.emplace(idx, &Sequence::shuffle);
+
     idx = ket_map.get_idx("sreverse");
     fn_map.built_in.emplace(idx, &Sequence::sreverse);
 

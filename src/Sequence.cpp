@@ -198,6 +198,15 @@ Sequence Sequence::Compile(ContextList& context, const std::vector<Sequence>& ar
 }
 
 
+Sequence Sequence::shuffle() const {
+    Sequence result;
+    for (const auto sp: seq) {
+        Superposition r = sp.shuffle();
+        result.seq.push_back(r);
+    }
+    return result;
+}
+
 Sequence Sequence::sreverse() const {
     Sequence result;
     for (auto it = seq.rbegin(); it != seq.rend(); ++it) {
